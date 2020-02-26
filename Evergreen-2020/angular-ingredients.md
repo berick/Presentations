@@ -36,8 +36,6 @@ King County Library System
 
 # egAccesskey Directive
 
-TODO: screen cap of ctrl+h window
-
     !html
     <a routerLink="/staff/circ/patron/search"
       egAccessKey keyCtx="navbar"
