@@ -5,7 +5,7 @@ Source files, media, compiled HTML presentation slides, and more.
 
 ## Markdown Slides
 
-### Darkslide
+### Using Darkslide
 
 ```sh
 darkslide -i -l no -t void preso.md
