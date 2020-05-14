@@ -16,6 +16,8 @@ King County Library System
 
 # Dialog
 
+open() vs. onOpen$
+
 ---
 
 # FM Editor
@@ -130,11 +132,66 @@ Source: https://blog.ninja-squad.com/2019/12/10/angular-localize/
 
 ---
 
+# Server Print Templates
+
+---
+
+# Serial vs Parallel requests
+
+Combo of WS and promises practically encourages us to blast many
+parallel requests becuase it speeds up the UI.  What we've learned
+in the early days of the browser client is this can cause excess 
+load on the servers.
+
+
+	!typescript
+    load() {
+        this.loading = true;
+
+        this.getThing1()
+        .then(_ => this.getThing2())
+        .then(_ => this.getThing3())
+        .then(_ => this.getThing4())
+        .then(_ => this.loading = false);
+    }
+
+# Route Reuse
+
+* ngOnInit() is called once per component instantiation
+* Components can persist across route changes.
+* If a route change should change what data the component uses, it will
+  have to be retrieved without the help of ngOnInit
+* E.g. Angular catalog record detail navigating results
+
+
+# Route subiscriptions and custom load()
+
+    !typescript
+    ngOnInit() { // this.route === ActivatedRoute
+
+        this.route.paramMap.subscribe((params: ParamMap) => {                  
+            // FIRES ON PAGE LOAD
+            const recId = +params.get('recordId');
+            if (recId !== this.recordId) {
+                this.load();
+            }
+        });
+    }
+
+    load() {
+        // Reset component state / variables
+        // Load data
+    }
+        
+
+
+---
+
 # Developer Suggestions
 
 - Symlink en-US directory.
 
-- Always create a browser bookmark of the page you are working on
+- Create a browser bookmark of the page you are working on
   - JS errors the prevent routing cause the page to jump back to the
     root app page.
 
