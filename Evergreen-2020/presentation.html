@@ -1237,7 +1237,8 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             <header><h1>Angular Ingredients</h1></header>
             
             
-            <section><p>2020 Evergreen Conference</p>
+            <section><h3>AKA Hodgepodge</h3>
+<p>2020 Evergreen Online Conference</p>
 <p>Bill Erickson</p>
 <p>Software Development Engineer</p>
 <p>King County Library System</p></section>
@@ -1257,7 +1258,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              1/15
+              1/23
             </aside>
           </footer>
         </div>
@@ -1286,7 +1287,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              2/15
+              2/23
             </aside>
           </footer>
         </div>
@@ -1299,6 +1300,8 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             
             <header><h1>Dialog</h1></header>
             
+            
+            <section><p>open() vs. onOpen$</p></section>
             
           </div>
           <div class="presenter_notes">
@@ -1315,7 +1318,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              3/15
+              3/23
             </aside>
           </footer>
         </div>
@@ -1344,7 +1347,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              4/15
+              4/23
             </aside>
           </footer>
         </div>
@@ -1373,7 +1376,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              5/15
+              5/23
             </aside>
           </footer>
         </div>
@@ -1402,7 +1405,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              6/15
+              6/23
             </aside>
           </footer>
         </div>
@@ -1431,7 +1434,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              7/15
+              7/23
             </aside>
           </footer>
         </div>
@@ -1470,7 +1473,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              8/15
+              8/23
             </aside>
           </footer>
         </div>
@@ -1501,7 +1504,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              9/15
+              9/23
             </aside>
           </footer>
         </div>
@@ -1537,7 +1540,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              10/15
+              10/23
             </aside>
           </footer>
         </div>
@@ -1568,7 +1571,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              11/15
+              11/23
             </aside>
           </footer>
         </div>
@@ -1608,7 +1611,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              12/15
+              12/23
             </aside>
           </footer>
         </div>
@@ -1659,7 +1662,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              13/15
+              13/23
             </aside>
           </footer>
         </div>
@@ -1703,7 +1706,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              14/15
+              14/23
             </aside>
           </footer>
         </div>
@@ -1714,6 +1717,289 @@ messages with the xi18n command as it does for templates.             </p>
         <div class="slide slide-15">
           <div class="inner">
             
+            <header><h1>Server Print Templates</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              15/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code slide-16">
+          <div class="inner">
+            
+            <header><h1>Serial vs Parallel requests</h1></header>
+            
+            
+            <section><p>Combo of WS and promises practically encourages us to blast many
+parallel requests becuase it speeds up the UI.  What we've learned
+in the early days of the browser client is this can cause excess 
+load on the servers.</p>
+<div class="highlight"><pre><span></span><span class="nx">load</span><span class="p">()</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">loading</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="c1">// 4 requests hit the server at the same time</span>
+    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">getThing1</span><span class="p">(),</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">getThing2</span><span class="p">(),</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">getThing3</span><span class="p">(),</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">getThing4</span><span class="p">()</span>
+    <span class="p">]).</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">loading</span> <span class="o">=</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              16/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code slide-17">
+          <div class="inner">
+            
+            <header><h1>Serialize Requests</h1></header>
+            
+            
+            <section><p>Use serialized requests by default and parallelize with care as neeeded.</p>
+<div class="highlight"><pre><span></span><span class="nx">load() {</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">loading</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">getThing1</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">getThing2</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">getThing3</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">getThing4</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">loading</span> <span class="o">=</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              17/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-18">
+          <div class="inner">
+            
+            <header><h1>Route Reuse</h1></header>
+            
+            
+            <section><ul>
+<li>ngOnInit() is called once per component instantiation</li>
+<li>Components can persist across route changes.</li>
+<li>If a route change should change what data the component uses, it will
+  have to be retrieved without the help of ngOnInit</li>
+<li>E.g. Angular catalog record detail navigating results</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              18/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code slide-19">
+          <div class="inner">
+            
+            <header><h1>Watch for route changes</h1></header>
+            
+            
+            <section><h3>Route-level components.</h3>
+<div class="highlight"><pre><span></span><span class="nx">ngOnInit() {</span> <span class="c1">// this.route === ActivatedRoute</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">route</span><span class="p">.</span><span class="nx">paramMap</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">params</span>: <span class="kt">ParamMap</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// FIRES ON PAGE LOAD</span>
+        <span class="kr">const</span> <span class="nx">recId</span> <span class="o">=</span> <span class="o">+</span><span class="nx">params</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;recordId&#39;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">recId</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">recordId</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">load() {</span>
+    <span class="c1">// Reset component state / variables</span>
+    <span class="c1">// Load data</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              19/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code slide-20">
+          <div class="inner">
+            
+            <header><h1>Watch for @Input() changes</h1></header>
+            
+            
+            <section><h3>Child components</h3>
+<div class="highlight"><pre><span></span><span class="kd">@Input</span><span class="p">()</span> <span class="nx">set</span> <span class="nx">recordId</span><span class="p">(</span><span class="nx">id</span>: <span class="kt">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">recId</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+    <span class="c1">// Only force new data collection when recordId()</span>
+    <span class="c1">// is invoked after ngInit() has already run.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">initDone</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">ngOnInit() {</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">initDone</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              20/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-21">
+          <div class="inner">
+            
+            <header><h1>@Input() set foo() beware...</h1></header>
+            
+            
+            <section><ul>
+<li>@Input() setter functions should only be used when changing inputs
+  require action by the component, e.g. fetching new data.</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              21/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-22">
+          <div class="inner">
+            
             <header><h1>Developer Suggestions</h1></header>
             
             
@@ -1722,7 +2008,7 @@ messages with the xi18n command as it does for templates.             </p>
 <p>Symlink en-US directory.</p>
 </li>
 <li>
-<p>Always create a browser bookmark of the page you are working on</p>
+<p>Create a browser bookmark of the page you are working on</p>
 </li>
 <li>
 <p>JS errors the prevent routing cause the page to jump back to the
@@ -1760,17 +2046,21 @@ autocmd BufWritePre *.ts %s/\s+$//e</p>
             </aside>
             
             <aside class="page_number">
-              15/15
+              22/23
             </aside>
           </footer>
         </div>
       </div>
       
-      <!-- slide source:  -->
+      <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-">
+        <div class="slide slide-23">
           <div class="inner">
             
+            <header><h1>Thanks!</h1></header>
+            
+            
+            <section><p>Questions?</p></section>
             
           </div>
           <div class="presenter_notes">
@@ -1782,8 +2072,12 @@ autocmd BufWritePre *.ts %s/\s+$//e</p>
           <footer>
             
             
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
             <aside class="page_number">
-              /15
+              23/23
             </aside>
           </footer>
         </div>
@@ -1882,8 +2176,56 @@ autocmd BufWritePre *.ts %s/\s+$//e</p>
       
       
       <tr id="toc-row-15">
-        <th><a href="#slide:15">Developer Suggestions</a></th>
+        <th><a href="#slide:15">Server Print Templates</a></th>
         <td><a href="#slide:15">15</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-16">
+        <th><a href="#slide:16">Serial vs Parallel requests</a></th>
+        <td><a href="#slide:16">16</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-17">
+        <th><a href="#slide:17">Serialize Requests</a></th>
+        <td><a href="#slide:17">17</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-18">
+        <th><a href="#slide:18">Route Reuse</a></th>
+        <td><a href="#slide:18">18</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-19">
+        <th><a href="#slide:19">Watch for route changes</a></th>
+        <td><a href="#slide:19">19</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-20">
+        <th><a href="#slide:20">Watch for @Input() changes</a></th>
+        <td><a href="#slide:20">20</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-21">
+        <th><a href="#slide:21">@Input() set foo() beware...</a></th>
+        <td><a href="#slide:21">21</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-22">
+        <th><a href="#slide:22">Developer Suggestions</a></th>
+        <td><a href="#slide:22">22</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-23">
+        <th><a href="#slide:23">Thanks!</a></th>
+        <td><a href="#slide:23">23</a></td>
       </tr>
       
       

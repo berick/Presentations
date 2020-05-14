@@ -1,6 +1,8 @@
 # Angular Ingredients
 
-2020 Evergreen Conference
+### AKA Hodgepodge
+
+2020 Evergreen Online Conference
 
 Bill Erickson
 
@@ -143,6 +145,24 @@ parallel requests becuase it speeds up the UI.  What we've learned
 in the early days of the browser client is this can cause excess 
 load on the servers.
 
+	!typescript
+    load(): Promise<any> {
+        this.loading = true;
+
+        // 4 requests hit the server at the same time
+        return Promise.all([
+            this.getThing1(),
+            this.getThing2(),
+            this.getThing3(),
+            this.getThing4()
+        ]).then(_ => this.loading = false);
+    }
+
+---
+
+# Serialize Requests
+Use serialized requests by default and parallelize with care as neeeded.
+
 
 	!typescript
     load() {
@@ -155,6 +175,8 @@ load on the servers.
         .then(_ => this.loading = false);
     }
 
+---
+
 # Route Reuse
 
 * ngOnInit() is called once per component instantiation
@@ -163,13 +185,16 @@ load on the servers.
   have to be retrieved without the help of ngOnInit
 * E.g. Angular catalog record detail navigating results
 
+---
 
-# Route subiscriptions and custom load()
+# Watch for route changes
+
+### Route-level components.
 
     !typescript
     ngOnInit() { // this.route === ActivatedRoute
 
-        this.route.paramMap.subscribe((params: ParamMap) => {                  
+        this.route.paramMap.subscribe((params: ParamMap) => {
             // FIRES ON PAGE LOAD
             const recId = +params.get('recordId');
             if (recId !== this.recordId) {
@@ -183,7 +208,33 @@ load on the servers.
         // Load data
     }
         
+---
 
+# Watch for @Input() changes
+
+### Child components
+
+    !typescript
+    @Input() set recordId(id: number) {
+        this.recId = id;
+        // Only force new data collection when recordId()
+        // is invoked after ngInit() has already run.
+        if (this.initDone) {
+            this.load();
+        }
+    }
+
+    ngOnInit() {
+        this.initDone = true;
+        // ...
+    }
+
+---
+
+# @Input() set foo() beware...
+
+* @Input() setter functions should only be used when changing inputs
+  require action by the component, e.g. fetching new data.
 
 ---
 
@@ -208,4 +259,8 @@ load on the servers.
 - ng build --prod can be instructive
 
 ---
+
+# Thanks!
+
+Questions?
 
