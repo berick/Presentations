@@ -1,6 +1,6 @@
 # Angular Ingredients
 
-### AKA Hodgepodge
+### A Hodgepodge
 
 2020 Evergreen Online Conference
 
@@ -13,6 +13,14 @@ King County Library System
 ---
 
 # Grid
+
+Using 'flex'
+
+    !html
+    <eg-grid-column name="id" i18n-label label="ID" flex="1">
+    </eg-grid-column>
+    <eg-grid-column name="title" i18n-label label="Title" flex="3">
+    </eg-grid-column>
 
 ---
 
@@ -30,7 +38,31 @@ open() vs. onOpen$
 
 ---
 
-# Org / Org Family Select
+# Org Family Select
+
+![Org Family Select](media/org-family.png)
+
+---
+
+# Org Family Select
+
+    !html
+    <eg-org-family-select
+      [limitPerms]="viewPerms"
+      [selectedOrgId]="contextOrg.id()"
+      [(ngModel)]="searchOrgs"
+      (ngModelChange)="grid.reload()">
+    </eg-org-family-select>
+
+Interface for ngModel:
+
+    !typescript
+    export interface OrgFamily {
+        primaryOrgId: number;
+        includeAncestors?: boolean;
+        includeDescendants?: boolean;
+        orgIds?: number[];
+    }
 
 ---
 
@@ -134,16 +166,45 @@ Source: https://blog.ninja-squad.com/2019/12/10/angular-localize/
 
 ---
 
+# Config Fields: New IDL Option for Admin UIs
+
+Z39.50 Source IDL "Attrs" Field
+
+    !xml
+    <field 
+        reporter:label="Attrs" name="attrs" 
+        oils_persist:virtual="true"  
+        reporter:datatype="link" 
+        config_field="true"/>
+
+---
+
+# ConfigFields: Create Links
+
+![Z39.50 Attr Links](media/z39-attrs-link.png)
+
+---
+
+# Admin Page Grid Filters
+
+![Z39.50 Attr Page](media/z39-attrs-page.png)
+
+---
+
+
 # Server Print Templates
+
+
+![Server Print Templates UI](media/server-print-templates-ui.png)
 
 ---
 
 # Serial vs Parallel requests
 
-Combo of WS and promises practically encourages us to blast many
-parallel requests becuase it speeds up the UI.  What we've learned
-in the early days of the browser client is this can cause excess 
-load on the servers.
+Combo of WS and promises practically encourages us to launch batches of
+parallel requests becuase it speeds up the UI.  We've learned in the
+early days of the browser client is this can cause excess load on the
+servers.
 
 	!typescript
     load(): Promise<any> {
@@ -162,7 +223,6 @@ load on the servers.
 
 # Serialize Requests
 Use serialized requests by default and parallelize with care as neeeded.
-
 
 	!typescript
     load() {
@@ -187,9 +247,11 @@ Use serialized requests by default and parallelize with care as neeeded.
 
 ---
 
-# Watch for route changes
+# Responding to Component Variable Changes
 
-### Route-level components.
+---
+
+# Route-level components: Route Changes
 
     !typescript
     ngOnInit() { // this.route === ActivatedRoute
@@ -210,9 +272,7 @@ Use serialized requests by default and parallelize with care as neeeded.
         
 ---
 
-# Watch for @Input() changes
-
-### Child components
+# Child Components: @Input() changes
 
     !typescript
     @Input() set recordId(id: number) {
@@ -233,6 +293,7 @@ Use serialized requests by default and parallelize with care as neeeded.
 
 # @Input() set foo() beware...
 
+* Similar to AngJS $watch('scopeVar')
 * @Input() setter functions should only be used when changing inputs
   require action by the component, e.g. fetching new data.
 
@@ -240,23 +301,39 @@ Use serialized requests by default and parallelize with care as neeeded.
 
 # Developer Suggestions
 
-- Symlink en-US directory.
+---
 
-- Create a browser bookmark of the page you are working on
-  - JS errors the prevent routing cause the page to jump back to the
-    root app page.
+# Symlink Angular Build Path
 
-- Only implement @Input() set functions when absolutely needed.
+Change path to suit your development environment.
 
-- ~/.vimrc option to auto-trim trailing whitespace (ng lint)
+    !sh
+    ln -s \
+        /path/to/Evergreen/Open-ILS/web/eg2/en-US \
+        /openils/var/web/eg2/en-US
+
+---
+
+# Bookmark UIs Under Development
+
+JS errors can prevent routing, which causes the page to jump back to
+the root application page.
+
+---
+
+# Remove Trailing Whitespace
+
+~/.vimrc option to auto-trim trailing whitespace (ng lint)
 
     !conf
     " Strip trailing whitespaces from Typescript files
     autocmd BufWritePre *.ts %s/\s\+$//e
 
-- Use 'par'
+---
 
-- ng build --prod can be instructive
+# ng build --prod Can Be Instructive
+
+Templates are compiled.
 
 ---
 
