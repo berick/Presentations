@@ -14,7 +14,7 @@ King County Library System
 
 # Grid Markup Flex
 
-Using 'flex'
+## Using 'flex'
 
     !html
     <eg-grid-column name="id" i18n-label label="ID" flex="1">
@@ -26,7 +26,7 @@ Using 'flex'
 
 # Grid Cell Text Generator (Printing)
 
-## Markup
+### Markup
 
     !html
     <eg-grid [cellTextGenerator]="cellTextGenerator" ...>
@@ -34,7 +34,7 @@ Using 'flex'
          [cellTemplate]="barcodeTemplate"></eg-grid-column>
     </eg-grid>
 
-## Code
+### Code
 
     !typescript
     this.cellTextGenerator = {
@@ -59,7 +59,7 @@ Using 'flex'
       (ngModelChange)="grid.reload()">
     </eg-org-family-select>
 
-Interface for ngModel:
+### Interface for ngModel:
 
     !typescript
     export interface OrgFamily {
@@ -71,7 +71,7 @@ Interface for ngModel:
 
 ---
 
-# Date Pickers
+# Date Pickers / Range Select
 
 
 ![Date Range Select](media/date-range-select.png)
@@ -133,7 +133,7 @@ logs => Metabib Field Class Series
 
 # eg-string Component
 
-## HTML
+### HTML
 
     !html
     <eg-string #successMsg i18n-text
@@ -142,7 +142,7 @@ logs => Metabib Field Class Series
     <b>{{successMsg.text}}</b>
 
 
-## SCRIPT
+### SCRIPT
 
     !typescript
     @ViewChild('successMsg') successMsg: EgString;
@@ -152,7 +152,7 @@ logs => Metabib Field Class Series
 
 # eg-string Component
 
-## HTML
+### HTML
 
     !html
     <ng-template #searchName let-tab="tab" let-query="query" i18n>
@@ -167,7 +167,7 @@ logs => Metabib Field Class Series
     <eg-string key='eg.catalog.recent_search.label'
         [template]="searchName"></eg-string>
 
-## SCRIPT
+### SCRIPT
 
     !typescript
     this.strings.interpolate(
@@ -183,6 +183,7 @@ logs => Metabib Field Class Series
 	@Component({
 	  template: '{{ title }}'
 	})
+
 	export class HomeComponent {
 	  title = $localize`You have 10 users`;
 	}
@@ -228,11 +229,17 @@ Z39.50 Source IDL "Attrs" Field
 
 # General Purpose Grid Filters
 
-## Collection of filters that can be passed pcrud (or other API)
+### Collection of filters that can be passed to PCRUD (or similar API)
 
     !typescript
-    this.gridDataSource.filters === 
+    this.gridDataSource.filters ===
         {"hook":[{"hook":{"=":"checkout.due"}}]}
+
+    this.gridDataSource.getRows = (pager: Pager, sort: any[]) => {
+        
+        // Add filters from this.gridDataSource.filters to
+        // the core query for this grid.
+    }
 
 
 ---
@@ -246,8 +253,7 @@ Z39.50 Source IDL "Attrs" Field
 
 # Serial vs Parallel requests
 
-Will someone please think of the servers!?
-
+## Will someone please think of the servers!?
 
 	!typescript
     load(): Promise<any> {
@@ -265,7 +271,8 @@ Will someone please think of the servers!?
 ---
 
 # Serialize Requests
-Use serialized requests by default and parallelize with care as neeeded.
+
+## Use serialized requests by default and parallelize with care as neeeded.
 
 	!typescript
     load() {
@@ -277,6 +284,28 @@ Use serialized requests by default and parallelize with care as neeeded.
         .then(_ => this.getThing4())
         .then(_ => this.loading = false);
     }
+
+---
+
+# Loding progress indicator
+
+    !html
+    <div class="row" [hidden]="!loading">
+      <div class="col-lg-6 offset-lg-3">
+        <eg-progress-inline #loadingProgress></eg-progress-inline>
+      </div>
+    </div>
+
+### [hidden] lets you reference this.loadingProgress regardless of this.loading
+
+    !typescript
+    @ViewChild('loadingProgress', {static: false})
+        loadingProgress: ProgressInlineComponent;
+
+    load() {
+        this.loadingProgress.reset();
+    }
+
 
 ---
 
@@ -335,7 +364,7 @@ Use serialized requests by default and parallelize with care as neeeded.
     ngOnInit() {
         this.load().then(_ => this.initDone = true);
     }
-    
+
     load(): Promise<any> { if (this.recordId) { ... } }
 
 ---
@@ -360,7 +389,7 @@ Processing Observable streams then  producing a Promise.
 
 # Symlink Angular Build Path for Instant Deployments
 
-Change path to suit your development environment.
+### Change path to suit your development environment.
 
     !sh
     $ ln -s \
@@ -380,7 +409,7 @@ Change path to suit your development environment.
 
 # Remove Trailing Whitespace
 
-~/.vimrc option to auto-trim trailing whitespace (ng lint)
+## ~/.vimrc option to auto-trim trailing whitespace (ng lint)
 
     !vim
     " Strip trailing whitespaces from Typescript files
@@ -390,11 +419,20 @@ Change path to suit your development environment.
 
 # ng build --prod Can Be Instructive
 
-Templates are compiled.
+### Code
+
+    !typescript
+    getName(field: any): string { ...  }
+
+### Markup
+
+    !html
+    <span>{{getName(field, index)}}</span>
 
 ---
 
 # Thanks!
 
-Questions?
+![Booger](media/hugo2.png)
+
 
