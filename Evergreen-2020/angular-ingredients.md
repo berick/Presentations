@@ -12,7 +12,7 @@ King County Library System
 
 ---
 
-# Grid
+# Grid Markup Flex
 
 Using 'flex'
 
@@ -21,6 +21,25 @@ Using 'flex'
     </eg-grid-column>
     <eg-grid-column name="title" i18n-label label="Title" flex="3">
     </eg-grid-column>
+
+---
+
+# Grid Cell Text Generator (Printing)
+
+## Markup
+
+    !html
+    <eg-grid [cellTextGenerator]="cellTextGenerator" ...>
+      <eg-grid-column i18n-label label="Barcode" name="barcode"
+         [cellTemplate]="barcodeTemplate"></eg-grid-column>
+    </eg-grid>
+
+## Code
+
+    !typescript
+    this.cellTextGenerator = {
+        barcode: row => row.barcode
+    };
 
 ---
 
@@ -195,12 +214,25 @@ Z39.50 Source IDL "Attrs" Field
 
 ---
 
-# Admin Page Grid Filters
+# Admin Page Grid URL Filters
 
 ![Z39.50 Attr Page](media/z39-attrs-page.png)
 
 ---
 
+# General Purpose Grid Filters
+
+![General Grid Filters](media/grid-filters.png)
+
+---
+
+# General Purpose Grid Filters
+
+    !typescript
+    this.gridDataSource.filters === {"hook":[{"hook":{"=":"checkout.due"}}]}
+
+
+---
 
 # Server Print Templates
 
