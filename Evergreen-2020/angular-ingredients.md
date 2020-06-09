@@ -228,8 +228,11 @@ Z39.50 Source IDL "Attrs" Field
 
 # General Purpose Grid Filters
 
+## Collection of filters that can be passed pcrud (or other API)
+
     !typescript
-    this.gridDataSource.filters === {"hook":[{"hook":{"=":"checkout.due"}}]}
+    this.gridDataSource.filters === 
+        {"hook":[{"hook":{"=":"checkout.due"}}]}
 
 
 ---
@@ -316,7 +319,7 @@ Use serialized requests by default and parallelize with care as neeeded.
 
     !typescript
     initDone = false;
-    _recordId: number;
+    private _recordId: number;
     @Input() set recordId(id: number) {
 
         if (id !== this._recordId) {
@@ -332,6 +335,8 @@ Use serialized requests by default and parallelize with care as neeeded.
     ngOnInit() {
         this.load().then(_ => this.initDone = true);
     }
+    
+    load(): Promise<any> { if (this.recordId) { ... } }
 
 ---
 

@@ -1909,7 +1909,9 @@ messages with the xi18n command as it does for templates.</p>
             <header><h1>General Purpose Grid Filters</h1></header>
             
             
-            <section><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">gridDataSource</span><span class="p">.</span><span class="nx">filters</span> <span class="o">===</span> <span class="p">{</span><span class="s2">&quot;hook&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;hook&quot;</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;=&quot;</span><span class="o">:</span><span class="s2">&quot;checkout.due&quot;</span><span class="p">}}]}</span>
+            <section><h2>Collection of filters that can be passed pcrud (or other API)</h2>
+<div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">gridDataSource</span><span class="p">.</span><span class="nx">filters</span> <span class="o">===</span> 
+    <span class="p">{</span><span class="s2">&quot;hook&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;hook&quot;</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;=&quot;</span><span class="o">:</span><span class="s2">&quot;checkout.due&quot;</span><span class="p">}}]}</span>
 </pre></div>
 </section>
             
@@ -2173,7 +2175,7 @@ messages with the xi18n command as it does for templates.</p>
             
             
             <section><div class="highlight"><pre><span></span><span class="nx">initDone</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-<span class="nx">_recordId</span>: <span class="kt">number</span><span class="p">;</span>
+<span class="kr">private</span> <span class="nx">_recordId</span>: <span class="kt">number</span><span class="p">;</span>
 <span class="kd">@Input</span><span class="p">()</span> <span class="nx">set</span> <span class="nx">recordId</span><span class="p">(</span><span class="nx">id</span>: <span class="kt">number</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="nx">id</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">_recordId</span><span class="p">)</span> <span class="p">{</span>
@@ -2189,6 +2191,8 @@ messages with the xi18n command as it does for templates.</p>
 <span class="nx">ngOnInit() {</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">load</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">initDone</span> <span class="o">=</span> <span class="kc">true</span><span class="p">);</span>
 <span class="p">}</span>
+
+<span class="nx">load</span><span class="p">()</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">recordId</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span> <span class="p">}</span>
 </pre></div>
 </section>
             
