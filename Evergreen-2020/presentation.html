@@ -1258,7 +1258,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              1/30
+              1/31
             </aside>
           </footer>
         </div>
@@ -1295,7 +1295,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              2/30
+              2/31
             </aside>
           </footer>
         </div>
@@ -1326,7 +1326,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              3/30
+              3/31
             </aside>
           </footer>
         </div>
@@ -1373,7 +1373,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              4/30
+              4/31
             </aside>
           </footer>
         </div>
@@ -1404,7 +1404,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              5/30
+              5/31
             </aside>
           </footer>
         </div>
@@ -1435,7 +1435,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              6/30
+              6/31
             </aside>
           </footer>
         </div>
@@ -1474,7 +1474,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              7/30
+              7/31
             </aside>
           </footer>
         </div>
@@ -1485,15 +1485,22 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
         <div class="slide has_code slide-8">
           <div class="inner">
             
-            <header><h1>egContextMenu Directive</h1></header>
+            <header><h1>PCRUD Flesh Selectors and Format Service</h1></header>
             
             
-            <section><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span>
-    <span class="err">[</span><span class="na">egContextMenu</span><span class="err">]=&quot;</span><span class="na">contextMenuEntries</span><span class="err">()&quot;</span>
-    <span class="err">(</span><span class="na">menuItemSelected</span><span class="err">)=&quot;</span><span class="na">contextMenuChange</span><span class="err">($</span><span class="na">event</span><span class="err">.</span><span class="na">value</span><span class="err">)&quot;</span>
-<span class="p">/&gt;</span>
+            <section><div class="highlight"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">pcrud</span><span class="p">.</span><span class="nx">retrieve</span><span class="p">(</span><span class="s1">&#39;cmf&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span><span class="nx">fleshSelectors</span>: <span class="kt">true</span><span class="p">})</span>
+<span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">field</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Metabib Field Class&#39;</span><span class="p">,</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">format</span><span class="p">.</span><span class="nx">transform</span><span class="p">({</span>
+            <span class="nx">value</span>: <span class="kt">field.field_class</span><span class="p">(),</span> <span class="c1">//  &#39;cmc&#39; object</span>
+            <span class="nx">idlClass</span><span class="o">:</span> <span class="s1">&#39;cmf&#39;</span><span class="p">,</span>
+            <span class="nx">idlField</span><span class="o">:</span> <span class="s1">&#39;field_class&#39;</span>
+        <span class="p">})</span>
+    <span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
-</section>
+
+<p>logs =&gt; Metabib Field Class Series</p></section>
             
           </div>
           <div class="presenter_notes">
@@ -1510,7 +1517,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              8/30
+              8/31
             </aside>
           </footer>
         </div>
@@ -1541,7 +1548,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              9/30
+              9/31
             </aside>
           </footer>
         </div>
@@ -1552,12 +1559,50 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
         <div class="slide has_code slide-10">
           <div class="inner">
             
+            <header><h1>egContextMenu Directive</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span>
+    <span class="err">[</span><span class="na">egContextMenu</span><span class="err">]=&quot;</span><span class="na">contextMenuEntries</span><span class="err">()&quot;</span>
+    <span class="err">(</span><span class="na">menuItemSelected</span><span class="err">)=&quot;</span><span class="na">contextMenuChange</span><span class="err">($</span><span class="na">event</span><span class="err">.</span><span class="na">value</span><span class="err">)&quot;</span>
+<span class="p">/&gt;</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              10/31
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide has_code slide-11">
+          <div class="inner">
+            
             <header><h1>eg-string Component</h1></header>
             
             
             <section><h2>HTML</h2>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">eg-string</span> <span class="err">#</span><span class="na">successMsg</span> <span class="na">i18n-text</span> 
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">eg-string</span> <span class="err">#</span><span class="na">successMsg</span> <span class="na">i18n-text</span>
     <span class="na">text</span><span class="o">=</span><span class="s">&quot;Setting Update Succeeded&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">eg-string</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>{{successMsg.text}}<span class="p">&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
 </pre></div>
 
 <h2>SCRIPT</h2>
@@ -1581,7 +1626,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              10/30
+              11/31
             </aside>
           </footer>
         </div>
@@ -1589,7 +1634,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-11">
+        <div class="slide has_code slide-12">
           <div class="inner">
             
             <header><h1>eg-string Component</h1></header>
@@ -1605,7 +1650,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
   <span class="p">&lt;/</span><span class="nt">ng-container</span><span class="p">&gt;</span> {{query}}
 <span class="p">&lt;/</span><span class="nt">ng-template</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">eg-string</span> <span class="na">key</span><span class="o">=</span><span class="s">&#39;eg.catalog.recent_search.label&#39;</span> 
+<span class="p">&lt;</span><span class="nt">eg-string</span> <span class="na">key</span><span class="o">=</span><span class="s">&#39;eg.catalog.recent_search.label&#39;</span>
     <span class="err">[</span><span class="na">template</span><span class="err">]=&quot;</span><span class="na">searchName</span><span class="err">&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">eg-string</span><span class="p">&gt;</span>
 </pre></div>
 
@@ -1632,7 +1677,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              11/30
+              12/31
             </aside>
           </footer>
         </div>
@@ -1640,7 +1685,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-12">
+        <div class="slide has_code slide-13">
           <div class="inner">
             
             <header><h1>Angular 9 $localize in Code</h1></header>
@@ -1655,9 +1700,9 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
 </pre></div>
 
 <blockquote>
-<p>You can then translate the message the same way you would for a     <br />
-template.  But, right now (v9.0.0), the CLI does not extract these  <br />
-messages with the xi18n command as it does for templates.             </p>
+<p>You can then translate the message the same way you would for a
+template.  But, right now (v9.0.0), the CLI does not extract these
+messages with the xi18n command as it does for templates.</p>
 </blockquote>
 <p>Source: https://blog.ninja-squad.com/2019/12/10/angular-localize/</p></section>
             
@@ -1676,7 +1721,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              12/30
+              13/31
             </aside>
           </footer>
         </div>
@@ -1684,17 +1729,17 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-13">
+        <div class="slide has_code slide-14">
           <div class="inner">
             
             <header><h1>Config Fields: New IDL Option for Admin UIs</h1></header>
             
             
             <section><p>Z39.50 Source IDL "Attrs" Field</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;field</span> 
-    <span class="na">reporter:label=</span><span class="s">&quot;Attrs&quot;</span> <span class="na">name=</span><span class="s">&quot;attrs&quot;</span> 
-    <span class="na">oils_persist:virtual=</span><span class="s">&quot;true&quot;</span>  
-    <span class="na">reporter:datatype=</span><span class="s">&quot;link&quot;</span> 
+<div class="highlight"><pre><span></span><span class="nt">&lt;field</span>
+    <span class="na">reporter:label=</span><span class="s">&quot;Attrs&quot;</span> <span class="na">name=</span><span class="s">&quot;attrs&quot;</span>
+    <span class="na">oils_persist:virtual=</span><span class="s">&quot;true&quot;</span>
+    <span class="na">reporter:datatype=</span><span class="s">&quot;link&quot;</span>
     <span class="na">config_field=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </section>
@@ -1714,7 +1759,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              13/30
+              14/31
             </aside>
           </footer>
         </div>
@@ -1722,7 +1767,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-14">
+        <div class="slide slide-15">
           <div class="inner">
             
             <header><h1>ConfigFields: Create Links</h1></header>
@@ -1745,7 +1790,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              14/30
+              15/31
             </aside>
           </footer>
         </div>
@@ -1753,7 +1798,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-15">
+        <div class="slide slide-16">
           <div class="inner">
             
             <header><h1>Admin Page Grid Filters</h1></header>
@@ -1776,7 +1821,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              15/30
+              16/31
             </aside>
           </footer>
         </div>
@@ -1784,7 +1829,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-16">
+        <div class="slide slide-17">
           <div class="inner">
             
             <header><h1>Server Print Templates</h1></header>
@@ -1807,7 +1852,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              16/30
+              17/31
             </aside>
           </footer>
         </div>
@@ -1815,7 +1860,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-17">
+        <div class="slide has_code slide-18">
           <div class="inner">
             
             <header><h1>Serial vs Parallel requests</h1></header>
@@ -1851,7 +1896,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              17/30
+              18/31
             </aside>
           </footer>
         </div>
@@ -1859,7 +1904,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-18">
+        <div class="slide has_code slide-19">
           <div class="inner">
             
             <header><h1>Serialize Requests</h1></header>
@@ -1893,7 +1938,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              18/30
+              19/31
             </aside>
           </footer>
         </div>
@@ -1901,7 +1946,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-19">
+        <div class="slide slide-20">
           <div class="inner">
             
             <header><h1>Route Reuse</h1></header>
@@ -1930,7 +1975,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              19/30
+              20/31
             </aside>
           </footer>
         </div>
@@ -1938,7 +1983,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-20">
+        <div class="slide slide-21">
           <div class="inner">
             
             <header><h1>Responding to Component Variable Changes</h1></header>
@@ -1959,7 +2004,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              20/30
+              21/31
             </aside>
           </footer>
         </div>
@@ -1967,7 +2012,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-21">
+        <div class="slide has_code slide-22">
           <div class="inner">
             
             <header><h1>Route-level components: Route Changes</h1></header>
@@ -2006,7 +2051,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              21/30
+              22/31
             </aside>
           </footer>
         </div>
@@ -2014,16 +2059,17 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-22">
+        <div class="slide has_code slide-23">
           <div class="inner">
             
             <header><h1>Child Components: @Input() changes</h1></header>
             
             
-            <section><div class="highlight"><pre><span></span><span class="nx">_recordId</span>: <span class="kt">number</span><span class="p">;</span>
+            <section><div class="highlight"><pre><span></span><span class="nx">initDone</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nx">_recordId</span>: <span class="kt">number</span><span class="p">;</span>
 <span class="kd">@Input</span><span class="p">()</span> <span class="nx">set</span> <span class="nx">recordId</span><span class="p">(</span><span class="nx">id</span>: <span class="kt">number</span><span class="p">)</span> <span class="p">{</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">id</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">_recordId</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="nx">id</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">_recordId</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_recordId</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
 
         <span class="c1">// Avoid collecting data before ngOnInit()</span>
@@ -2033,8 +2079,8 @@ messages with the xi18n command as it does for templates.             </p>
 
 <span class="nx">get</span> <span class="nx">recordId</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_recordId</span><span class="p">;</span> <span class="p">}</span>
 
-<span class="nx">ngOnInit() {</span> 
-    <span class="k">this</span><span class="p">.</span><span class="nx">load</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">initDone</span> <span class="o">=</span> <span class="kc">true</span><span class="p">);</span> 
+<span class="nx">ngOnInit() {</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">load</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">_</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">initDone</span> <span class="o">=</span> <span class="kc">true</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </section>
@@ -2054,7 +2100,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              22/30
+              23/31
             </aside>
           </footer>
         </div>
@@ -2062,7 +2108,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-23">
+        <div class="slide slide-24">
           <div class="inner">
             
             <header><h1>@Input() set foo() beware...</h1></header>
@@ -2089,7 +2135,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              23/30
+              24/31
             </aside>
           </footer>
         </div>
@@ -2097,7 +2143,7 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-24">
+        <div class="slide has_code slide-25">
           <div class="inner">
             
             <header><h1>import {tap} from 'rxjs/operators';</h1></header>
@@ -2128,7 +2174,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              24/30
+              25/31
             </aside>
           </footer>
         </div>
@@ -2136,10 +2182,10 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-25">
+        <div class="slide slide-26">
           <div class="inner">
             
-            <header><h1>Developer Suggestions</h1></header>
+            <header><h1>Misc. Suggestions</h1></header>
             
             
           </div>
@@ -2157,7 +2203,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              25/30
+              26/31
             </aside>
           </footer>
         </div>
@@ -2165,16 +2211,19 @@ messages with the xi18n command as it does for templates.             </p>
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-26">
+        <div class="slide has_code slide-27">
           <div class="inner">
             
-            <header><h1>Symlink Angular Build Path</h1></header>
+            <header><h1>Symlink Angular Build Path for Instant Deployments</h1></header>
             
             
             <section><p>Change path to suit your development environment.</p>
-<div class="highlight"><pre><span></span>ln -s <span class="se">\</span>
+<div class="highlight"><pre><span></span>$ ln -s <span class="se">\</span>
     /path/to/Evergreen/Open-ILS/web/eg2/en-US <span class="se">\</span>
     /openils/var/web/eg2/en-US
+
+<span class="c1"># When coding</span>
+$ ng build --watch <span class="c1"># separate terminal</span>
 </pre></div>
 </section>
             
@@ -2193,39 +2242,7 @@ messages with the xi18n command as it does for templates.             </p>
             </aside>
             
             <aside class="page_number">
-              26/30
-            </aside>
-          </footer>
-        </div>
-      </div>
-      
-      <!-- slide source: angular-ingredients.md -->
-      <div class="slide-wrapper">
-        <div class="slide slide-27">
-          <div class="inner">
-            
-            <header><h1>Bookmark UIs Under Development</h1></header>
-            
-            
-            <section><p>JS errors can prevent routing, which causes the page to jump back to
-the root application page.</p></section>
-            
-          </div>
-          <div class="presenter_notes">
-            <header><h1>Presenter Notes</h1></header>
-            <section>
-            
-            </section>
-          </div>
-          <footer>
-            
-            
-            <aside class="source">
-              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
-            </aside>
-            
-            <aside class="page_number">
-              27/30
+              27/31
             </aside>
           </footer>
         </div>
@@ -2236,14 +2253,10 @@ the root application page.</p></section>
         <div class="slide slide-28">
           <div class="inner">
             
-            <header><h1>Remove Trailing Whitespace</h1></header>
+            <header><h1>Bookmark UIs Under Development</h1></header>
             
             
-            <section><p>~/.vimrc option to auto-trim trailing whitespace (ng lint)</p>
-<pre><code>!conf
-" Strip trailing whitespaces from Typescript files
-autocmd BufWritePre *.ts %s/\s\+$//e
-</code></pre></section>
+            <section><p><img alt="Webby Home Page" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA08AAAHsCAYAAAAKKZZzAAAABHNCSVQICAgIfAhkiAAAIABJREFUeJzs3XtcVGX+B/APIAPijBdQAU0xFbyAKMi1DC0lTWzTbmqlZVqt6G7Wb9V281KplbVb2kW7aDcqta1wayETrBVLBkxQBC+gJpaOioDKcBtEfn8gCMzzDGcuxICf9+vV65VzzpzzDPPMOef7XL6Pw9nzxTUgIiIiIiIikxxbuwBERERERERtAYMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RE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4SIqKyvh5OQEtUYDjVqNG27ohSGDh8LffyhGjhxpk+trdnY2SkqMMzyGhIQYjRQoKi7Gjz/+gPT0X3Ds2DEUFhahoqIcLq6u6O7hgX79+iE4KAijR0fZrBfM3sun1Pfbt2P58ueMXo+MjMTrr/3rDy0LUXvE4ImIiIionVjw1NPQarVGr7/44ircduutrVAiovalTc15IiIiIiKxosJCpKenG73erWtX3DJqVCuUiKj9YfBERERE1A58t+174YLxE+6YYPV6XERUi8ETERERURtXU1OD/3zzjXDblLsm/8GlIWq/GDwRERERtXG7d6fi5MmTRq+HhISgr0/fVigRUfvE4ImIiIioDSstK8Ubb74p3DZ16v1/cGmI2jcGT0RERERtVFFxMRYtXCxcA7Nvnz4YdfPNrVAqovarzS2SS0RERHQ9+feXXwEABg4YgG7duuLy5csoLCxEevoeJH73HYqLi4XvmzVrFhwcHP7IohK1ewyeiIiIiOzYsWPHsHXrVrPeM2iQH26/PbqFSkR0/eKwPSIiIiI75unpadb+HTp0wKJFi+Dk5NRCJSK6fjF4IiIiIrJj3t5eZu0/f/48+A8d2kKlIbq+MXgiIiIismOePZX3PM2a9QimTZ3agqUhur5xzhMRERGRHfPyar7nqVvXrljw1AKMv/32P6BERNcvh7Pni2tauxBEREREJHblyhUkJCZiT/oeHD5yBOfPn8flqip06doVvr6+GDXqJowfPx6d3Dq1dlGJ2j0GT0RERERERApwzhMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECDJ6IiIiIiIgUYPBERERERESkAIMnIiIiIiIiBRg8ERERERERKcDgiYiIiIiISAEGT0RERERERAoweCIiIiIiIlKAwRMREREREZECrRs8nYjDjMibEDEnHoUNXy/JxubFD2Pi6JsQETkGU1ZoUdlaZWxvCjPwdVJugxe0WBF9EyJmxuFEs2+uRNLiMYiInIevC5vdmVpZScJTiIi8CeOWalu7KC3EnLprjmv1PKGk+b1PfPIwIiJvxwob/ZkL4+chInIMFiVdR1e9ncsQFXkTYuNtdGHJXYepkTdh4uoM2xyPiIjoKrvsecre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AAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFBAPAEAABQQTwAAAAXEEwAAQAHxBAAAUEA8AQAAFBBPAAAABcQTAABAAfEEAABQQDwBAAAUEE8AAAAFxBMAAEAB8QQAAFDg/wfd+HSTCm5XrwAAAABJRU5ErkJggg==" /></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -2260,7 +2273,7 @@ autocmd BufWritePre *.ts %s/\s\+$//e
             </aside>
             
             <aside class="page_number">
-              28/30
+              28/31
             </aside>
           </footer>
         </div>
@@ -2268,7 +2281,42 @@ autocmd BufWritePre *.ts %s/\s\+$//e
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-29">
+        <div class="slide has_code slide-29">
+          <div class="inner">
+            
+            <header><h1>Remove Trailing Whitespace</h1></header>
+            
+            
+            <section><p>~/.vimrc option to auto-trim trailing whitespace (ng lint)</p>
+<div class="highlight"><pre><span></span><span class="c">&quot; Strip trailing whitespaces from Typescript files</span>
+autocmd <span class="nb">BufWritePre</span> *.<span class="k">ts</span> %s<span class="sr">/\s\+$/</span>/<span class="k">e</span>
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="angular-ingredients.md">angular-ingredients.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              29/31
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: angular-ingredients.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-30">
           <div class="inner">
             
             <header><h1>ng build --prod Can Be Instructive</h1></header>
@@ -2291,7 +2339,7 @@ autocmd BufWritePre *.ts %s/\s\+$//e
             </aside>
             
             <aside class="page_number">
-              29/30
+              30/31
             </aside>
           </footer>
         </div>
@@ -2299,7 +2347,7 @@ autocmd BufWritePre *.ts %s/\s\+$//e
       
       <!-- slide source: angular-ingredients.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-30">
+        <div class="slide slide-31">
           <div class="inner">
             
             <header><h1>Thanks!</h1></header>
@@ -2322,7 +2370,7 @@ autocmd BufWritePre *.ts %s/\s\+$//e
             </aside>
             
             <aside class="page_number">
-              30/30
+              31/31
             </aside>
           </footer>
         </div>
@@ -2379,7 +2427,7 @@ autocmd BufWritePre *.ts %s/\s\+$//e
       
       
       <tr id="toc-row-8">
-        <th><a href="#slide:8">egContextMenu Directive</a></th>
+        <th><a href="#slide:8">PCRUD Flesh Selectors and Format Service</a></th>
         <td><a href="#slide:8">8</a></td>
       </tr>
       
@@ -2391,7 +2439,7 @@ autocmd BufWritePre *.ts %s/\s\+$//e
       
       
       <tr id="toc-row-10">
-        <th><a href="#slide:10">eg-string Component</a></th>
+        <th><a href="#slide:10">egContextMenu Directive</a></th>
         <td><a href="#slide:10">10</a></td>
       </tr>
       
@@ -2403,116 +2451,122 @@ autocmd BufWritePre *.ts %s/\s\+$//e
       
       
       <tr id="toc-row-12">
-        <th><a href="#slide:12">Angular 9 $localize in Code</a></th>
+        <th><a href="#slide:12">eg-string Component</a></th>
         <td><a href="#slide:12">12</a></td>
       </tr>
       
       
       <tr id="toc-row-13">
-        <th><a href="#slide:13">Config Fields: New IDL Option for Admin UIs</a></th>
+        <th><a href="#slide:13">Angular 9 $localize in Code</a></th>
         <td><a href="#slide:13">13</a></td>
       </tr>
       
       
       <tr id="toc-row-14">
-        <th><a href="#slide:14">ConfigFields: Create Links</a></th>
+        <th><a href="#slide:14">Config Fields: New IDL Option for Admin UIs</a></th>
         <td><a href="#slide:14">14</a></td>
       </tr>
       
       
       <tr id="toc-row-15">
-        <th><a href="#slide:15">Admin Page Grid Filters</a></th>
+        <th><a href="#slide:15">ConfigFields: Create Links</a></th>
         <td><a href="#slide:15">15</a></td>
       </tr>
       
       
       <tr id="toc-row-16">
-        <th><a href="#slide:16">Server Print Templates</a></th>
+        <th><a href="#slide:16">Admin Page Grid Filters</a></th>
         <td><a href="#slide:16">16</a></td>
       </tr>
       
       
       <tr id="toc-row-17">
-        <th><a href="#slide:17">Serial vs Parallel requests</a></th>
+        <th><a href="#slide:17">Server Print Templates</a></th>
         <td><a href="#slide:17">17</a></td>
       </tr>
       
       
       <tr id="toc-row-18">
-        <th><a href="#slide:18">Serialize Requests</a></th>
+        <th><a href="#slide:18">Serial vs Parallel requests</a></th>
         <td><a href="#slide:18">18</a></td>
       </tr>
       
       
       <tr id="toc-row-19">
-        <th><a href="#slide:19">Route Reuse</a></th>
+        <th><a href="#slide:19">Serialize Requests</a></th>
         <td><a href="#slide:19">19</a></td>
       </tr>
       
       
       <tr id="toc-row-20">
-        <th><a href="#slide:20">Responding to Component Variable Changes</a></th>
+        <th><a href="#slide:20">Route Reuse</a></th>
         <td><a href="#slide:20">20</a></td>
       </tr>
       
       
       <tr id="toc-row-21">
-        <th><a href="#slide:21">Route-level components: Route Changes</a></th>
+        <th><a href="#slide:21">Responding to Component Variable Changes</a></th>
         <td><a href="#slide:21">21</a></td>
       </tr>
       
       
       <tr id="toc-row-22">
-        <th><a href="#slide:22">Child Components: @Input() changes</a></th>
+        <th><a href="#slide:22">Route-level components: Route Changes</a></th>
         <td><a href="#slide:22">22</a></td>
       </tr>
       
       
       <tr id="toc-row-23">
-        <th><a href="#slide:23">@Input() set foo() beware...</a></th>
+        <th><a href="#slide:23">Child Components: @Input() changes</a></th>
         <td><a href="#slide:23">23</a></td>
       </tr>
       
       
       <tr id="toc-row-24">
-        <th><a href="#slide:24">import {tap} from 'rxjs/operators';</a></th>
+        <th><a href="#slide:24">@Input() set foo() beware...</a></th>
         <td><a href="#slide:24">24</a></td>
       </tr>
       
       
       <tr id="toc-row-25">
-        <th><a href="#slide:25">Developer Suggestions</a></th>
+        <th><a href="#slide:25">import {tap} from 'rxjs/operators';</a></th>
         <td><a href="#slide:25">25</a></td>
       </tr>
       
       
       <tr id="toc-row-26">
-        <th><a href="#slide:26">Symlink Angular Build Path</a></th>
+        <th><a href="#slide:26">Misc. Suggestions</a></th>
         <td><a href="#slide:26">26</a></td>
       </tr>
       
       
       <tr id="toc-row-27">
-        <th><a href="#slide:27">Bookmark UIs Under Development</a></th>
+        <th><a href="#slide:27">Symlink Angular Build Path for Instant Deployments</a></th>
         <td><a href="#slide:27">27</a></td>
       </tr>
       
       
       <tr id="toc-row-28">
-        <th><a href="#slide:28">Remove Trailing Whitespace</a></th>
+        <th><a href="#slide:28">Bookmark UIs Under Development</a></th>
         <td><a href="#slide:28">28</a></td>
       </tr>
       
       
       <tr id="toc-row-29">
-        <th><a href="#slide:29">ng build --prod Can Be Instructive</a></th>
+        <th><a href="#slide:29">Remove Trailing Whitespace</a></th>
         <td><a href="#slide:29">29</a></td>
       </tr>
       
       
       <tr id="toc-row-30">
-        <th><a href="#slide:30">Thanks!</a></th>
+        <th><a href="#slide:30">ng build --prod Can Be Instructive</a></th>
         <td><a href="#slide:30">30</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-31">
+        <th><a href="#slide:31">Thanks!</a></th>
+        <td><a href="#slide:31">31</a></td>
       </tr>
       
       

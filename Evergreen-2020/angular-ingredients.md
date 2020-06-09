@@ -78,6 +78,30 @@ Interface for ngModel:
     </a>
 ---
 
+# PCRUD Flesh Selectors and Format Service
+
+    !typescript
+	this.pcrud.retrieve('cmf', 1, {}, {fleshSelectors: true})
+	.subscribe(field => {
+		console.log('Metabib Field Class',
+			this.format.transform({
+				value: field.field_class(), //  'cmc' object
+				idlClass: 'cmf',
+				idlField: 'field_class'
+			})
+		);
+	});	
+
+logs => Metabib Field Class Series
+
+---
+
+# egContextMenu Directive
+
+![Context Menu](media/context-menu.png)
+
+---
+
 # egContextMenu Directive
 
     !html
@@ -88,19 +112,16 @@ Interface for ngModel:
 
 ---
 
-# egContextMenu Directive
-
-![Context Menu](media/context-menu.png)
-
----
-
 # eg-string Component
 
 ## HTML
 
     !html
-    <eg-string #successMsg i18n-text 
+    <eg-string #successMsg i18n-text
         text="Setting Update Succeeded"></eg-string>
+
+    <b>{{successMsg.text}}</b>
+
 
 ## SCRIPT
 
@@ -124,7 +145,7 @@ Interface for ngModel:
       </ng-container> {{query}}
     </ng-template>
 
-    <eg-string key='eg.catalog.recent_search.label' 
+    <eg-string key='eg.catalog.recent_search.label'
         [template]="searchName"></eg-string>
 
 ## SCRIPT
@@ -147,9 +168,9 @@ Interface for ngModel:
 	  title = $localize`You have 10 users`;
 	}
 
-> You can then translate the message the same way you would for a       
-> template.  But, right now (v9.0.0), the CLI does not extract these    
-> messages with the xi18n command as it does for templates.             
+> You can then translate the message the same way you would for a
+> template.  But, right now (v9.0.0), the CLI does not extract these
+> messages with the xi18n command as it does for templates.
 
 Source: https://blog.ninja-squad.com/2019/12/10/angular-localize/
 
@@ -160,10 +181,10 @@ Source: https://blog.ninja-squad.com/2019/12/10/angular-localize/
 Z39.50 Source IDL "Attrs" Field
 
     !xml
-    <field 
-        reporter:label="Attrs" name="attrs" 
-        oils_persist:virtual="true"  
-        reporter:datatype="link" 
+    <field
+        reporter:label="Attrs" name="attrs"
+        oils_persist:virtual="true"
+        reporter:datatype="link"
         config_field="true"/>
 
 ---
@@ -256,18 +277,19 @@ Use serialized requests by default and parallelize with care as neeeded.
         // Reset component state / variables
         // Load data
     }
-        
+
 ---
 
 # Child Components: @Input() changes
 
     !typescript
+    initDone = false;
     _recordId: number;
     @Input() set recordId(id: number) {
 
-        if (id !== this._recordId) { 
+        if (id !== this._recordId) {
             this._recordId = id;
-    
+
             // Avoid collecting data before ngOnInit()
             if (this.initDone) { this.load(); }
         }
@@ -275,8 +297,8 @@ Use serialized requests by default and parallelize with care as neeeded.
 
     get recordId(): number { return this._recordId; }
 
-    ngOnInit() { 
-        this.load().then(_ => this.initDone = true); 
+    ngOnInit() {
+        this.load().then(_ => this.initDone = true);
     }
 
 ---
@@ -303,25 +325,27 @@ Processing Observable streams then  producing a Promise.
 
 ---
 
-# Developer Suggestions
+# Misc. Suggestions
 
 ---
 
-# Symlink Angular Build Path
+# Symlink Angular Build Path for Instant Deployments
 
 Change path to suit your development environment.
 
     !sh
-    ln -s \
+    $ ln -s \
         /path/to/Evergreen/Open-ILS/web/eg2/en-US \
         /openils/var/web/eg2/en-US
+
+    # When coding
+    $ ng build --watch # separate terminal
 
 ---
 
 # Bookmark UIs Under Development
 
-JS errors can prevent routing, which causes the page to jump back to
-the root application page.
+![Webby Home Page](media/webby.png)
 
 ---
 
@@ -329,7 +353,7 @@ the root application page.
 
 ~/.vimrc option to auto-trim trailing whitespace (ng lint)
 
-    !conf
+    !vim
     " Strip trailing whitespaces from Typescript files
     autocmd BufWritePre *.ts %s/\s\+$//e
 
