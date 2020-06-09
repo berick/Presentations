@@ -24,20 +24,6 @@ Using 'flex'
 
 ---
 
-# Dialog
-
-open() vs. onOpen$
-
----
-
-# FM Editor
-
----
-
-# Combobox
-
----
-
 # Org Family Select
 
 ![Org Family Select](media/org-family.png)
@@ -68,6 +54,16 @@ Interface for ngModel:
 
 # Date Pickers
 
+
+![Date Range Select](media/date-range-select.png)
+
+---
+
+# Accesskey Help Dialog (ctrl+h)
+
+![egAccessKey Help](media/eg-accesskey-help-dialog.png)
+
+
 ---
 
 # egAccesskey Directive
@@ -80,13 +76,6 @@ Interface for ngModel:
       i18n>
       Patron Search
     </a>
-
----
-
-# Accesskey Help Dialog (ctrl+h)
-
-![egAccessKey Help](media/eg-accesskey-help-dialog.png)
-
 ---
 
 # egContextMenu Directive
@@ -201,10 +190,8 @@ Z39.50 Source IDL "Attrs" Field
 
 # Serial vs Parallel requests
 
-Combo of WS and promises practically encourages us to launch batches of
-parallel requests becuase it speeds up the UI.  We've learned in the
-early days of the browser client is this can cause excess load on the
-servers.
+Will someone please think of the servers!?
+
 
 	!typescript
     load(): Promise<any> {
@@ -275,18 +262,21 @@ Use serialized requests by default and parallelize with care as neeeded.
 # Child Components: @Input() changes
 
     !typescript
+    _recordId: number;
     @Input() set recordId(id: number) {
-        this.recId = id;
-        // Only force new data collection when recordId()
-        // is invoked after ngInit() has already run.
-        if (this.initDone) {
-            this.load();
+
+        if (id !== this._recordId) { 
+            this._recordId = id;
+    
+            // Avoid collecting data before ngOnInit()
+            if (this.initDone) { this.load(); }
         }
     }
 
-    ngOnInit() {
-        this.initDone = true;
-        // ...
+    get recordId(): number { return this._recordId; }
+
+    ngOnInit() { 
+        this.load().then(_ => this.initDone = true); 
     }
 
 ---
@@ -296,6 +286,20 @@ Use serialized requests by default and parallelize with care as neeeded.
 * Similar to AngJS $watch('scopeVar')
 * @Input() setter functions should only be used when changing inputs
   require action by the component, e.g. fetching new data.
+
+---
+
+# import {tap} from 'rxjs/operators';
+
+Processing Observable streams then  producing a Promise.
+
+    !typescript
+    return this.pcrud.search('acp', {call_number: cnId})
+    .pipe(
+        tap(
+            copy => this.processCopy(copy)
+        )
+    ).toPromise()
 
 ---
 
