@@ -340,14 +340,6 @@ Use serialized requests by default and parallelize with care as neeeded.
 
 ---
 
-# @Input() set foo() beware...
-
-* Similar to AngJS $watch('scopeVar')
-* @Input() setter functions should only be used when changing inputs
-  require action by the component, e.g. fetching new data.
-
----
-
 # import {tap} from 'rxjs/operators';
 
 Processing Observable streams then  producing a Promise.
