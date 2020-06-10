@@ -407,6 +407,13 @@ Processing Observable streams then  producing a Promise.
 
 ---
 
+# Bookmark UIs Under Development
+
+![Webby Home Page](media/webby-blank.png)
+
+---
+
+
 # Remove Trailing Whitespace
 
 ## ~/.vimrc option to auto-trim trailing whitespace (ng lint)
@@ -437,7 +444,6 @@ Processing Observable streams then  producing a Promise.
 
 ---
 
-# Questions?
-
+![Fin](media/fin.png)
 
 
