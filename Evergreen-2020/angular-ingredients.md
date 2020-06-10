@@ -10,6 +10,8 @@ Software Development Engineer
 
 King County Library System
 
+https://github.com/berick/Presentations/tree/master/Evergreen-2020
+
 ---
 
 # Improving Default Grid Layout
@@ -138,11 +140,21 @@ logs => Metabib Field Class Series
 
 # egContextMenu Directive
 
+### Markup
+
     !html
     <input
         [egContextMenu]="contextMenuEntries()"
         (menuItemSelected)="contextMenuChange($event.value)"
     />
+
+### Code
+
+    !typescript
+    contextMenuEntries(): ContextMenuEntry[] {
+        return this.stuff.map(
+            s => ({value: s.value, label: s.label}));
+    }
 
 ---
 
@@ -302,9 +314,32 @@ Z39.50 Source IDL "Attrs" Field
 
 ---
 
-# Loding progress indicator
+# @ViewChild('...', {static: false})
+
+https://angular.io/guide/static-query-migration
+
+### static === false
+
+    !typescript
+    @ViewChild('myComponent', {static: false}) myComponent: MyComp;
+
+this.myComponent is available in ngAfterViewInit()
+
+### static === true
+
+    !typescript
+    @ViewChild('myComponent', {static: true}) myComponent: MyComp;
+
+this.myComponent is available in ngOnInit()
+
+---
+
+# *ngIf vs. [hidden]
 
     !html
+    <!--
+    <div class="row" *ngIf="loading">
+    -->
     <div class="row" [hidden]="!loading">
       <div class="col-lg-6 offset-lg-3">
         <eg-progress-inline #loadingProgress></eg-progress-inline>
