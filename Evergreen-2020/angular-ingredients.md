@@ -497,7 +497,7 @@ Processing Observable streams then  producing a Promise.
 
 ---
 
-# Booger Says Hi!
+# You Missed a Closing Bracket
 
 ![Booger](media/hugo2.png)
 
