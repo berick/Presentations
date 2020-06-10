@@ -1269,14 +1269,28 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
         <div class="slide has_code slide-2">
           <div class="inner">
             
-            <header><h1>Grid Markup Flex</h1></header>
+            <header><h1>Improving Default Grid Layout</h1></header>
             
             
             <section><h2>Using 'flex'</h2>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">eg-grid-column</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;id&quot;</span> <span class="na">i18n-label</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span> <span class="na">flex</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">eg-grid-column</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">eg-grid-column</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="na">i18n-label</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Title&quot;</span> <span class="na">flex</span><span class="o">=</span><span class="s">&quot;3&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">eg-grid-column</span><span class="p">&gt;</span>
+<h3>Creating a 'Title' column that's 3X the size of an 'ID' column.</h3>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">eg-grid</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">eg-grid-column</span> 
+    <span class="na">name</span><span class="o">=</span><span class="s">&quot;id&quot;</span> 
+    <span class="na">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span> 
+    <span class="na">i18n-label</span> 
+    <span class="na">flex</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">eg-grid-column</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">eg-grid-column</span> 
+    <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> 
+    <span class="na">label</span><span class="o">=</span><span class="s">&quot;Title&quot;</span> 
+    <span class="na">i18n-label</span>
+    <span class="na">flex</span><span class="o">=</span><span class="s">&quot;3&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">eg-grid-column</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">eg-grid</span><span class="p">&gt;</span>
 </pre></div>
 </section>
             
@@ -2483,11 +2497,18 @@ autocmd <span class="nb">BufWritePre</span> *.<span class="k">ts</span> %s<span 
             
             
             <section><h3>Code</h3>
-<div class="highlight"><pre><span></span><span class="nx">getName</span><span class="p">(</span><span class="nx">field</span>: <span class="kt">any</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span> <span class="p">{</span> <span class="p">...</span>  <span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="nx">getValue</span><span class="p">(</span><span class="nx">field1</span>: <span class="kt">any</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span> <span class="p">{</span> <span class="p">...</span>  <span class="p">}</span>
 </pre></div>
 
 <h3>Markup</h3>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>{{getName(field, index)}}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>{{getValue(field1, field2)}}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+
+<h3>Console</h3>
+<div class="highlight"><pre><span></span>ng build --prod
+...
+ERROR in src/app/staff/sandbox/sandbox.component.html<span class="o">(</span><span class="m">420</span>,4<span class="o">)</span>: 
+Expected <span class="m">1</span> arguments, but got <span class="m">2</span>.
 </pre></div>
 </section>
             
@@ -2587,7 +2608,7 @@ autocmd <span class="nb">BufWritePre</span> *.<span class="k">ts</span> %s<span 
       
       
       <tr id="toc-row-2">
-        <th><a href="#slide:2">Grid Markup Flex</a></th>
+        <th><a href="#slide:2">Improving Default Grid Layout</a></th>
         <td><a href="#slide:2">2</a></td>
       </tr>
       

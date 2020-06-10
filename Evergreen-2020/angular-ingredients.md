@@ -12,15 +12,30 @@ King County Library System
 
 ---
 
-# Grid Markup Flex
+# Improving Default Grid Layout
 
 ## Using 'flex'
 
+### Creating a 'Title' column that's 3X the size of an 'ID' column.
+
     !html
-    <eg-grid-column name="id" i18n-label label="ID" flex="1">
-    </eg-grid-column>
-    <eg-grid-column name="title" i18n-label label="Title" flex="3">
-    </eg-grid-column>
+    <eg-grid>
+
+      <eg-grid-column 
+        name="id" 
+        label="ID" 
+        i18n-label 
+        flex="1">
+      </eg-grid-column>
+  
+      <eg-grid-column 
+        name="title" 
+        label="Title" 
+        i18n-label
+        flex="3">
+      </eg-grid-column>
+
+    </eg-grid>
 
 ---
 
@@ -429,12 +444,21 @@ Processing Observable streams then  producing a Promise.
 ### Code
 
     !typescript
-    getName(field: any): string { ...  }
+    getValue(field1: any): string { ...  }
 
 ### Markup
 
     !html
-    <span>{{getName(field, index)}}</span>
+    <span>{{getValue(field1, field2)}}</span>
+
+### Console
+
+    !sh
+    ng build --prod
+    ...
+    ERROR in src/app/staff/sandbox/sandbox.component.html(420,4): 
+    Expected 1 arguments, but got 2.
+
 
 ---
 
