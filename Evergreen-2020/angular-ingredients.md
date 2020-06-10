@@ -431,8 +431,13 @@ Processing Observable streams then  producing a Promise.
 
 ---
 
-# Thanks!
+# Booger Says Hi!
 
 ![Booger](media/hugo2.png)
+
+---
+
+# Questions?
+
 
 
