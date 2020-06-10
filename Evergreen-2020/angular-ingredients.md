@@ -41,7 +41,7 @@ King County Library System
 
 # Grid Cell Text Generator (Printing)
 
-### Markup
+![Barcode Template](media/barcode-template.png)
 
     !html
     <eg-grid [cellTextGenerator]="cellTextGenerator" ...>
@@ -103,7 +103,7 @@ King County Library System
 # egAccesskey Directive
 
     !html
-    <a routerLink="/staff/circ/patron/search"
+    <a href="/eg/staff/circ/patron/search"
       egAccessKey keyCtx="navbar"
       i18n-keySpec keySpec="alt+s f4"
       i18n-keyDesc keyDesc="Patron Search"
