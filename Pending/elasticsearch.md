@@ -46,7 +46,7 @@ Collapsing indexes, e.g. no need for subject|geographic
 # NOTES
 
 * Fixes https://bugs.launchpad.net/evergreen/+bug/1748814
-* Nested filters 
+* Nested filters w/ booleans, etc.
 * https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-analyze.html
   * See analysis output
 ```sh
@@ -57,4 +57,5 @@ curl -X GET "localhost:9200/bib-search-bibcn-and-icu/_analyze?pretty" -H 'Conten
 }
 '
 ```
+* New 'contains', etc. options, including MARC search.
 
