@@ -59,3 +59,41 @@ curl -X GET "localhost:9200/bib-search-bibcn-and-icu/_analyze?pretty" -H 'Conten
 ```
 * New 'contains', etc. options, including MARC search.
 
+* JQ is cool / diagnosing a stopwords issue / doing "'" stripping
+** It's a wonderful life, I'm not tired
+```sh
+
+$ cat search.json 
+{
+  "size": 10,
+  "from": 0,
+  "sort": [
+    {
+      "_score": "desc"
+    }
+  ],
+  "query": {
+    "bool": {
+      "must": {
+        "multi_match": {
+          "query": "i'm not tired",
+          "fields": [
+            "title.*"
+          ],
+          "operator": "and",
+          "type": "most_fields"
+        }
+      }
+    }
+  }
+}
+
+curl -s -X GET 'http://localhost:9200/bib-search/_search' \
+	-H 'Content-Type: application/json' -d @search.json \
+    | jq '.hits.hits[] | ._source."title|maintitle"'
+
+"I'm really not tired /"
+"I'm tired and other body feelings /"
+
+```
+
