@@ -23,9 +23,14 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2021
 
 # Acquisitions Selection & Order Interfaces
 
-* TODO
+* LP TODO
 * Selection lists, Purchase Orders, View/Place Orders
 * ~80% implemented
+
+# Acquisitions Selection & Order Interfaces
+
+* Improved display efficiency
+* Improved paging/selection support
 
 # Patron / Circulation Interfaces
 
@@ -35,4 +40,17 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2021
 * Checkin
 * Renew
 * Ready for broader testing
+
+# Patron / Circulation Interfaces
+
+* Improved page anchoring (e.g. summary sidebar, editor buttons)
+* Return of patron status borders
+
+# Code Additions
+
+* Grid wildcard columns
+* Grid flat data service (open-ils.fielder)
+* Angular login page 'route\_to' support
+* Offline data consolidated API and Angular service.
+
 
