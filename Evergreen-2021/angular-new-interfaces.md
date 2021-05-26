@@ -27,10 +27,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2021
 * Selection lists, Purchase Orders, View/Place Orders
 * ~80% implemented
 
-# Acquisitions Selection & Order Interfaces
-
-* Improved display efficiency
-* Improved paging/selection support
+---
 
 # Patron / Circulation Interfaces
 
@@ -39,6 +36,8 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2021
  * Minus Notes, Triggered Events, and Message Center
 * Checkin, Renew
 * Ready for broader testing
+
+---
 
 # Code Additions
 
