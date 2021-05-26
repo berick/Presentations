@@ -37,14 +37,8 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2021
 * https://bugs.launchpad.net/evergreen/+bug/1904036
 * Patron UI's
  * Minus Notes, Triggered Events, and Message Center
-* Checkin
-* Renew
+* Checkin, Renew
 * Ready for broader testing
-
-# Patron / Circulation Interfaces
-
-* Improved page anchoring (e.g. summary sidebar, editor buttons)
-* Return of patron status borders
 
 # Code Additions
 
