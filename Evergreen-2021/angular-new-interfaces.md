@@ -33,7 +33,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2021
 
 * https://bugs.launchpad.net/evergreen/+bug/1904036
 * Patron UI's
- * Minus Notes, Triggered Events, and Message Center
+  * Minus Notes, Triggered Events, and Message Center
 * Checkin, Renew
 * Ready for broader testing
 
