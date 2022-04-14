@@ -31,7 +31,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Why Elasticsearch?
 
-* Jeff's talk (find link)
+* Wide use of solr, Jeff's elastic talk (find link)
 * Robust, Simple Clustering
 * I preferred the search API
 * Industry backing outside the library world
@@ -48,7 +48,13 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # NOTES
 
-* Analysis examplej
+* Highlighting support
+* did-you-mean
+* Regular indexing, 1 minute all modified, 2 seconds new recs only.
+* normalizing / isbn/issn
+* record / copy counts
+* config files
+* Analysis example
 * Reindex speed
 * Ease of administration
 * Cluster setup
