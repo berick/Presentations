@@ -1,6 +1,6 @@
 # Evergreen & Elasticsearch
 
-2021 Evergreen Online Conference ??
+2022 Evergreen Online Conference ??
 
 Bill Erickson
 
@@ -31,20 +31,28 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Why Elasticsearch?
 
-Jeff's talk (find link)
-Robust, Simple Clustering
-I preferred the search API
-Industry backing outside the library world
-More Ecom than library
-Open source w/ vendor support/additions
+* Jeff's talk (find link)
+* Robust, Simple Clustering
+* I preferred the search API
+* Industry backing outside the library world
+* Open source w/ vendor support/additions
 
 # Local Modifications
 
-Collapsing indexes, e.g. no need for subject|geographic
+* Collapsing indexes, e.g. no need for subject|geographic
+* 'contains exact'  match opt
+* MARC searches all ES now
+  * Including match opt selector
+   * MARC regex search (with example)
 
 
 # NOTES
 
+* Analysis examplej
+* Reindex speed
+* Ease of administration
+* Cluster setup
+* Show indexed document and how to access
 * Fixes https://bugs.launchpad.net/evergreen/+bug/1748814
 * Nested filters w/ booleans, etc.
 * https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-analyze.html
@@ -57,10 +65,8 @@ curl -X GET "localhost:9200/bib-search-bibcn-and-icu/_analyze?pretty" -H 'Conten
 }
 '
 ```
-* New 'contains', etc. options, including MARC search.
-
 * JQ is cool / diagnosing a stopwords issue / doing "'" stripping
-** It's a wonderful life, I'm not tired
+  * It's a wonderful life, I'm not tired
 ```sh
 
 $ cat search.json 
