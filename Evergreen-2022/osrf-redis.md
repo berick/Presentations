@@ -60,19 +60,9 @@ TODO timer script / demo
 
 ---
 
-# Debugging Tools:
-
-    % redis-cli monitor
-
-![Redis CLI Monitor](media/redis-cli-minotor.png)
-
-
----
-
 # Fundamental Differences
 
 * No More OpenSRF Routers
-    * Clients deliver requests directly to the service address.
 * Bus messages are JSON
 * Clients pull messages instead of recieving + caching them.
 * Redis accounts/authentication optional
@@ -89,15 +79,18 @@ TODO timer script / demo
 
 ---
 
+# Debugging Tools:
+
+    % redis-cli monitor
+    % redis-cli client help
+
+---
+
 # Opportunities
 
 * Direct-to-drone request delivery.
 * Sending broadcast/control messages to listeners.
-    * Shutdown, reload, dynamically raise max children, etc.
-    * Requests for data, e.g. drone stats (similar to router info messages)
-* OpenSRF request "backlog" no longer required.  Unprocessed requests
-  stay in the Redis message queue instead of filling up the
-  listener's network buffer.
+* OpenSRF request "backlog" no longer required.
 
 ---
 
@@ -108,6 +101,8 @@ TODO timer script / demo
     * NOTE: Bricks that share a Redis instance could still cross-communicate
 * Requests sent to a service that is not running will linger unanswered
   instead of resulting in a not-found response.
+
+---
 
 # Pending Work
 
