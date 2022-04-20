@@ -64,7 +64,7 @@ TODO timer script / demo
 
 * No More OpenSRF Routers
 * Bus messages are JSON
-* Clients pull messages instead of recieving + caching them.
+* Clients pull messages instead of receiving them.
 * Redis accounts/authentication optional
 
 ---
@@ -90,7 +90,7 @@ TODO timer script / demo
 
 * Direct-to-drone request delivery.
 * Sending broadcast/control messages to listeners.
-* OpenSRF request "backlog" no longer required.
+* OpenSRF request "backlog" not required.
 
 ---
 
