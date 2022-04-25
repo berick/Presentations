@@ -56,6 +56,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Highlighting support
 * did-you-mean
 * popularity ranking?
+* give me everything keyword search *:*
 * Regular indexing, 1 minute all modified, 2 seconds new recs only.
 * normalizing / isbn/issn
 * record / copy counts
@@ -64,7 +65,9 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 * Reindex speed
     * KCLS 1135434 records; 3607758 items
-    * 4 parallel:
+    * 4 parallel: 1 hour 45 mins
+
+* Full reindex maybe 3 times in a year
 
 * Ease of administration
 * Cluster setup

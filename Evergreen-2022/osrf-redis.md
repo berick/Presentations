@@ -72,9 +72,11 @@ TODO timer script / demo
 # Benefits
 
 * Speed
+* Resource Usage (TODO show top)
 * Ease of Installation and Configuration
 * Slimmer Bus Messages / Less Packing & Unpacking
 * Intuitive Flow of Data
+* Stats collection
 * Say Goodbye to Ejabberd
 
 ---
@@ -82,7 +84,11 @@ TODO timer script / demo
 # Debugging Tools:
 
     % redis-cli monitor
+    % redis-cli memory stats
     % redis-cli client help
+    % redis-cli keys open*
+      1) "opensrf.settings-f67a1bb2188e"
+      2) "opensrf.settings-c9e470abf2c3"
 
 ---
 
@@ -106,7 +112,8 @@ TODO timer script / demo
 
 # Pending Work
 
-* Securing Private Services (e.g. Internal API Key)
+* Securing Private Services (e.g. Internal API Key, ACL's (v6))
+    * ACL SETUSER public on \>demo123 -@all +lpop +blpop +lpush +llen ~openils:actor
 * In-Bus Registry of Running Services (If Needed).
     * Circ, for example, queries the router to see if Booking is running.
       Could be addressed with configuration (e.g. global flag)
