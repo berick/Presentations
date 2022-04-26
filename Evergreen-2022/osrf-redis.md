@@ -110,7 +110,7 @@ TODO timer script / demo
 * No cross-domain (i.e. cross-brick) routing.
     * Affects some Dojo/translator UI's
     * NOTE: Bricks that share a Redis instance could still cross-communicate
-    * Potentially code-able if required.
+    * Routing potentially code-able if required.
 
 ---
 
