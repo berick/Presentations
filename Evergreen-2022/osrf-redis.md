@@ -14,12 +14,11 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 ---
 
-# Why Replace Ejabberd / XMPP?
+# Why Replace Ejabberd?
 
-Ejabberd install and setup has traditionally been one of the clunkiest parts 
-of the Evergreen/OpenSRF installation.
+It's a bear.
 
-Authentication changes https://bugs.launchpad.net/opensrf/+bug/1703411 
+Also: authentication changes https://bugs.launchpad.net/opensrf/+bug/1703411 
 
 ---
 
@@ -43,9 +42,17 @@ Authentication changes https://bugs.launchpad.net/opensrf/+bug/1703411
 
 # Install
 
+Ubuntu 18 & 20 have Redis 5.  We want Redis 6 for ACL support.
+
 ## Prereqs
 
-    % sudo apt install redis-server libredis-perl libhiredis-dev
+	% curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+																				   
+	% echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" \
+		| sudo tee /etc/apt/sources.list.d/redis.list
+																				   
+	% sudo apt update                                                                
+	% sudo apt install redis-server libredis-perl libhiredis-dev   
 
 ## Branches
 
@@ -65,7 +72,6 @@ TODO timer script / demo
 * No More OpenSRF Routers
 * Bus messages are JSON
 * Clients pull messages instead of receiving them.
-* Redis accounts/authentication optional
 
 ---
 
@@ -76,8 +82,8 @@ TODO timer script / demo
 * Ease of Installation and Configuration
 * Slimmer Bus Messages / Less Packing & Unpacking
 * Intuitive Flow of Data
-* Stats collection
-* Say Goodbye to Ejabberd
+* Natvie Debugging Tools & Stats Collection
+* Say Goodbye to Ejabberd :fireworks:
 
 ---
 
@@ -105,8 +111,7 @@ TODO timer script / demo
 * No cross-domain (i.e. cross-brick) routing.
     * Affects some Dojo/translator UI's
     * NOTE: Bricks that share a Redis instance could still cross-communicate
-* Requests sent to a service that is not running will linger unanswered
-  instead of resulting in a not-found response.
+    * Potentially code-able if required.
 
 ---
 
