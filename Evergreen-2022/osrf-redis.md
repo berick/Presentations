@@ -56,8 +56,8 @@ Ubuntu 18 & 20 have Redis 5.  We want Redis 6 for ACL support.
 
 ## Branches
 
-* TODO
-* TODO
+* https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-via-redis-v4
+* https://github.com/berick/Evergreen/commits/user/berick/lpxxx-osrf-redis
 
 ---
 
