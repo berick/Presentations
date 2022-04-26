@@ -81,7 +81,6 @@ TODO timer script / demo
 * Resource Usage (TODO show top)
 * Ease of Installation and Configuration
 * Slimmer Bus Messages / Less Packing & Unpacking
-* Intuitive Flow of Data
 * Natvie Debugging Tools & Stats Collection
 * Say Goodbye to Ejabberd :fireworks:
 
