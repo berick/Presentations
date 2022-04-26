@@ -1,8 +1,6 @@
-# OpenSRF-Over-Redis
+# OpenSRF -> RediSRF ?
 
-### Exploring Replacing Ejabberd/XMPP For OpenSRF
-
-2022 Evergreen Online Conference
+### 2022 Evergreen Online Conference
 
 Bill Erickson
 
@@ -17,8 +15,6 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 # Why Replace Ejabberd?
 
 It's a bear.
-
-Also: authentication changes https://bugs.launchpad.net/opensrf/+bug/1703411 
 
 ---
 
@@ -36,34 +32,28 @@ Also: authentication changes https://bugs.launchpad.net/opensrf/+bug/1703411
 
 ---
 
-# RediSRF in Action
+# Why Redis?
+
+* Speed
+* Resource Usage
+* Ease of Installation and Configuration
+* Slimmer Bus Messages / Less Packing & Unpacking
+* Natvie Debugging Tools & Stats Collection
+* Say Goodbye to Ejabberd :fireworks:
 
 ---
 
-# Install
+# How Does It Work?
 
-Ubuntu 18 & 20 have Redis 5.  We want Redis 6 for ACL support.
-
-## Prereqs
-
-	% curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
-																				   
-	% echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" \
-		| sudo tee /etc/apt/sources.list.d/redis.list
-																				   
-	% sudo apt update                                                                
-	% sudo apt install redis-server libredis-perl libhiredis-dev   
-
-## Branches
-
-* https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-via-redis-v4
-* https://github.com/berick/Evergreen/commits/user/berick/lpxxx-osrf-redis
-
----
-
-# Timing
-
-TODO timer script / demo
+* Clients push requests to the request queue for a service
+    * LPUSH open_ils:actor osrf_msg_json
+* Listeners wait for requests to enter the list
+    * BLPOP open_ils:actor
+* Listeners pass requests to an available child
+* Workers post responses to the calling client's bus address
+    * LPUSH websocket:9c32cea1a260 osrf_msg_json
+* Client sends follow-up requests directly to worker's bus address
+    * LPUSH client:0a00bac476a9 osrf_msg_json
 
 ---
 
@@ -75,16 +65,30 @@ TODO timer script / demo
 
 ---
 
-# Benefits
-
-* Speed
-* Resource Usage (TODO show top)
-* Ease of Installation and Configuration
-* Slimmer Bus Messages / Less Packing & Unpacking
-* Natvie Debugging Tools & Stats Collection
-* Say Goodbye to Ejabberd :fireworks:
+# RediSRF in Action
 
 ---
+
+# Install
+
+* Setup Redis Apt Repository
+    * [Redis Apt Repository](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
+    * Not needed with Ubuntu 22.04 and up.
+* Install Prereqs
+    * sudo apt install redis-server libredis-perl libhiredis-dev   
+* Install Branches
+    * [OpenSRF Working Branch](https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-via-redis-v4)
+    * [Evergreen Working Branch](https://github.com/berick/Evergreen/commits/user/berick/lpxxx-osrf-redis)
+
+---
+
+# Timing
+
+TODO timer script / UI demo
+
+---
+
+
 
 # Debugging Tools:
 
@@ -103,28 +107,41 @@ TODO timer script / demo
 * Sending broadcast/control messages to listeners.
 * Could replace memcache / optional key persistence.
 * OpenSRF request "backlog" not required.
+* Do we need chunking/bundling?
 
 ---
 
 # Limitations
 
-* No cross-domain (i.e. cross-brick) routing.
-    * Affects some Dojo/translator UI's
-    * NOTE: Bricks that share a Redis instance could still cross-communicate
-    * Routing potentially code-able if required.
+### No cross-domain (i.e. cross-brick) routing.
+
+* Affects some Dojo/translator UI's
+* NOTE: Bricks that share a Redis instance could still cross-communicate
+* Routing potentially code-able if required.
 
 ---
 
 # Pending Work
 
-* Securing Private Services (e.g. Internal API Key, ACL's (v6))
-    * ACL SETUSER public on \>demo123 -@all +lpop +blpop +lpush +llen ~openils:actor
-* In-Bus Registry of Running Services (If Needed).
-    * Circ, for example, queries the router to see if Booking is running.
-      Could be addressed with configuration (e.g. global flag)
-* Docs
+### Securing Private Services (e.g. ACL's)
+
+    ACL SETUSER public_client on >demo123 -@all
+    ACL SETUSER public_client +set +get +lpop +blpop +lpush +llen
+    ACL SETUSER public_client ~client:*
+    ACL SETUSER public_client ~open_ils:actor
+    ACL SETUSER public_client ~open_ils:circ
+    ACL SETUSER public_client ~open_ils:cat
+
+### In-Bus Registry of Running Services (If Needed).
+
+Circ, for example, queries the router to see if Booking is running.  
+Could be addressed with configuration (e.g. global flag)
+
+### Code Cleanup
+
+### Docs
 
 ---
 
-# How Does That Make You Feel?
+# Questions and Comments
 
