@@ -101,6 +101,7 @@ TODO timer script / demo
 
 * Direct-to-drone request delivery.
 * Sending broadcast/control messages to listeners.
+* Could replace memcache / optional key persistence.
 * OpenSRF request "backlog" not required.
 
 ---
