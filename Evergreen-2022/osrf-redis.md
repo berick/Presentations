@@ -145,3 +145,5 @@ Could be addressed with configuration (e.g. global flag)
 
 # Questions and Comments
 
+![Redis LOLWUT](media/redis-lolwut.png)
+
