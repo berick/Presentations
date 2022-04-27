@@ -125,12 +125,12 @@ TODO timer script / UI demo
 
 ### Securing Private Services (e.g. ACL's)
 
-    ACL SETUSER public_client on >demo123 -@all
-    ACL SETUSER public_client +set +get +lpop +blpop +lpush +llen
-    ACL SETUSER public_client ~client:*
-    ACL SETUSER public_client ~open_ils:actor
-    ACL SETUSER public_client ~open_ils:circ
-    ACL SETUSER public_client ~open_ils:cat
+    ACL SETUSER opensrf@public.localhost on >demo123 -@all
+    ACL SETUSER opensrf@public.localhost +set +get +lpop +blpop +lpush +llen
+    ACL SETUSER opensrf@public.localhost ~client:*
+    ACL SETUSER opensrf@public.localhost ~open_ils:actor
+    ACL SETUSER opensrf@public.localhost ~open_ils:circ
+    ACL SETUSER opensrf@public.localhost ~open_ils:cat
 
 ### In-Bus Registry of Running Services (If Needed).
 
