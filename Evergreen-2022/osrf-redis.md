@@ -14,7 +14,12 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 # Why Replace Ejabberd?
 
-It's a bear.
+#### It's a bear.
+
+* Authentication changes
+* Complications with changing hostnames
+* Apparmor interactions.
+* Default install fails in LXD guests
 
 ---
 
@@ -38,7 +43,7 @@ It's a bear.
 * Resource Usage
 * Ease of Installation and Configuration
 * Slimmer Bus Messages / Less Packing & Unpacking
-* Natvie Debugging Tools & Stats Collection
+* Native Debugging Tools & Stats Collection
 * Say Goodbye to Ejabberd :fireworks:
 
 ---

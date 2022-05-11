@@ -34,46 +34,77 @@ Source: https://www.elastic.co/what-is/elasticsearch
 # Why Elasticsearch?
 
 * Similar use of Solr
-* Jeff's elastic talk (find link)
+* Jeff G's elastic talk (find link)
 * Robust, Simple Clustering
-* I liked the API
+* I like the API
 * Industry use outside the library world
 * Open source w/ vendor support/additions
 
 ---
 
-# Local Modifications
+# What's Implemented?
 
-* Collapsing indexes, e.g. no need for subject|geographic
-* 'contains exact'  match opt
-* MARC match option selector
-    * Plus MARC regex search (TODO example)
+### Angular Staff Catalog Only
+
+* Keyword, Title, Author, etc. searches
+* Some Numeric Searches (e.g. not Item Barcode)
+* MARC searches
+
 ---
 
-# NOTES
+# Query String Examples
 
-* Grid of supported features?
-* Highlighting support
-* did-you-mean
-* popularity ranking?
-* give me everything keyword search *:*
-* Regular indexing, 1 minute all modified, 2 seconds new recs only.
-* normalizing / isbn/issn
-* record / copy counts
-* config files
-* Analysis example
+### Query String supported added to Keyword field
+
+* Give me everything: 
+    * \*:\*
+* Give me the new stuff:
+    * pubdate:2022
+* Boolean Grouping
+    * (kw:dogs AND pubdate:2022) OR (ti:cats AND NOT pubdate:2022)
+
+---
+
+# Other Benefits
 
 * Reindex speed
     * KCLS 1135434 records; 3607758 items
     * 4 parallel: 1 hour 45 mins
+* Debugging Indexes
+    * curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
+* Full search results / no estimates
 
-* Full reindex maybe 3 times in a year
+---
 
+# Local Modifications
+
+* Collapsing Facets
+* 'contains exact'  match opt
+* MARC match option selector
+* MARC regex search
+    * .{24}[^6]{3}.{13}
+    * [Graphic Novels](https://evgstaging.kcls.org/eg2/en-US/staff/catalog/search?org=1&limit=10&marcTag=008&marcTag=655&marcSubfield=&marcSubfield=a&marcValue=.%7B24%7D%5B%5E6%5D%7B3%7D.%7B13%7D&marcValue=graphic%20novels&matchOp=regexp&matchOp=phrase)
+
+---
+
+# Missing (Future?) Features
+
+* Search Results Highlight Support
+* Sort by Populatrity
+* "Did YOu Mean" (in progress)
+
+# NOTES
+
+* pre-insert normazliation: isbn / issn / pubdate / sorters
+* ascii folding example
+* Grid of supported features?
+* Regular indexing, 1 minute all modified, 2 seconds new recs only.
+* record / copy counts
+* config files
+* Analysis example
 * Ease of administration
 * Cluster setup
-* Show indexed document and how to access
 * Fixes https://bugs.launchpad.net/evergreen/+bug/1748814
-* Nested filters w/ booleans, etc.
 * https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-analyze.html
   * See analysis output
 ```sh
