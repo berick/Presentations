@@ -18,6 +18,18 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 ---
 
+# A Brief History
+
+* Evergreen Exists
+* Rise of [Solr](https://solr.apache.org/) for discovery layers
+* KCLS migrates to 3rd-party catalog
+* Jeff G presents on Elasticsearch-driven mobile catalog (TODO link?)
+* Blake GH opens [LP1844418](https://bugs.launchpad.net/evergreen/+bug/1844418)
+* KCLS limited staff use late 2020
+* KCLS general use late 2021
+
+---
+
 # What is Elasticsearch?
 
 > Elasticsearch is a distributed, open source search and analytics
@@ -118,13 +130,12 @@ Source: https://www.elastic.co/what-is/elasticsearch
     % cd /usr/share/elasticsearch/
     % sudo bin/elasticsearch-plugin install analysis-icu
 
-    % curl -X GET "localhost:9200/bib-search/_analyze?pretty" \
-        -H 'Content-Type: application/json' -d'
+    % curl -X GET "localhost:9200/bib-search/_analyze?pretty" -H 'Content-Type: application/json' -d'
     {
       "analyzer" : "icu_folding",
       "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
     }
-    '
+    ' | jq -C . | less -R
 
 ---
 
