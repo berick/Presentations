@@ -35,9 +35,9 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 * Similar use of Solr
 * Jeff G's elastic talk (find link)
-* Robust, Simple Clustering
 * I like the API
 * Industry use outside the library world
+* Robust, Simple Clustering
 * Open source w/ vendor support/additions
 
 ---
@@ -65,17 +65,6 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 ---
 
-# Other Benefits
-
-* Reindex speed
-    * KCLS 1135434 records; 3607758 items
-    * 4 parallel: 1 hour 45 mins
-* Debugging Indexes
-    * curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
-* Full search results / no estimates
-
----
-
 # Local Modifications
 
 * Collapsing Facets
@@ -87,11 +76,57 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 ---
 
+# Other Stuff
+
+* Reindex speed
+    * KCLS 1135434 records; 3607758 items
+    * 4 parallel: 1 hour 45 mins
+* Debugging Indexes
+    * curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
+* Create and run side-by-side datasets
+* Full search results / no estimates
+
+---
+
+
 # Missing (Future?) Features
 
 * Search Results Highlight Support
 * Sort by Populatrity
-* "Did YOu Mean" (in progress)
+* "Did You Mean" (in progress)
+
+---
+
+# Installation
+
+    !sh
+
+    % sudo apt install openjdk-11-jre-headless
+    % wget 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.8.11.deb'
+    % sudo dpkg -i elasticsearch-6.8.11.deb
+    % sudo systemctl start elasticsearch
+    % sudo systemctl enable elasticsearch
+
+
+---
+
+# Plugin - International Components for Unicode
+
+[https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
+
+    !sh
+    % cd /usr/share/elasticsearch/
+    % sudo bin/elasticsearch-plugin install analysis-icu
+
+    % curl -X GET "localhost:9200/bib-search/_analyze?pretty" \
+        -H 'Content-Type: application/json' -d'
+    {
+      "analyzer" : "icu_folding",
+      "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
+    }
+    '
+
+---
 
 # NOTES
 
@@ -107,49 +142,42 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Fixes https://bugs.launchpad.net/evergreen/+bug/1748814
 * https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-analyze.html
   * See analysis output
-```sh
-curl -X GET "localhost:9200/bib-search/_analyze?pretty" -H 'Content-Type: application/json' -d'
-{
-  "analyzer" : "icu_folding",
-  "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
-}
-'
-```
 * JQ is cool / diagnosing a stopwords issue / doing "'" stripping
   * It's a wonderful life, I'm not tired
-```sh
 
-$ cat search.json 
-{
-  "size": 10,
-  "from": 0,
-  "sort": [
+    !sh
+
+    $ cat search.json 
     {
-      "_score": "desc"
-    }
-  ],
-  "query": {
-    "bool": {
-      "must": {
-        "multi_match": {
-          "query": "i'm not tired",
-          "fields": [
-            "title.*"
-          ],
-          "operator": "and",
-          "type": "most_fields"
+      "size": 10,
+      "from": 0,
+      "sort": [
+        {
+          "_score": "desc"
+        }
+      ],
+      "query": {
+        "bool": {
+          "must": {
+            "multi_match": {
+              "query": "i'm not tired",
+              "fields": [
+                "title.*"
+              ],
+              "operator": "and",
+              "type": "most_fields"
+            }
+          }
         }
       }
     }
-  }
-}
 
-curl -s -X GET 'http://localhost:9200/bib-search/_search' \
-	-H 'Content-Type: application/json' -d @search.json \
-    | jq '.hits.hits[] | ._source."title|maintitle"'
+    curl -s -X GET 'http://localhost:9200/bib-search/_search' \
+        -H 'Content-Type: application/json' -d @search.json \
+        | jq '.hits.hits[] | ._source."title|maintitle"'
 
-"I'm really not tired /"
-"I'm tired and other body feelings /"
+    "I'm really not tired /"
+    "I'm tired and other body feelings /"
 
 ```
 
