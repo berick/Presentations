@@ -14,10 +14,10 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 # Why Replace Ejabberd?
 
-#### It's a bear.
+#### Mainly, it's a bear, but also...
 
-* Authentication changes
 * Complications with changing hostnames
+* Authentication changes
 * Apparmor interactions.
 * Default install fails in LXD guests
 
@@ -41,6 +41,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 * Speed
 * Resource Usage
+* It does a few things very well
 * Ease of Installation and Configuration
 * Slimmer Bus Messages / Less Packing & Unpacking
 * Native Debugging Tools & Stats Collection
@@ -48,13 +49,13 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 ---
 
-# How Does It Work?
+# How Does This Implemtation Work?
 
 * Clients push requests to the request queue for a service
-    * LPUSH open_ils:actor osrf_msg_json
+    * LPUSH open-ils.actor osrf_msg_json
 * Listeners wait for requests to enter the list
-    * BLPOP open_ils:actor
-* Listeners pass requests to an available child
+    * BLPOP open-ils.actor
+* Listeners pass requests to an available child -- same as now
 * Workers post responses to the calling client's bus address
     * LPUSH websocket:9c32cea1a260 osrf_msg_json
 * Client sends follow-up requests directly to worker's bus address
@@ -70,6 +71,14 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 ---
 
+# What Does the OpenSRF Router Do?
+
+* Routes requests to one or more Listeners
+* Provides separate destinations for public vs. private services
+* Knows what services are actively running for a domain.
+
+---
+
 # RediSRF in Action
 
 ---
@@ -78,6 +87,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 * Setup Redis Apt Repository
     * [Redis Apt Repository](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
+    * v6. Only reuquired if using ACL's
     * Not needed with Ubuntu 22.04 and up.
 * Install Prereqs
     * sudo apt install redis-server libredis-perl libhiredis-dev   
@@ -126,16 +136,32 @@ TODO timer script / UI demo
 
 ---
 
-# Pending Work
+# Securing Private Services
 
-### Securing Private Services (e.g. ACL's)
+If we no longer have public and private XMPP domains...
 
-    ACL SETUSER opensrf@public.localhost on >demo123 -@all
-    ACL SETUSER opensrf@public.localhost +set +get +lpop +blpop +lpush +llen
-    ACL SETUSER opensrf@public.localhost ~client:*
-    ACL SETUSER opensrf@public.localhost ~open_ils:actor
-    ACL SETUSER opensrf@public.localhost ~open_ils:circ
-    ACL SETUSER opensrf@public.localhost ~open_ils:cat
+---
+
+# ACL Example
+
+### Replicate the public vs. private domains via ACL's
+
+    ACL SETUSER opensrf@public on >demo123 -@all
+    ACL SETUSER opensrf@public +del +lpop +blpop +lpush +llen
+    ACL SETUSER opensrf@public ~client:*
+    ACL SETUSER opensrf@public ~public:*
+
+    ACL SETUSER opensrf@private on >demo123 -@all
+    ACL SETUSER opensrf@private +del +lpop +blpop +lpush +llen
+    ACL SETUSER opensrf@private ~client:*
+    ACL SETUSER opensrf@private ~public:*
+    ACL SETUSER opensrf@private ~private:*
+
+### Public service listens on both
+
+    BLPOP public:open-ils.actor private:open-ils.actor <timeout>
+
+---
 
 ### In-Bus Registry of Running Services (If Needed).
 

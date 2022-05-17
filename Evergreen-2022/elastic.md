@@ -20,10 +20,11 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 # A Brief History
 
-* Evergreen Exists
+* Evergreen Begins
 * Rise of [Solr](https://solr.apache.org/) for discovery layers
-* KCLS migrates to 3rd-party catalog
+* KCLS adopts EG, soon migrates to 3rd-party catalog
 * Jeff G presents on Elasticsearch-driven mobile catalog (TODO link?)
+* Bill starts proof-of-concept implementation
 * Blake GH opens [LP1844418](https://bugs.launchpad.net/evergreen/+bug/1844418)
 * KCLS limited staff use late 2020
 * KCLS general use late 2021
@@ -97,6 +98,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
     * curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
 * Create and run side-by-side datasets
 * Full search results / no estimates
+* Takes heavy search query load off primary PG Database
 
 ---
 
@@ -121,6 +123,27 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 
 ---
+
+# Production Setup
+
+* Two dedicated VMs with ~100G disk and 24G RAM
+* Load-balanced with one write node, one replica node.
+* A full index uses about 36G disk
+* Apply firewall (iptables) to limit port 9200 access
+
+---
+
+# Sysadmin Tools
+
+    !sh
+
+    curl -XGET 'localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason'
+    curl -XGET 'localhost:9200/bib-search/_count?pretty' 
+    curl -XGET 'localhost:9200/_cluster/health?pretty'
+    curl -XGET 'localhost:9200/bib-search/_search?pretty&q=dogs'
+
+---
+
 
 # Plugin - International Components for Unicode
 
