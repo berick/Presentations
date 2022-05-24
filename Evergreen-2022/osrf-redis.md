@@ -52,14 +52,16 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 # How Does This Implemtation Work?
 
 * Clients push requests to the request queue for a service
-    * LPUSH open-ils.actor osrf_msg_json
+    * RPUSH public:open-ils.actor OSRF-MESSAGE-AS-JSON
 * Listeners wait for requests to enter the list
-    * BLPOP open-ils.actor
+    * BLPOP public:open-ils.actor private:open-ils.actor
 * Listeners pass requests to an available child -- same as now
 * Workers post responses to the calling client's bus address
-    * LPUSH websocket:9c32cea1a260 osrf_msg_json
+    * RPUSH client:O515aad3bfbc21d2f SRF-MESSAGE-AS-JSON
+* Client receives the response
+    * BLPOP client:515aad3bfbc21d2f
 * Client sends follow-up requests directly to worker's bus address
-    * LPUSH client:0a00bac476a9 osrf_msg_json
+    * RPUSH client:open-ils.actor:d12252828cb22a97 OSRF-MESSAGE-AS-JSON
 
 ---
 
@@ -101,6 +103,10 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 TODO timer script / UI demo
 
+* Catalog
+* https://eg-osrf-redis.station/eg2/en-US/staff/admin/server/config/metabib_field
+    * fleshing the xml transform
+
 ---
 
 
@@ -140,26 +146,10 @@ TODO timer script / UI demo
 
 If we no longer have public and private XMPP domains...
 
----
-
-# ACL Example
-
-### Replicate the public vs. private domains via ACL's
-
-    ACL SETUSER opensrf@public on >demo123 -@all
-    ACL SETUSER opensrf@public +del +lpop +blpop +lpush +llen
-    ACL SETUSER opensrf@public ~client:*
-    ACL SETUSER opensrf@public ~public:*
-
-    ACL SETUSER opensrf@private on >demo123 -@all
-    ACL SETUSER opensrf@private +del +lpop +blpop +lpush +llen
-    ACL SETUSER opensrf@private ~client:*
-    ACL SETUSER opensrf@private ~public:*
-    ACL SETUSER opensrf@private ~private:*
-
-### Public service listens on both
-
-    BLPOP public:open-ils.actor private:open-ils.actor <timeout>
+* ACL's to prevent access to private services
+    * See osrf_control --reset-bus-auth
+    * 3 accounts: 'default', 'opensrf@public', and 'opensrf@private'
+* Gateway verifies request for public services
 
 ---
 

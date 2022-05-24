@@ -107,7 +107,21 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 * Search Results Highlight Support
 * Sort by Populatrity
+    * E.g. popularity adjusted relevance (but w/ pupdate)
+    * Integer.parseInt(doc['pubdate'].value) * _score
 * "Did You Mean" (in progress)
+
+    !json
+    sort: {
+        _script: {
+            type: "number",
+            script: {
+                lang: "painless",
+                source: "Integer.parseInt(doc['pubdate'].value) * _score"
+            },
+            order: "asc"
+        }
+    }
 
 ---
 
