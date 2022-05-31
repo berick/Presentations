@@ -20,6 +20,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 * Authentication changes
 * Apparmor interactions.
 * Default install fails in LXD guests
+* XMPP spec has changed multiple times causing breakage
 
 ---
 
@@ -45,19 +46,18 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 * Ease of Installation and Configuration
 * Slimmer Bus Messages / Less Packing & Unpacking
 * Native Debugging Tools & Stats Collection
-* Say Goodbye to Ejabberd :fireworks:
 
 ---
 
 # How Does This Implemtation Work?
 
 * Clients push requests to the request queue for a service
-    * RPUSH public:open-ils.actor OSRF-MESSAGE-AS-JSON
+    * RPUSH service:open-ils.actor OSRF-MESSAGE-AS-JSON
 * Listeners wait for requests to enter the list
-    * BLPOP public:open-ils.actor private:open-ils.actor
+    * BLPOP service:open-ils.actor
 * Listeners pass requests to an available child -- same as now
 * Workers post responses to the calling client's bus address
-    * RPUSH client:O515aad3bfbc21d2f SRF-MESSAGE-AS-JSON
+    * RPUSH client:O515aad3bfbc21d2f OSRF-MESSAGE-AS-JSON
 * Client receives the response
     * BLPOP client:515aad3bfbc21d2f
 * Client sends follow-up requests directly to worker's bus address
@@ -69,7 +69,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 * No More OpenSRF Routers
 * Bus messages are JSON
-* Clients pull messages instead of receiving them.
+* Changes to opensrf_core.xml
 
 ---
 
@@ -89,18 +89,17 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 * Setup Redis Apt Repository
     * [Redis Apt Repository](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
-    * v6. Only reuquired if using ACL's
-    * Not needed with Ubuntu 22.04 and up.
+    * Apt Repo Not needed with Ubuntu 22.04 and up.
 * Install Prereqs
     * sudo apt install redis-server libredis-perl libhiredis-dev   
 * Install Branches
     * [OpenSRF Working Branch](https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-via-redis-v4)
     * [Evergreen Working Branch](https://github.com/berick/Evergreen/commits/user/berick/lpxxx-osrf-redis)
 * Put new OpenSRF config file into place
-    * sudo -u opensrf mv /openils/conf/opensrf_core.xml /openils/conf/opensrf_core.xml.orig
-    * sudo -u opensrf cp OpenSRF/examples/opensrf_core.xml.example /openils/conf/opensrf_core.xml
+    * mv /openils/conf/opensrf_core.xml /openils/conf/opensrf_core.xml.orig
+    * cp OpenSRF/examples/opensrf_core.xml.example /openils/conf/opensrf_core.xml
 * Setup opensrf accounts on the message bus
-    * sudo -u opensrf osrf_control -l --reset-message-bus
+    * osrf_control -l --reset-message-bus
 
 ---
 
@@ -115,15 +114,14 @@ TODO timer script / UI demo
 ---
 
 
-
 # Debugging Tools:
 
     % redis-cli monitor
     % redis-cli memory stats
     % redis-cli client help
-    % redis-cli keys open*
-      1) "opensrf.settings-f67a1bb2188e"
-      2) "opensrf.settings-c9e470abf2c3"
+    % redis-cli keys client:* 
+      1) "client:opensrf.settings-f67a1bb2188e"
+      2) "client:opensrf.settings-c9e470abf2c3"
 
 ---
 
@@ -142,8 +140,7 @@ TODO timer script / UI demo
 ### No cross-domain (i.e. cross-brick) routing.
 
 * Affects some Dojo/translator UI's
-* NOTE: Bricks that share a Redis instance could still cross-communicate
-* Routing potentially code-able if required.
+    * Bricks that share a Redis instance could still cross-communicate
 
 ---
 
@@ -152,11 +149,13 @@ TODO timer script / UI demo
 If we no longer have public and private XMPP domains...
 
 * ACL's to prevent access to private services
-    * See osrf_control --reset-bus-auth
+    * See osrf_control --reset-message-bus
     * 3 accounts: 'default', 'opensrf@public', and 'opensrf@private'
-* Gateway verifies request for public services
+* Gateway additionally verifies requests for public services
 
 ---
+
+# More TODO
 
 ### In-Bus Registry of Running Services (If Needed).
 
@@ -169,7 +168,7 @@ Could be addressed with configuration (e.g. global flag)
 
 ---
 
-# Questions and Comments
+# Let's Talk
 
 ![Redis LOLWUT](media/redis-lolwut.png)
 
