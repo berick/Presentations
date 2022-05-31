@@ -96,6 +96,11 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 * Install Branches
     * [OpenSRF Working Branch](https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-via-redis-v4)
     * [Evergreen Working Branch](https://github.com/berick/Evergreen/commits/user/berick/lpxxx-osrf-redis)
+* Put new OpenSRF config file into place
+    * sudo -u opensrf mv /openils/conf/opensrf_core.xml /openils/conf/opensrf_core.xml.orig
+    * sudo -u opensrf cp OpenSRF/examples/opensrf_core.xml.example /openils/conf/opensrf_core.xml
+* Setup opensrf accounts on the message bus
+    * sudo -u opensrf osrf_control -l --reset-message-bus
 
 ---
 
