@@ -14,13 +14,14 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 # Why Replace Ejabberd?
 
-#### Mainly, it's a bear, but also...
+#### It's kind of a bear, but also...
 
 * Complications with changing hostnames
 * Authentication changes
 * Apparmor interactions.
 * Default install fails in LXD guests
 * XMPP spec has changed multiple times causing breakage
+* There may be better options
 
 ---
 
@@ -42,26 +43,32 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 * Speed
 * Resource Usage
+* Trivial to get started
 * It does a few things very well
 * Ease of Installation and Configuration
-* Slimmer Bus Messages / Less Packing & Unpacking
 * Native Debugging Tools & Stats Collection
+* Open-source, C-based, liberally licensed.
 
 ---
 
 # How Does This Work?
 
-* Clients push requests to the request queue for a service
-    * RPUSH service:open-ils.actor OSRF-MESSAGE
-* Listeners wait for requests to enter the list
-    * BLPOP service:open-ils.actor
-* Listeners pass requests to an available child -- same as now
-* Workers post responses to the calling client's bus address
-    * RPUSH client:515aad3bfbc2 OSRF-MESSAGE
-* Client receives the response
-    * BLPOP client:515aad3bfbc2
-* Client sends follow-up requests directly to worker's bus address
-    * RPUSH client:open-ils.actor:d12252828cb2 OSRF-MESSAGE
+    RPUSH service:open-ils.actor <OSRF-REQUEST-JSON>
+
+    BLPOP service:open-ils.actor
+
+    RPUSH client:515aad3bfbc2 <OSRF-RESPONSE-JSON>
+
+    BLPOP client:515aad3bfbc2
+
+    RPUSH client:515aad3bfbc2 <OSRF-RESPONSE-2-JSON>
+
+    BLPOP client:515aad3bfbc2
+
+    # ...
+    # Connected clients send follow-up requests to ther worker address
+
+    RPUSH client:open-ils.actor:d12252828cb2 <OSRF-REQUEST2-JSON>
 
 ---
 
@@ -102,11 +109,17 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 # Debugging Tools:
 
     % redis-cli monitor
+
     % redis-cli memory stats
+
     % redis-cli client help
+
     % redis-cli client list # e.g. tot-mem
+
     % redis-cli keys client:* 
+
       1) "client:opensrf.settings:f67a1bb2188e"
+
       2) "client:opensrf.settings:c9e470abf2c3"
 
 ---
@@ -114,7 +127,6 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 # Opportunities
 
 * Direct-to-drone request delivery.
-* Sending broadcast/control messages to listeners.
 * Could replace memcache / optional key persistence.
 * OpenSRF request "backlog" not required.
 * Do we need chunking/bundling?
@@ -127,6 +139,14 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 * Affects some Dojo/translator UI's
     * Bricks that share a Redis instance could still cross-communicate
+
+### No support for max list entry size
+
+* Could be enforced in the OpenSRF client libs.
+
+### Key expiration for lists does not inspect list values
+
+* Lists appear and disappear as values are entered and the list is emptied
 
 ---
 
