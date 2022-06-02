@@ -49,19 +49,19 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 ---
 
-# How Does This Implemtation Work?
+# How Does This Work?
 
 * Clients push requests to the request queue for a service
-    * RPUSH service:open-ils.actor OSRF-MESSAGE-AS-JSON
+    * RPUSH service:open-ils.actor OSRF-MESSAGE
 * Listeners wait for requests to enter the list
     * BLPOP service:open-ils.actor
 * Listeners pass requests to an available child -- same as now
 * Workers post responses to the calling client's bus address
-    * RPUSH client:O515aad3bfbc21d2f OSRF-MESSAGE-AS-JSON
+    * RPUSH client:515aad3bfbc2 OSRF-MESSAGE
 * Client receives the response
-    * BLPOP client:515aad3bfbc21d2f
+    * BLPOP client:515aad3bfbc2
 * Client sends follow-up requests directly to worker's bus address
-    * RPUSH client:open-ils.actor:d12252828cb22a97 OSRF-MESSAGE-AS-JSON
+    * RPUSH client:open-ils.actor:d12252828cb2 OSRF-MESSAGE
 
 ---
 
@@ -87,41 +87,27 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 # Install
 
-* Setup Redis Apt Repository
-    * [Redis Apt Repository](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
-    * Apt Repo Not needed with Ubuntu 22.04 and up.
-* Install Prereqs
-    * sudo apt install redis-server libredis-perl libhiredis-dev   
-* Install Branches
-    * [OpenSRF Working Branch](https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-via-redis-v4)
-    * [Evergreen Working Branch](https://github.com/berick/Evergreen/commits/user/berick/lpxxx-osrf-redis)
-* Put new OpenSRF config file into place
-    * mv /openils/conf/opensrf_core.xml /openils/conf/opensrf_core.xml.orig
-    * cp OpenSRF/examples/opensrf_core.xml.example /openils/conf/opensrf_core.xml
-* Setup opensrf accounts on the message bus
-    * osrf_control -l --reset-message-bus
+[README_REDIS.md](https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-via-redis-v4-auth-exp-2/README_REDIS.md)
 
 ---
 
 # Timing
 
-TODO timer script / UI demo
-
-* Catalog
-* https://eg-osrf-redis.station/eg2/en-US/staff/admin/server/config/metabib_field
-    * fleshing the xml transform
+* Demo timer script
+* Demo Catalog with
+* Demo Server Admin -> Search Facet Fields
 
 ---
-
 
 # Debugging Tools:
 
     % redis-cli monitor
     % redis-cli memory stats
     % redis-cli client help
+    % redis-cli client list # e.g. tot-mem
     % redis-cli keys client:* 
-      1) "client:opensrf.settings-f67a1bb2188e"
-      2) "client:opensrf.settings-c9e470abf2c3"
+      1) "client:opensrf.settings:f67a1bb2188e"
+      2) "client:opensrf.settings:c9e470abf2c3"
 
 ---
 
@@ -151,7 +137,8 @@ If we no longer have public and private XMPP domains...
 * ACL's to prevent access to private services
     * See osrf_control --reset-message-bus
     * 3 accounts: 'default', 'opensrf@public', and 'opensrf@private'
-* Gateway additionally verifies requests for public services
+* Gateway additionally verifies requests for public services as an added 
+  security layer and to prevent requests going to nonexistent end points.
 
 ---
 
