@@ -8,19 +8,20 @@ Software Development Engineer
 
 King County Library System
 
-https://github.com/berick/Presentations/tree/master/Evergreen-2022
+* [Slides as Markdown](https://github.com/berick/Presentations/tree/master/Evergreen-2022/osrf-redis.md)
+* [Slides as HTML](https://github.com/berick/Presentations/tree/master/Evergreen-2022/osrf-redis.html)
 
 ---
 
-# Why Replace Ejabberd?
+# Why Replace XMPP / Ejabberd?
 
-#### It's kind of a bear, but also...
+## It's haunted, but also...
 
 * Complications with changing hostnames
 * Authentication changes
 * Apparmor interactions.
-* Default install fails in LXD guests
-* XMPP spec has changed multiple times causing breakage
+* Install issues in LXD guests
+* Responding to XMPP spec changes
 * There may be better options
 
 ---
@@ -116,6 +117,8 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
     % redis-cli client list # e.g. tot-mem
 
+    $ redis-cli --bigkeys
+
     % redis-cli keys client:* 
 
       1) "client:opensrf.settings:f67a1bb2188e"
@@ -127,7 +130,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 # Opportunities
 
 * Direct-to-drone request delivery.
-* Could replace memcache / optional key persistence.
+* Could replace memcache / optional key persistence & Replication
 * OpenSRF request "backlog" not required.
 * Do we need chunking/bundling?
 
@@ -143,10 +146,12 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 ### No support for max list entry size
 
 * Could be enforced in the OpenSRF client libs.
+    * websocket-osrf already has 10M limit
 
-### Key expiration for lists does not inspect list values
+### No auto-expire for keys
 
-* Lists appear and disappear as values are entered and the list is emptied
+* Trivial to script "delete all keys older than X"
+    * [Example Script](https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months)
 
 ---
 
@@ -155,8 +160,8 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 If we no longer have public and private XMPP domains...
 
 * ACL's to prevent access to private services
-    * See osrf_control --reset-message-bus
     * 3 accounts: 'default', 'opensrf@public', and 'opensrf@private'
+    * See osrf_control --reset-message-bus
 * Gateway additionally verifies requests for public services as an added 
   security layer and to prevent requests going to nonexistent end points.
 
@@ -169,9 +174,7 @@ If we no longer have public and private XMPP domains...
 Circ, for example, queries the router to see if Booking is running.  
 Could be addressed with configuration (e.g. global flag)
 
-### Code Cleanup
-
-### Docs
+### LP, Cleanup, Docs
 
 ---
 

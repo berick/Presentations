@@ -14,7 +14,7 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 # Project Goal
 
-* Improve search speed for staff while using the Evergreen catalog.
+* Improve Evergreen catalog search speed for staff.
 
 ---
 
@@ -24,10 +24,10 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 * Rise of [Solr](https://solr.apache.org/) for discovery layers
 * KCLS adopts EG, soon migrates to 3rd-party catalog
 * Jeff G presents on Elasticsearch-driven mobile catalog (TODO link?)
-* Bill starts proof-of-concept implementation
+* Bill starts Elasticsearch proof-of-concept implementation
 * Blake GH opens [LP1844418](https://bugs.launchpad.net/evergreen/+bug/1844418)
 * Angular Catalog development proceeds
-* KCLS limited staff use late 2020
+* Angular Catalog + Elasticsearch limited staff use at KCLS 2020
 * KCLS general use late 2021
 
 ---
@@ -65,6 +65,8 @@ Source: https://www.elastic.co/what-is/elasticsearch
     * 4 parallel: 1 hour 45 mins
 * Searches report total result count / no estimates
 * Takes heavy search query load off primary PG Database
+* Opportunities for new types of searches w/o backend development.
+* Parallel, Interchangeable Datasets
 
 ---
 
@@ -104,34 +106,41 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Pending Features
 
+* "Did You Mean" (in progress)
 * Search Results Highlight Support
 * Sort by Populatrity
-    * E.g. popularity adjusted relevance (but w/ pupdate as example)
-    * Integer.parseInt(doc['pubdate'].value) * _score
-    !json
+
+## Script-Based Sorting
+
+    !js
     sort: {
         _script: {
             type: "number",
             script: {
                 lang: "painless",
-                source: "Integer.parseInt(doc['pubdate'].value) * _score"
+                source: "Integer.parseInt(doc['popularity'].value) * _score"
             },
             order: "asc"
         }
     }
-* "Did You Mean" (in progress)
+
 
 ---
 
 # Installation
 
     !sh
+    $ sudo apt install openjdk-11-jre-headless
 
-    % sudo apt install openjdk-11-jre-headless
-    % wget 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.8.11.deb'
-    % sudo dpkg -i elasticsearch-6.8.11.deb
-    % sudo systemctl start elasticsearch
-    % sudo systemctl enable elasticsearch
+    $ wget 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.8.11.deb'
+
+    $ sudo dpkg -i elasticsearch-6.8.11.deb
+
+    $ sudo systemctl start elasticsearch
+
+    $ sudo systemctl enable elasticsearch
+
+    $ sudo cpan Search::Elasticsearch::Client::6_0
 
 ---
 
@@ -140,15 +149,19 @@ Source: https://www.elastic.co/what-is/elasticsearch
 [https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 
     !sh
-    % cd /usr/share/elasticsearch/
-    % sudo bin/elasticsearch-plugin install analysis-icu
+    $ cd /usr/share/elasticsearch/
 
-    % curl -X GET "localhost:9200/bib-search/_analyze?pretty" -H 'Content-Type: application/json' -d'
+    $ sudo bin/elasticsearch-plugin install analysis-icu
+
+    $ curl -X GET "localhost:9200/bib-search/_analyze?pretty" \
+        -H 'Content-Type: application/json' -d'
     {
       "analyzer" : "icu_folding",
       "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
     }
     ' | jq -C . | less -R
+
+
 
 ---
 
@@ -158,18 +171,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Load-balanced with one write node, one replica node.
 * A full index uses about 36G disk
 * Apply firewall (iptables) to limit port 9200 access
-
----
-
-# Administration
-
-* Indexing script runs regularly in the background.
-* Create multiple datasets
-* Debugging Indexes
-    * curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
-* Configuration Files
-    * /openils/conf/elastic-config.xml
-    * /openils/var/xsl/elastic-bib-transform.xsl
+* 2 Indexer Scripts
 
 ---
 
@@ -178,17 +180,18 @@ Source: https://www.elastic.co/what-is/elasticsearch
     !sh
 
     curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
+
     curl -XGET 'localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason'
+
     curl -XGET 'localhost:9200/bib-search/_count?pretty' 
+
     curl -XGET 'localhost:9200/_cluster/health?pretty'
+
     curl -XGET 'localhost:9200/bib-search/_search?pretty&q=dogs' | jq -C . | less -R
+
+    #
 
 ---
 
-# NOTES
-
-* pre-insert normazliation: isbn / issn / pubdate / sorters
-* ascii folding example
-
-```
+# 
 
