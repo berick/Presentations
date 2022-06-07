@@ -1,4 +1,4 @@
-# Living the Life Elastic
+# Living the Life Elastic: A Report
 
 2022 Evergreen Online Conference
 
@@ -11,6 +11,15 @@ King County Library System
 https://github.com/berick/Presentations/tree/master/Evergreen-2022
 
 ---
+# A Report
+
+* Project Review and History
+* How's it going?
+    * Elasticsearch In Action at King County
+    * Administration
+* A Call to Action?
+
+---
 
 # Project Goal
 
@@ -21,12 +30,12 @@ https://github.com/berick/Presentations/tree/master/Evergreen-2022
 # A Brief History
 
 * Evergreen Begins
-* Rise of [Solr](https://solr.apache.org/) for discovery layers
+* Rise of [Solr](https://solr.apache.org/) and discovery layers
 * KCLS adopts EG, soon migrates to 3rd-party catalog
-* Jeff G presents on Elasticsearch-driven mobile catalog (TODO link?)
-* Bill starts Elasticsearch proof-of-concept implementation
+* Jeff G presents(?) on Elasticsearch-driven mobile catalog
+* Bill starts Elasticsearch proof-of-concept implementation for EG
 * Blake GH opens [LP1844418](https://bugs.launchpad.net/evergreen/+bug/1844418)
-* Angular Catalog development proceeds
+* Angular Catalog development proceeds in parallel
 * Angular Catalog + Elasticsearch limited staff use at KCLS 2020
 * KCLS general use late 2021
 
@@ -47,7 +56,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Why Elasticsearch?
 
-* Similar use of Solr
+* Similar to Solr
 * Ease of use
 * Broad feature set
 * Excellent documentation
@@ -58,14 +67,14 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 ---
 
-# Other Benefits
+# Other Benefits to External Indexing
 
 * Indexing speed
     * KCLS 1.1M records; 3.6M items
     * 4 parallel: 1 hour 45 mins
 * Searches report total result count / no estimates
 * Takes heavy search query load off primary PG Database
-* Opportunities for new types of searches w/o backend development.
+* Opportunities for new types of searches with minimal backend development.
 * Parallel, Interchangeable Datasets
 
 ---
@@ -77,6 +86,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Keyword, Title, Author, etc. search
 * Some Numeric Searches (e.g. not Item Barcode)
 * MARC search
+* Query String support
 
 ---
 
@@ -87,7 +97,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Give me everything: 
     * \*:\*
 * Give me the new stuff:
-    * pubdate:2022
+    * pubdate:2020
 * Boolean Grouping
     * (kw:dogs AND (pubdate:2021 OR pubdate:2022)) OR (ti:cats AND NOT pubdate:2022)
 
@@ -95,22 +105,26 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Local Additions & Modifications
 
-* 'contains exact'  match opt
 * MARC match option selector
+* 'contains exact'  match opt
 * MARC regex search
     * .{24}[^6]{3}.{13}
     * [Graphic Novels](https://evgstaging.kcls.org/eg2/en-US/staff/catalog/search?org=1&limit=10&marcTag=008&marcTag=655&marcSubfield=&marcSubfield=a&marcValue=.%7B24%7D%5B%5E6%5D%7B3%7D.%7B13%7D&marcValue=graphic%20novels&matchOp=regexp&matchOp=phrase)
-
 
 ---
 
 # Pending Features
 
-* "Did You Mean" (in progress)
+* "Did You Mean"
 * Search Results Highlight Support
 * Sort by Populatrity
+* Copy Location Group filtering
+* Org Unit Lasso filtering
+* Others?
 
-## Script-Based Sorting
+---
+
+# Note to Self: Script-Based Sorting
 
     !js
     sort: {
@@ -124,6 +138,10 @@ Source: https://www.elastic.co/what-is/elasticsearch
         }
     }
 
+
+---
+
+# Setup and Administration
 
 ---
 
@@ -146,22 +164,12 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Plugin - International Components for Unicode
 
-[https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
+[Elasticserach ICU Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 
     !sh
     $ cd /usr/share/elasticsearch/
 
     $ sudo bin/elasticsearch-plugin install analysis-icu
-
-    $ curl -X GET "localhost:9200/bib-search/_analyze?pretty" \
-        -H 'Content-Type: application/json' -d'
-    {
-      "analyzer" : "icu_folding",
-      "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
-    }
-    ' | jq -C . | less -R
-
-
 
 ---
 
@@ -187,11 +195,34 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
     curl -XGET 'localhost:9200/_cluster/health?pretty'
 
-    curl -XGET 'localhost:9200/bib-search/_search?pretty&q=dogs' | jq -C . | less -R
+    curl -s -XGET 'localhost:9200/bib-search/_search?pretty&q=dogs' | jq -C . | less -R
 
     #
 
 ---
 
-# 
+# Testing Analysis
+
+    !sh
+    $ curl -X GET "localhost:9200/bib-search/_analyze?pretty" \
+        -H 'Content-Type: application/json' -d'
+    {
+      "analyzer" : "icu_folding",
+      "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
+    }
+    ' | jq -C . | less -R
+
+    #
+
+---
+
+# Call to Action?
+
+---
+
+# Questions & Comments
+
+
+
+
 
