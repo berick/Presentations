@@ -148,8 +148,14 @@ King County Library System
 * Could be enforced in the OpenSRF client libs.
     * websocket-osrf already has 10M limit
 
+### Chunked requests not supported
+
+* Since multiple listeners may pull from the shared bus address
+* Resolved by CONNECT'ing before sending large requests.
+
 ### No auto-expire for keys
 
+* Memory configs support delete 'least recently used' under pressure
 * Trivial to script "delete all keys older than X"
     * [Example Script](https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months)
 
