@@ -1,23 +1,22 @@
-# Living the Life Elastic: A Report
+# Living the Life Elastic
+
+## A Report
 
 2022 Evergreen Online Conference
 
 Bill Erickson
 
-Software Development Engineer
+Software Development Engineer, King County Library System
 
-King County Library System
-
-https://github.com/berick/Presentations/tree/master/Evergreen-2022
+[Slides as Markdown / HTML](https://github.com/berick/Presentations/tree/master/Evergreen-2022)
 
 ---
+
 # A Report
 
 * Project Review and History
-* How's it going?
-    * Elasticsearch In Action at King County
-    * Administration
-* A Call to Action?
+* Elasticsearch In Action at King County
+* Day to Day Administration
 
 ---
 
@@ -59,7 +58,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Similar to Solr
 * Ease of use
 * Broad feature set
-* Excellent documentation
+* Excellent Documentation and Examples
 * I liked the API
 * Industry use outside the library world
 * Clustering / Replication
@@ -72,8 +71,8 @@ Source: https://www.elastic.co/what-is/elasticsearch
 * Indexing speed
     * KCLS 1.1M records; 3.6M items
     * 4 parallel: 1 hour 45 mins
-* Searches report total result count / no estimates
 * Takes heavy search query load off primary PG Database
+* Searches report total result count / no estimates
 * Opportunities for new types of searches with minimal backend development.
 * Parallel, Interchangeable Datasets
 
@@ -81,9 +80,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # What's Implemented?
 
-### Angular Staff Catalog Only
-
-* Keyword, Title, Author, etc. search
+* An Evergreen API for Keyword, Title, Author, etc. searches
 * Some Numeric Searches (e.g. not Item Barcode)
 * MARC search
 * Query String support
@@ -115,29 +112,13 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 # Pending Features
 
-* "Did You Mean"
-* Search Results Highlight Support
+* "Did You Mean" ([Elastic Docs](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-suggesters-phrase.html))
+* Search Results Highlight ([Elastic Docs](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-request-highlighting.html))
+* Autosuggest ([Elastic Docs](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-suggesters-completion.html))
 * Sort by Populatrity
 * Copy Location Group filtering
 * Org Unit Lasso filtering
 * Others?
-
----
-
-# Note to Self: Script-Based Sorting
-
-    !js
-    sort: {
-        _script: {
-            type: "number",
-            script: {
-                lang: "painless",
-                source: "Integer.parseInt(doc['popularity'].value) * _score"
-            },
-            order: "asc"
-        }
-    }
-
 
 ---
 
@@ -189,13 +170,13 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
     curl -s http://localhost:9200/bib-search/_doc/891066 | jq -C . | less -R
 
-    curl -XGET 'localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason'
-
-    curl -XGET 'localhost:9200/bib-search/_count?pretty' 
-
-    curl -XGET 'localhost:9200/_cluster/health?pretty'
-
     curl -s -XGET 'localhost:9200/bib-search/_search?pretty&q=dogs' | jq -C . | less -R
+
+    curl -s -XGET 'localhost:9200/bib-search/_count?pretty' 
+
+    curl -s -XGET 'localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason'
+
+    curl -s -XGET 'localhost:9200/_cluster/health?pretty'
 
     #
 
@@ -204,8 +185,7 @@ Source: https://www.elastic.co/what-is/elasticsearch
 # Testing Analysis
 
     !sh
-    $ curl -X GET "localhost:9200/bib-search/_analyze?pretty" \
-        -H 'Content-Type: application/json' -d'
+    $ curl -s -XGET "localhost:9200/bib-search/_analyze?pretty" -H 'Content-Type: application/json' -d'
     {
       "analyzer" : "icu_folding",
       "text" : "En̲ iruḷ vān̲il oḷi nilavāy nī"
@@ -213,10 +193,6 @@ Source: https://www.elastic.co/what-is/elasticsearch
     ' | jq -C . | less -R
 
     #
-
----
-
-# Call to Action?
 
 ---
 

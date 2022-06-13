@@ -1,21 +1,20 @@
 # OpenSRF -> RediSRF ?
 
-### 2022 Evergreen Online Conference
+2022 Evergreen Online Conference
 
 Bill Erickson
 
-Software Development Engineer
+Software Development Engineer, King County Library System
 
-King County Library System
-
-* [Slides as Markdown](https://github.com/berick/Presentations/tree/master/Evergreen-2022/osrf-redis.md)
-* [Slides as HTML](https://github.com/berick/Presentations/tree/master/Evergreen-2022/osrf-redis.html)
+[Slides as Markdown / HTML](https://github.com/berick/Presentations/tree/master/Evergreen-2022)
 
 ---
 
 # Why Replace XMPP / Ejabberd?
 
-## It's haunted, but also...
+## It's haunted
+
+But also...
 
 * Complications with changing hostnames
 * Authentication changes
@@ -155,7 +154,7 @@ King County Library System
 
 ### No auto-expire for keys
 
-* Memory configs support delete 'least recently used' under pressure
+* Memory config can support delete-least-recently-used (among other things)
 * Trivial to script "delete all keys older than X"
     * [Example Script](https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months)
 
