@@ -158,8 +158,11 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
     !sh
     cd /home/opensrf/Evergreen/Open-ILS/src/support-scripts/
+
     ./elastic-index.pl --index-name kcls-1 --create-index
+
     ./elastic-index.pl --index-name kcls-1 --populate
+
     ./elastic-index.pl --index-name kcls-1 --activate-index
 
 ---
