@@ -91,15 +91,23 @@ Source: https://www.elastic.co/what-is/elasticsearch
 
 ### Query String supported added to Keyword field
 
-* Give me everything: 
-    * \*:\*
-* Give me the new stuff:
-    * pubdate:2020
+* Give me everything: \*:\*
+* Give me the new stuff: pubdate:2020
 * Ranges
     * pubdate:[2001 TO 2010]
     * create_date:[2021-01 TO 2021-02]
+    * pubdate:>=2020
 * Boolean Grouping
     * (kw:dogs AND (pubdate:2021 OR pubdate:2022)) OR (ti:cats AND NOT pubdate:2022)
+
+---
+
+# Analysis and Normalization
+
+* R.E.M.
+* REM
+* R E M
+* Its A Wonderful Life
 
 ---
 
