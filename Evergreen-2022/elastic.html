@@ -1307,7 +1307,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              1/18
+              1/19
             </aside>
           </footer>
         </div>
@@ -1342,7 +1342,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              2/18
+              2/19
             </aside>
           </footer>
         </div>
@@ -1375,7 +1375,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              3/18
+              3/19
             </aside>
           </footer>
         </div>
@@ -1416,7 +1416,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
             </aside>
             
             <aside class="page_number">
-              4/18
+              4/19
             </aside>
           </footer>
         </div>
@@ -1455,7 +1455,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              5/18
+              5/19
             </aside>
           </footer>
         </div>
@@ -1495,7 +1495,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              6/18
+              6/19
             </aside>
           </footer>
         </div>
@@ -1536,7 +1536,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              7/18
+              7/19
             </aside>
           </footer>
         </div>
@@ -1572,7 +1572,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              8/18
+              8/19
             </aside>
           </footer>
         </div>
@@ -1617,7 +1617,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              9/18
+              9/19
             </aside>
           </footer>
         </div>
@@ -1656,7 +1656,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              10/18
+              10/19
             </aside>
           </footer>
         </div>
@@ -1695,7 +1695,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              11/18
+              11/19
             </aside>
           </footer>
         </div>
@@ -1724,7 +1724,7 @@ nature, speed, and scalability...</p>
             </aside>
             
             <aside class="page_number">
-              12/18
+              12/19
             </aside>
           </footer>
         </div>
@@ -1767,7 +1767,7 @@ $ sudo cpan Search::Elasticsearch::Client::6_0
             </aside>
             
             <aside class="page_number">
-              13/18
+              13/19
             </aside>
           </footer>
         </div>
@@ -1803,7 +1803,7 @@ $ sudo bin/elasticsearch-plugin install analysis-icu
             </aside>
             
             <aside class="page_number">
-              14/18
+              14/19
             </aside>
           </footer>
         </div>
@@ -1811,7 +1811,43 @@ $ sudo bin/elasticsearch-plugin install analysis-icu
       
       <!-- slide source: elastic.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-15">
+        <div class="slide has_code slide-15">
+          <div class="inner">
+            
+            <header><h1>Building Indexes</h1></header>
+            
+            
+            <section><div class="highlight"><pre><span></span><span class="nb">cd</span> /home/opensrf/Evergreen/Open-ILS/src/support-scripts/
+./elastic-index.pl --index-name kcls-1 --create-index
+./elastic-index.pl --index-name kcls-1 --populate
+./elastic-index.pl --index-name kcls-1 --activate-index
+</pre></div>
+</section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            
+            <aside class="source">
+              Source: <a href="elastic.md">elastic.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              15/19
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: elastic.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-16">
           <div class="inner">
             
             <header><h1>KCLS Production Setup</h1></header>
@@ -1840,7 +1876,7 @@ $ sudo bin/elasticsearch-plugin install analysis-icu
             </aside>
             
             <aside class="page_number">
-              15/18
+              16/19
             </aside>
           </footer>
         </div>
@@ -1848,7 +1884,7 @@ $ sudo bin/elasticsearch-plugin install analysis-icu
       
       <!-- slide source: elastic.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-16">
+        <div class="slide has_code slide-17">
           <div class="inner">
             
             <header><h1>Sysadmin Tools</h1></header>
@@ -1883,7 +1919,7 @@ curl -s -XGET <span class="s1">&#39;localhost:9200/_cluster/health?pretty&#39;</
             </aside>
             
             <aside class="page_number">
-              16/18
+              17/19
             </aside>
           </footer>
         </div>
@@ -1891,7 +1927,7 @@ curl -s -XGET <span class="s1">&#39;localhost:9200/_cluster/health?pretty&#39;</
       
       <!-- slide source: elastic.md -->
       <div class="slide-wrapper">
-        <div class="slide has_code slide-17">
+        <div class="slide has_code slide-18">
           <div class="inner">
             
             <header><h1>Testing Analysis</h1></header>
@@ -1923,7 +1959,7 @@ curl -s -XGET <span class="s1">&#39;localhost:9200/_cluster/health?pretty&#39;</
             </aside>
             
             <aside class="page_number">
-              17/18
+              18/19
             </aside>
           </footer>
         </div>
@@ -1931,7 +1967,7 @@ curl -s -XGET <span class="s1">&#39;localhost:9200/_cluster/health?pretty&#39;</
       
       <!-- slide source: elastic.md -->
       <div class="slide-wrapper">
-        <div class="slide slide-18">
+        <div class="slide slide-19">
           <div class="inner">
             
             <header><h1>Questions &amp; Comments</h1></header>
@@ -1952,7 +1988,7 @@ curl -s -XGET <span class="s1">&#39;localhost:9200/_cluster/health?pretty&#39;</
             </aside>
             
             <aside class="page_number">
-              18/18
+              19/19
             </aside>
           </footer>
         </div>
@@ -2057,26 +2093,32 @@ curl -s -XGET <span class="s1">&#39;localhost:9200/_cluster/health?pretty&#39;</
       
       
       <tr id="toc-row-15">
-        <th><a href="#slide:15">KCLS Production Setup</a></th>
+        <th><a href="#slide:15">Building Indexes</a></th>
         <td><a href="#slide:15">15</a></td>
       </tr>
       
       
       <tr id="toc-row-16">
-        <th><a href="#slide:16">Sysadmin Tools</a></th>
+        <th><a href="#slide:16">KCLS Production Setup</a></th>
         <td><a href="#slide:16">16</a></td>
       </tr>
       
       
       <tr id="toc-row-17">
-        <th><a href="#slide:17">Testing Analysis</a></th>
+        <th><a href="#slide:17">Sysadmin Tools</a></th>
         <td><a href="#slide:17">17</a></td>
       </tr>
       
       
       <tr id="toc-row-18">
-        <th><a href="#slide:18">Questions &amp; Comments</a></th>
+        <th><a href="#slide:18">Testing Analysis</a></th>
         <td><a href="#slide:18">18</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-19">
+        <th><a href="#slide:19">Questions &amp; Comments</a></th>
+        <td><a href="#slide:19">19</a></td>
       </tr>
       
       
