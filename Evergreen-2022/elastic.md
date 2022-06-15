@@ -1,7 +1,5 @@
 # Living the Life Elastic
 
-## A Report
-
 2022 Evergreen Online Conference
 
 Bill Erickson
@@ -14,9 +12,11 @@ Software Development Engineer, King County Library System
 
 # A Report
 
-* Project Review and History
-* Elasticsearch In Action at King County
-* Day to Day Administration
+## Project Review and History
+
+## Elasticsearch In Action at King County
+
+## Day to Day Administration
 
 ---
 
@@ -32,7 +32,7 @@ Software Development Engineer, King County Library System
 * Rise of [Solr](https://solr.apache.org/) and discovery layers
 * KCLS adopts EG, soon migrates to 3rd-party catalog
 * Jeff G presents(?) on Elasticsearch-driven mobile catalog
-* Bill starts Elasticsearch proof-of-concept implementation for EG
+* Elasticsearch proof-of-concept implementation for EG
 * Blake GH opens [LP1844418](https://bugs.launchpad.net/evergreen/+bug/1844418)
 * Angular Catalog development proceeds in parallel
 * Angular Catalog + Elasticsearch limited staff use at KCLS 2020
@@ -95,6 +95,9 @@ Source: https://www.elastic.co/what-is/elasticsearch
     * \*:\*
 * Give me the new stuff:
     * pubdate:2020
+* Ranges
+    * pubdate:[2001 TO 2010]
+    * create_date:[2021-01 TO 2021-02]
 * Boolean Grouping
     * (kw:dogs AND (pubdate:2021 OR pubdate:2022)) OR (ti:cats AND NOT pubdate:2022)
 
