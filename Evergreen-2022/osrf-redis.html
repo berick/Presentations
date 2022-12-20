@@ -1436,7 +1436,7 @@ developer survey.</p>
         <div class="slide slide-5">
           <div class="inner">
             
-            <header><h1>How Does This Work?</h1></header>
+            <header><h1>Where Does It All Go?</h1></header>
             
             
             <section><pre><code>RPUSH service:open-ils.actor &lt;OSRF-REQUEST-JSON&gt;
@@ -1735,30 +1735,16 @@ $ redis-cli --bigkeys
             
             <section><h3>No cross-domain (i.e. cross-brick) routing.</h3>
 <ul>
-<li>Affects some Dojo/translator UI's<ul>
-<li>Bricks that share a Redis instance could still cross-communicate</li>
-</ul>
-</li>
+<li>Affects Dojo UI's</li>
 </ul>
 <h3>No support for max list entry size</h3>
 <ul>
-<li>Could be enforced in the OpenSRF client libs.<ul>
-<li>websocket-osrf already has 10M limit</li>
-</ul>
-</li>
-</ul>
-<h3>Chunked requests not supported</h3>
-<ul>
-<li>Since multiple listeners may pull from the shared bus address</li>
-<li>Resolved by CONNECT'ing before sending large requests.</li>
+<li>websocket-osrf has 10M limit</li>
 </ul>
 <h3>No auto-expire for keys</h3>
 <ul>
 <li>Memory config can support delete-least-recently-used (among other things)</li>
-<li>Trivial to script "delete all keys older than X"<ul>
-<li><a href="https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months">Example Script</a></li>
-</ul>
-</li>
+<li><a href="https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months">Script to remove old data</a></li>
 </ul></section>
             
           </div>
@@ -1797,8 +1783,7 @@ $ redis-cli --bigkeys
 <li>See osrf_control --reset-message-bus</li>
 </ul>
 </li>
-<li>Gateway additionally verifies requests for public services as an added 
-  security layer and to prevent requests going to nonexistent end points.</li>
+<li>Gateway &amp; Websockets additionally verify requests for public services.</li>
 </ul></section>
             
           </div>
@@ -1833,7 +1818,7 @@ $ redis-cli --bigkeys
             <section><h3>In-Bus Registry of Running Services (If Needed).</h3>
 <p>Circ, for example, queries the router to see if Booking is running.<br />
 Could be addressed with configuration (e.g. global flag)</p>
-<h3>LP, Cleanup, Docs</h3></section>
+<h3>Discuss Email List(?), Cleanup, Docs</h3></section>
             
           </div>
           <div class="presenter_notes">
@@ -1926,7 +1911,7 @@ Could be addressed with configuration (e.g. global flag)</p>
       
       
       <tr id="toc-row-5">
-        <th><a href="#slide:5">How Does This Work?</a></th>
+        <th><a href="#slide:5">Where Does It All Go?</a></th>
         <td><a href="#slide:5">5</a></td>
       </tr>
       

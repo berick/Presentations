@@ -51,7 +51,7 @@ But also...
 
 ---
 
-# How Does This Work?
+# Where Does It All Go?
 
     RPUSH service:open-ils.actor <OSRF-REQUEST-JSON>
 
@@ -139,24 +139,16 @@ But also...
 
 ### No cross-domain (i.e. cross-brick) routing.
 
-* Affects some Dojo/translator UI's
-    * Bricks that share a Redis instance could still cross-communicate
+* Affects Dojo UI's
 
 ### No support for max list entry size
 
-* Could be enforced in the OpenSRF client libs.
-    * websocket-osrf already has 10M limit
-
-### Chunked requests not supported
-
-* Since multiple listeners may pull from the shared bus address
-* Resolved by CONNECT'ing before sending large requests.
+* websocket-osrf has 10M limit
 
 ### No auto-expire for keys
 
 * Memory config can support delete-least-recently-used (among other things)
-* Trivial to script "delete all keys older than X"
-    * [Example Script](https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months)
+* [Script to remove old data](https://stackoverflow.com/questions/16517439/redis-how-to-delete-all-keys-older-than-3-months)
 
 ---
 
@@ -167,8 +159,7 @@ If we no longer have public and private XMPP domains...
 * ACL's to prevent access to private services
     * 3 accounts: 'default', 'opensrf@public', and 'opensrf@private'
     * See osrf_control --reset-message-bus
-* Gateway additionally verifies requests for public services as an added 
-  security layer and to prevent requests going to nonexistent end points.
+* Gateway & Websockets additionally verify requests for public services.
 
 ---
 
@@ -179,7 +170,7 @@ If we no longer have public and private XMPP domains...
 Circ, for example, queries the router to see if Booking is running.  
 Could be addressed with configuration (e.g. global flag)
 
-### LP, Cleanup, Docs
+### Discuss Email List(?), Cleanup, Docs
 
 ---
 
