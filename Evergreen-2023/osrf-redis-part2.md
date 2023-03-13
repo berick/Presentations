@@ -12,28 +12,38 @@ Software Development Engineer, King County Library System
 
 ---
 
-# NOTES
-
-* TODO move to 
-* https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-over-redis-v2
-* https://github.com/berick/Evergreen/tree/user/berick/lpxxx-opensrf-over-redis-v1
-* Discuss accounts
-  * https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt
-* buswatch / expire lingering
-
 # Recap XMPP Replacement
 
 https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md
 
 ---
 
-# Additional Design Proposals
+# XMPP V. Redis
+
+### Jabber
+
+<div>
+  <script src="https://asciinema.org/a/UA1p5dbF7KfB46ckDwtwlXaaN.js" 
+    id="asciicast-UA1p5dbF7KfB46ckDwtwlXaaN" async 
+    data-loop="true" data-rows="10" data-autoplay="true" data-size="big"></script>
+</div>
+
+### Redis
+
+<div style="padding-left:2px;margin-left:2px">
+  <script src="https://asciinema.org/a/sIbrmZ60vUm3v5m81ojhmxqdP.js" 
+    id="asciicast-sIbrmZ60vUm3v5m81ojhmxqdP" async 
+    data-loop="true" data-rows="10" data-autoplay="true" data-size="big"></script>
+</div>
+
+---
+
+# Additional Design Proposals After Previous Talk
 
 * Recover the OpenSRF Router and its multi-domain routing.
   * Cross-Domain Service Registration / High-Availability
   * Additional Layer of Security
   * Works with the OpenSRF Translator / Dojo UI's
-  * Have not coded a non-router option
 * Message Streams vs. Message Queues
 
 ---
@@ -54,7 +64,6 @@ https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md
 * opensrf:service:open-ils.cstore
 * opensrf:router:private.localhost
 * opensrf:client:private.localhost:eg22:848908:330137
-* Services also have their own opensrf:client:\* address
 
 ---
 
@@ -75,12 +84,35 @@ open-ils.cstore Listener waits for messages at opensrf:service:open-ils.cstore
 * https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis
 * Been runnning the redis branches on my dev machine since Jan 2023
 
+https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22
+https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22
+
 ---
+
+# Websockets
+
+* Remove websocketd dependency
+* Implemented max-parallel throttling (user/berick/websocket-parallel-tester)
+
+---
+
 
 # Development TODO Items
 * Generate a random redis password at build time.
 * Implement direct-to-drone request delivery
   * Avoid listener chokepoint.
   * Perl code exists for this.
+
+---
+
+# NOTES
+
+* TODO move to git.evergreen-ils.org
+* https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-over-redis-v2
+* https://github.com/berick/Evergreen/tree/user/berick/lpxxx-opensrf-over-redis-v1
+* Discuss accounts
+  * https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt
+  * generate passwords at compile time
+* buswatch / expire lingering
 
 
