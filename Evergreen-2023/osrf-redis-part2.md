@@ -58,8 +58,8 @@ Recover the OpenSRF Router
 
 ## Structure
 
-	!sh
-	[prefix]:[purpose]:[domain|service-name]:[hostname]:[pid]:[random]
+    !sh
+    [prefix]:[purpose]:[domain|service-name]:[hostname]:[pid]:[random]
 
 ## Examples
 
@@ -71,7 +71,7 @@ Recover the OpenSRF Router
 
 # Routing Example
 
-	!sh
+    !sh
 
     # Worker client sends to service via router
     Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:9094
@@ -94,25 +94,42 @@ Recover the OpenSRF Router
 
 [Router v1 / Rust](https://github.com/kcls/evergreen-universe-rs/blob/main/opensrf/src/bin/router.rs)
 
-	!json
-	egsh# router _ summarize
-	---------------------------------------------------
-	{
-	  "listen_address": "opensrf:router:private.localhost",
-	  "primary_domain": {
-		"domain": "private.localhost",
-		"route_count": 343,
-		"services": [
-		  {
-			"name": "opensrf.settings",
-			"controllers": [
-			  {
-				"address": "opensrf:client:private.localhost:eg22.lxd:1702978:9094",
-				"register_time": "2023-03-13T17:14:13.903523503-04:00"
-			  } 
-			] 
-		  },
-		  ...
+    !sh
+    srfsh# request router opensrf.router.info.class.list
+
+    Received Data: [
+      "opensrf.settings",
+      "open-ils.booking",
+      "opensrf.math",
+      "open-ils.supercat",
+      "open-ils.cat",
+      "open-ils.auth_proxy",
+      ...
+
+--- 
+
+# Router / Summarize
+
+    !json
+    {
+      "listen_address": "opensrf:router:private.localhost",
+      "primary_domain": {
+        "domain": "private.localhost",
+        "route_count": 343,
+        "services": [ {
+          "name": "opensrf.settings",
+          "controllers": [ {
+            "address": "opensrf:client:private.localhost:eg22.lxd:1702978:9094",
+            "register_time": "2023-03-13T17:14:13.903523503-04:00"
+          } ] 
+        }, {
+          "name": "open-ils.booking",
+          "controllers": [ {
+            "address": "opensrf:client:private.localhost:eg22.lxd:1702999:5342",
+            "register_time": "2023-03-13T17:14:14.372647614-04:00"
+          } ] 
+        },
+        ...
 
 ---
 
