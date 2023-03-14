@@ -36,7 +36,7 @@ Software Development Engineer, King County Library System
 
 ---
 
-# Additional Design Proposals
+# Additional Design Considerations
 
 * Multi-Domain Routing
 * Redis Message Streams
@@ -46,11 +46,11 @@ Software Development Engineer, King County Library System
 
 # Multi-Domain Routing
 
-Recover the OpenSRF Router
+Long Live the OpenSRF Router!
 
 * High-Availability
 * Additional Layer of Security (domain segmentation)
-* Works with the OpenSRF Translator / Dojo UI's
+* Backwards Compatible with the OpenSRF Translator / Dojo UI's
 
 ---
 
@@ -142,37 +142,12 @@ Recover the OpenSRF Router
 
 # Why Not Message Streams?
 
-* Require stream / group creation and deletion
-    * Queues are auto-created on first use.
-    * Queues are auto-deleted when last message is popped
-* Stream messages have to be explicitly deleted
-    * Queue messages are popped and removed
-* Swapping betweeen streams and queues is fairly trivial.
+Streams work, are a bit more complicated overall, but mainly:
 
----
-
-# Redis List / Queue
-
-1. Push a value onto a list
-1. Pop a value from the list (blocking/timeout optional)
-    * This removes the message from Redis
-    * List disappears once empty
-
----
-
-# Redis Streams & Groups
-
-1. Create a stream and a group
-1. Add a message to the stream
-1. Read a message from the stream (blocking/timeout optional)
-    * OPTIONAL: ACK the message
-1. Delete the read message from the stream
-1. Delete the stream to cleanup
-
----
-
-# Lists and Streams Swappable
-
+> All the messages are appended in the stream indefinitely (unless the user 
+> explicitly asks to delete entries): different consumers will know what 
+> is a new message from its point of view by remembering the ID of the 
+> last message received.
 
 ---
 
@@ -183,26 +158,30 @@ Recover the OpenSRF Router
 
 ---
 
-# Kicking the Tires
+# Rust, Really?
 
-* https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis
-* Been runnning the redis branches on my dev machine since Jan 2023
+[KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
 
-https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22
-https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22
-
----
-
-# Websockets
+# Also, with Websockets
 
 * Remove websocketd dependency
 * Implemented max-parallel throttling (user/berick/websocket-parallel-tester)
 
 ---
 
+# Kicking the Tires
+
+* [Ansible Installer](https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
+* [Demo Site](https://redis.demo.kclseg.org/eg2/staff/splash)
+* [Public Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
+* [Private Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
+
+---
+
 
 # Development TODO Items
 * Generate a random redis password at build time.
+  * https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt
 * Implement direct-to-drone request delivery
   * Avoid listener chokepoint.
   * Perl code exists for this.
@@ -214,9 +193,6 @@ https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=ope
 * TODO move to git.evergreen-ils.org
 * https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-over-redis-v2
 * https://github.com/berick/Evergreen/tree/user/berick/lpxxx-opensrf-over-redis-v1
-* Discuss accounts
-  * https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt
-  * generate passwords at compile time
 * buswatch / expire lingering
 
 
