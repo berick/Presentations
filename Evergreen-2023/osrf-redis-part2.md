@@ -1,4 +1,4 @@
-# XMPP/Ejabberd to Redis Project Update
+# XMPP/Ejabberd to Redis Update
 
 2023 Evergreen Online Conference
 
@@ -6,15 +6,13 @@ Bill Erickson
 
 Software Development Engineer, King County Library System
 
-[Last Year's Talk](https://github.com/berick/Presentations/tree/master/Evergreen-2022)
-
 [Slides as Markdown / HTML](https://github.com/berick/Presentations/tree/master/Evergreen-2023)
 
 ---
 
-# Recap XMPP Replacement
+# XMPP Replacement?
 
-https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md
+[Evergreen 2022 Talk](https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
 
 ---
 
@@ -38,28 +36,32 @@ https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md
 
 ---
 
-# Additional Design Proposals After Previous Talk
+# Additional Design Proposals
 
-* Recover the OpenSRF Router and its multi-domain routing.
-  * Cross-Domain Service Registration / High-Availability
-  * Additional Layer of Security
-  * Works with the OpenSRF Translator / Dojo UI's
-* Message Streams vs. Message Queues
+* Multi-Domain Routing
+* Redis Message Streams
+* Minimal upgrade requirements
 
 ---
 
-# Why Not Message Streams?
+# Multi-Domain Routing
 
-* Require stream / group creation and deletion
-  * Queues are auto-created on first use.
-  * Queues are auto-deleted when last message is popped
-* Stream messages have to be explicitly deleted
-  * Queue messages are popped and removed
-* Swapping betweeen streams and queues is fairly trivial.
+Recover the OpenSRF Router
+
+* High-Availability
+* Additional Layer of Security (domain segmentation)
+* Works with the OpenSRF Translator / Dojo UI's
 
 ---
 
-# Anatomy of a Queue Addresses
+# Routing / Addresses
+
+## Structure
+
+	!sh
+	[prefix]:[purpose]:[domain|service-name]:[hostname]:[pid]:[random]
+
+## Examples
 
 * opensrf:service:open-ils.cstore
 * opensrf:router:private.localhost
@@ -67,15 +69,74 @@ https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md
 
 ---
 
-# Message Path Example
+# Routing Example
 
-open-ils.actor service starts up on private.localhost
-sends top-level request to opensrf:router:private.localhost for opensrf:service:open-ils.cstore
-if registered, router relays request to opensrf:service:open-ils.cstore on its private.localhost bus connection
-if not register, router relays request to opensrf:service:open-ils.cstore a different domain bus connection.
-open-ils.cstore Listener waits for messages at opensrf:service:open-ils.cstore
- -- if multiple Listeners are running, they both listen at opensrf:service:open-ils.cstore
-    and redis round-robin's which gets the message.
+	!sh
+
+    # Worker client sends to service via router
+    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:9094
+    Message-To:   opensrf:service:open-ils.cstore
+    Delivered-To: opensrf:router:private.localhost
+
+    # Router sends to service address
+    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:9094 
+    Message-To:   opensrf:service:open-ils.cstore
+
+    # Worker replies directly to calling worker
+    Message-From: opensrf:client:private.localhost:eg22.lxd:1702964:8234
+    Message-To:   opensrf:client:private.localhost:eg22.lxd:1702978:9094
+
+*Routes via domain instead of specific listener address*
+
+---
+
+# Router
+
+[Router v1 / Rust](https://github.com/kcls/evergreen-universe-rs/blob/main/opensrf/src/bin/router.rs)
+
+	!json
+	egsh# router _ summarize
+	---------------------------------------------------
+	{
+	  "listen_address": "opensrf:router:private.localhost",
+	  "primary_domain": {
+		"domain": "private.localhost",
+		"route_count": 343,
+		"services": [
+		  {
+			"name": "opensrf.settings",
+			"controllers": [
+			  {
+				"address": "opensrf:client:private.localhost:eg22.lxd:1702978:9094",
+				"register_time": "2023-03-13T17:14:13.903523503-04:00"
+			  } 
+			] 
+		  },
+		  ...
+
+---
+
+# Message Streams
+
+* Alternate form of message delivery in Redis vs. Queues.
+
+---
+
+# Minimal Upgrade Requirements
+
+* Avoid config file overhaul
+* Drop-in Replacment as much as possible
+
+---
+
+# Why Not Message Streams?
+
+* Require stream / group creation and deletion
+    * Queues are auto-created on first use.
+    * Queues are auto-deleted when last message is popped
+* Stream messages have to be explicitly deleted
+    * Queue messages are popped and removed
+* Swapping betweeen streams and queues is fairly trivial.
 
 ---
 
