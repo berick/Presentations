@@ -136,13 +136,7 @@ Recover the OpenSRF Router
 # Message Streams
 
 * Alternate form of message delivery in Redis vs. Queues.
-
----
-
-# Minimal Upgrade Requirements
-
-* Avoid config file overhaul
-* Drop-in Replacment as much as possible
+* Support subscriptions
 
 ---
 
@@ -154,6 +148,38 @@ Recover the OpenSRF Router
 * Stream messages have to be explicitly deleted
     * Queue messages are popped and removed
 * Swapping betweeen streams and queues is fairly trivial.
+
+---
+
+# Redis List / Queue
+
+1. Push a value onto a list
+1. Pop a value from the list (blocking/timeout optional)
+    * This removes the message from Redis
+    * List disappears once empty
+
+---
+
+# Redis Streams & Groups
+
+1. Create a stream and a group
+1. Add a message to the stream
+1. Read a message from the stream (blocking/timeout optional)
+    * OPTIONAL: ACK the message
+1. Delete the read message from the stream
+1. Delete the stream to cleanup
+
+---
+
+# Lists and Streams Swappable
+
+
+---
+
+# Minimal Upgrade Requirements
+
+* Avoid config file overhaul
+* Drop-in Replacment as much as possible
 
 ---
 
