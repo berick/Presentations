@@ -1,18 +1,31 @@
 # XMPP/Ejabberd to Redis Update
 
-2023 Evergreen Online Conference
+2023 Evergreen Conference
+
+Worcester, Massachusetts
 
 Bill Erickson
 
 Software Development Engineer, King County Library System
 
-[Slides as Markdown / HTML](https://github.com/berick/Presentations/tree/master/Evergreen-2023)
+[https://github.com/berick/Presentations/tree/master/Evergreen-2023](https://github.com/berick/Presentations/tree/master/Evergreen-2023)
 
 ---
 
 # XMPP Replacement?
 
-[Evergreen 2022 Talk](https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
+<a href="https://upload.wikimedia.org/wikipedia/commons/d/d6/NeXTcube_motherboard.jpg">
+    <img style="height:450px"
+        src="https://upload.wikimedia.org/wikipedia/commons/d/d6/NeXTcube_motherboard.jpg"/>
+</a>
+
+*https://en.wikipedia.org/wiki/File:NeXTcube_motherboard.jpg*
+
+---
+
+# Evergreen 2022
+
+[https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md](https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
 
 ---
 
@@ -39,8 +52,8 @@ Software Development Engineer, King County Library System
 # Additional Design Considerations
 
 * Recover Cross-Domain Routing
-* Minimal upgrade requirements
 * Redis Message Streams
+* Minimal upgrade requirements
 
 ---
 
@@ -51,6 +64,12 @@ Long Live the OpenSRF Router!
 * High-Availability
 * Additional Layer of Security (domain segmentation)
 * Backwards Compatible with the OpenSRF Translator / Dojo UI's
+
+---
+
+# High Availability
+
+![Router](./media/router-multi.png)
 
 ---
 
@@ -87,26 +106,36 @@ Long Live the OpenSRF Router!
     Message-From: opensrf:client:private.localhost:eg22.lxd:open-ils.cstore:1702964:82349172
     Message-To:   opensrf:client:private.localhost:eg22.lxd:1702978:90948398
 
-*Routes via domain instead of specific listener address*
-
 ---
 
 # Router
 
-[Router v1 / Rust](https://github.com/kcls/evergreen-universe-rs/blob/main/opensrf/src/bin/router.rs)
+[Router v1](https://github.com/kcls/evergreen-universe-rs/blob/main/opensrf/src/bin/router.rs)
+[ / Rust (!)](https://www.rust-lang.org/)
 
     !sh
     srfsh# request router opensrf.router.info.class.list
 
     Received Data: [
       "opensrf.settings",
-      "open-ils.booking",
-      "opensrf.math",
-      "open-ils.supercat",
       "open-ils.cat",
+      "opensrf.math",
+      "open-ils.search",
+      "open-ils.booking",
+      "open-ils.supercat",
+      "open-ils.acq",
+      "opensrf.dbmath",
+      "open-ils.actor",
+      "open-ils.justintime",
+      "open-ils.reporter",
+      "open-ils.collections",
       "open-ils.auth_proxy",
+      "open-ils.auth",
+      "open-ils.trigger",
+      "open-ils.url_verify",
+      "open-ils.vandelay",
+      "open-ils.permacrud",
       ...
-
 --- 
 
 # Router / Summarize
@@ -116,31 +145,23 @@ Long Live the OpenSRF Router!
       "listen_address": "opensrf:router:private.localhost",
       "primary_domain": {
         "domain": "private.localhost",
-        "route_count": 343,
+        "route_count": 1484,
         "services": [ {
           "name": "opensrf.settings",
-          "route_count": 18,
+          "route_count": 10,
           "controllers": [ {
-            "address": "opensrf:client:private.localhost:eg22.lxd:1702978:9094",
-            "register_time": "2023-03-13T17:14:13.903523503-04:00"
+              "address": "opensrf:client:private.localhost:eg22.lxd::opensrf.settings:1771487:9698073",
+              "register_time": "2023-03-15T12:35:15.852677162-04:00"
           } ] 
         }, {
-          "name": "open-ils.booking",
-          "route_count": 0,
+          "name": "open-ils.cat",
+          "route_count": 1,
           "controllers": [ {
-            "address": "opensrf:client:private.localhost:eg22.lxd:1702999:5342",
-            "register_time": "2023-03-13T17:14:14.372647614-04:00"
-          } ] 
+              "address": "opensrf:client:private.localhost:eg22.lxd::open-ils.cat:1771516:8781771",
+              "register_time": "2023-03-15T12:35:16.402692131-04:00"
+            } ]
         },
         ...
-
----
-
-# Minimal Upgrade Requirements
-
-* Avoid config file overhaul
-* Drop-in Replacment as much as possible
-
 ---
 
 # Message Streams
@@ -162,14 +183,26 @@ Streams work, are a bit more complicated overall, but mainly:
 
 ---
 
+# Minimal Upgrade Requirements
+
+* New config file: [/openils/conf/redis-accounts.txt](https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
+  * No manual account registration
+  * Pairs with osrf\_control --reset-message-bus
+  * TODO: Generate random passwords at build time
+
+---
+
 # Rust, Really?
 
 [KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
 
+---
+
 # Also, with Websockets
 
 * Remove websocketd dependency
-* Implemented max-parallel throttling (user/berick/websocket-parallel-tester)
+* Implemented max-parallel throttling 
+    * Evergreen -> user/berick/websocket-parallel-tester
 
 ---
 
