@@ -89,25 +89,6 @@ Long Live the OpenSRF Router!
 
 ---
 
-# Routing Example
-
-    !sh
-
-    # Worker client sends to service via router
-    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:90948398
-    Message-To:   opensrf:service:open-ils.cstore
-    Delivered-To: opensrf:router:private.localhost
-
-    # Router sends to service address
-    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:90948398
-    Message-To:   opensrf:service:open-ils.cstore
-
-    # Worker replies directly to calling worker
-    Message-From: opensrf:client:private.localhost:eg22.lxd:open-ils.cstore:1702964:82349172
-    Message-To:   opensrf:client:private.localhost:eg22.lxd:1702978:90948398
-
----
-
 # Router
 
 [Router v1](https://github.com/kcls/evergreen-universe-rs/blob/main/opensrf/src/bin/router.rs)
@@ -186,13 +167,14 @@ Streams work, are a bit more complicated overall, but mainly:
 # Minimal Upgrade Requirements
 
 * New config file: [/openils/conf/redis-accounts.txt](https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
-  * No manual account registration
-  * Pairs with osrf\_control --reset-message-bus
-  * TODO: Generate random passwords at build time
+    * `osrf_control --reset-message-bus`
+    * TODO: Generate random passwords at build time
 
 ---
 
-# Rust, Really?
+# Rust
+
+Really?
 
 [KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
 
@@ -210,18 +192,25 @@ Streams work, are a bit more complicated overall, but mainly:
 
 * [Ansible Installer](https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
 * [Demo Site](https://redis.demo.kclseg.org/eg2/staff/splash)
-* [Public Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
-* [Private Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
+* [Gateway Public Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
+* [Gateway Private Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
 
 ---
 
+# Future Development
 
-# Development TODO Items
-* Generate a random redis password at build time.
-  * https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt
-* Implement direct-to-drone request delivery
-  * Avoid listener chokepoint.
-  * Perl code exists for this.
+* Direct-to-drone request delivery
+    * Avoid listener chokepoints
+    * Perl code exists for this
+
+---
+
+# What's Left?
+
+* Decide on a path for Router and Websockets
+* Generate bus passwords at install time
+* Migrate code to community repositories
+* Finalize install documentation
 
 ---
 
