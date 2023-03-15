@@ -38,9 +38,9 @@ Software Development Engineer, King County Library System
 
 # Additional Design Considerations
 
-* Multi-Domain Routing
-* Redis Message Streams
+* Recover Cross-Domain Routing
 * Minimal upgrade requirements
+* Redis Message Streams
 
 ---
 
@@ -59,13 +59,14 @@ Long Live the OpenSRF Router!
 ## Structure
 
     !sh
-    [prefix]:[purpose]:[domain|service-name]:[hostname]:[pid]:[random]
+    [prefix]:[purpose]:[domain|service-name]:[hostname]:[service-name?]:[pid]:[random]
 
 ## Examples
 
 * opensrf:service:open-ils.cstore
 * opensrf:router:private.localhost
 * opensrf:client:private.localhost:eg22:848908:330137
+* opensrf:client:private.localhost:eg22:open-ils.cstore:848908:330137
 
 ---
 
@@ -74,17 +75,17 @@ Long Live the OpenSRF Router!
     !sh
 
     # Worker client sends to service via router
-    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:9094
+    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:90948398
     Message-To:   opensrf:service:open-ils.cstore
     Delivered-To: opensrf:router:private.localhost
 
     # Router sends to service address
-    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:9094 
+    Message-From: opensrf:client:private.localhost:eg22.lxd:1702978:90948398
     Message-To:   opensrf:service:open-ils.cstore
 
     # Worker replies directly to calling worker
-    Message-From: opensrf:client:private.localhost:eg22.lxd:1702964:8234
-    Message-To:   opensrf:client:private.localhost:eg22.lxd:1702978:9094
+    Message-From: opensrf:client:private.localhost:eg22.lxd:open-ils.cstore:1702964:82349172
+    Message-To:   opensrf:client:private.localhost:eg22.lxd:1702978:90948398
 
 *Routes via domain instead of specific listener address*
 
@@ -118,12 +119,14 @@ Long Live the OpenSRF Router!
         "route_count": 343,
         "services": [ {
           "name": "opensrf.settings",
+          "route_count": 18,
           "controllers": [ {
             "address": "opensrf:client:private.localhost:eg22.lxd:1702978:9094",
             "register_time": "2023-03-13T17:14:13.903523503-04:00"
           } ] 
         }, {
           "name": "open-ils.booking",
+          "route_count": 0,
           "controllers": [ {
             "address": "opensrf:client:private.localhost:eg22.lxd:1702999:5342",
             "register_time": "2023-03-13T17:14:14.372647614-04:00"
@@ -133,10 +136,16 @@ Long Live the OpenSRF Router!
 
 ---
 
+# Minimal Upgrade Requirements
+
+* Avoid config file overhaul
+* Drop-in Replacment as much as possible
+
+---
+
 # Message Streams
 
-* Alternate form of message delivery in Redis vs. Queues.
-* Support subscriptions
+[https://redis.io/docs/data-types/streams-tutorial/](https://redis.io/docs/data-types/streams-tutorial/)
 
 ---
 
@@ -149,12 +158,7 @@ Streams work, are a bit more complicated overall, but mainly:
 > is a new message from its point of view by remembering the ID of the 
 > last message received.
 
----
-
-# Minimal Upgrade Requirements
-
-* Avoid config file overhaul
-* Drop-in Replacment as much as possible
+*MAXLEN option applies to pending messages only!*
 
 ---
 
