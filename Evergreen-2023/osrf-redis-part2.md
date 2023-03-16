@@ -64,6 +64,8 @@ Long Live the OpenSRF Router!
 * High-Availability
 * Additional Layer of Security (domain segmentation)
 * Backwards Compatible with the OpenSRF Translator / Dojo UI's
+* [Gateway Public Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
+* [Gateway Private Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
 
 ---
 
@@ -166,7 +168,7 @@ Streams work, are a bit more complicated overall, but mainly:
 
 # Minimal Upgrade Requirements
 
-* New config file: [/openils/conf/redis-accounts.txt](https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
+* New config file: [/openils/conf/redis-accounts.txt[.example]](https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
     * TODO: Generate random passwords at build time
 
@@ -174,7 +176,7 @@ Streams work, are a bit more complicated overall, but mainly:
 
 # Rust
 
-Really?
+A we really doing this?
 
 [KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
 
@@ -190,10 +192,10 @@ Really?
 
 # Kicking the Tires
 
+* [OpenSRF Github Branch](https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-over-redis-v2)
+* [Evergreen Github Branch](https://github.com/berick/Evergreen/tree/user/berick/lpxxx-opensrf-over-redis-v1)
 * [Ansible Installer](https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
 * [Demo Site](https://redis.demo.kclseg.org/eg2/staff/splash)
-* [Gateway Public Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
-* [Gateway Private Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
 
 ---
 
@@ -205,20 +207,11 @@ Really?
 
 ---
 
-# What's Left?
+# OK, what now?
 
 * Decide on a path for Router and Websockets
 * Generate bus passwords at install time
 * Migrate code to community repositories
 * Finalize install documentation
-
----
-
-# NOTES
-
-* TODO move to git.evergreen-ils.org
-* https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-over-redis-v2
-* https://github.com/berick/Evergreen/tree/user/berick/lpxxx-opensrf-over-redis-v1
-* buswatch / expire lingering
 
 
