@@ -8,7 +8,8 @@ Bill Erickson
 
 Software Development Engineer, King County Library System
 
-[https://github.com/berick/Presentations/tree/master/Evergreen-2023](https://github.com/berick/Presentations/tree/master/Evergreen-2023)
+[https://github.com/berick/Presentations/tree/master/Evergreen-2023](
+    https://github.com/berick/Presentations/tree/master/Evergreen-2023)
 
 ---
 
@@ -25,7 +26,8 @@ Software Development Engineer, King County Library System
 
 # Evergreen 2022
 
-[https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md](https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
+[https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md](
+    https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
 
 ---
 
@@ -64,8 +66,10 @@ Long Live the OpenSRF Router!
 * High-Availability
 * Additional Layer of Security (domain segmentation)
 * Backwards Compatible with the OpenSRF Translator / Dojo UI's
-* [Gateway Public Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
-* [Gateway Private Service](https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
+* [Gateway Public Service](
+    https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
+* [Gateway Private Service](
+    https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
 
 ---
 
@@ -168,34 +172,36 @@ Streams work, are a bit more complicated overall, but mainly:
 
 # Minimal Upgrade Requirements
 
-* New config file: [/openils/conf/redis-accounts.txt[.example]](https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
+* New config file: [/openils/conf/redis-accounts.txt[.example]](
+    https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
     * TODO: Generate random passwords at build time
 
 ---
 
-# Rust
-
-A we really doing this?
+# Fun With Rust
 
 [KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
 
----
-
-# Also, with Websockets
-
-* Remove websocketd dependency
-* Implemented max-parallel throttling 
-    * Evergreen -> user/berick/websocket-parallel-tester
+* Router
+* Websocket Translator
+    * Remove websocketd dependency
+    * Implemented max-parallel throttling 
+* JSON HTTP Gateway
+    * Raw and RawSlim formats.
+* OpenSRF Server
 
 ---
 
 # Kicking the Tires
 
-* [OpenSRF Github Branch](https://github.com/berick/OpenSRF/tree/user/berick/lpxxx-opensrf-over-redis-v2)
-* [Evergreen Github Branch](https://github.com/berick/Evergreen/tree/user/berick/lpxxx-opensrf-over-redis-v1)
-* [Ansible Installer](https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
+* [Ansible Installer](
+    https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
 * [Demo Site](https://redis.demo.kclseg.org/eg2/staff/splash)
+* [OpenSRF Github Branch](
+    https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-opensrf-over-redis-v3)
+* [Evergreen Github Branch](
+    https://git.evergreen-ils.org/?p=working/Evergreen.git;a=shortlog;h=refs/heads/user/berick/lpxxx-opensrf-over-redis-v3)
 
 ---
 
