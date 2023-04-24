@@ -29,6 +29,11 @@ Software Development Engineer, King County Library System
 [https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md](
     https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
 
+## While We're Talking Ejabberd: 
+
+[https://github.com/berick/evergreen-ansible-installer/tree/ubuntu-22.04#evergreen--opensrf-ansible-installer](
+    https://github.com/berick/evergreen-ansible-installer/tree/ubuntu-22.04#evergreen--opensrf-ansible-installer)
+
 ---
 
 # XMPP V. Redis
@@ -53,7 +58,7 @@ Software Development Engineer, King County Library System
 
 # Additional Design Considerations
 
-* Recover Cross-Domain Routing
+* Cross-Domain Routing
 * Redis Message Streams
 * Minimal upgrade requirements
 
@@ -84,9 +89,15 @@ Long Live the OpenSRF Router!
 ## Structure
 
     !sh
-    [prefix]:[purpose]:[domain|service-name]:[hostname]:[service-name?]:[pid]:[random]
+     [prefix]
+      :[purpose]
+        :[domain|service-name]
+          :[hostname]
+            :[service-name] (OPTIONAL)
+              :[pid]
+                :[random]
 
-## Examples
+## #Examples
 
 * opensrf:service:open-ils.cstore
 * opensrf:router:private.localhost
@@ -153,25 +164,49 @@ Long Live the OpenSRF Router!
 
 # Message Streams
 
+* Observability
+* Access Ranges of Messages
+* Multiple Delivery Targets/Groups
+* Ability to ACK message
+
 [https://redis.io/docs/data-types/streams-tutorial/](https://redis.io/docs/data-types/streams-tutorial/)
 
 ---
 
-# Why Not Message Streams?
+# CLI Examples
 
-Streams work, are a bit more complicated overall, but mainly:
+### Stream
 
-> All the messages are appended in the stream indefinitely (unless the user 
-> explicitly asks to delete entries): different consumers will know what 
-> is a new message from its point of view by remembering the ID of the 
-> last message received.
+    !sh
+    XGROUP CREATE mystream mygroup $ MKSTREAM
+    XADD mystream MAXLEN ~ 1000 * message apple
+    XADD mystream MAXLEN ~ 1000 * message banana
+    XADD mystream MAXLEN ~ 1000 * message pineapple
+    XREADGROUP GROUP mygroup myself BLOCK 6000 COUNT 1 NOACK STREAMS mystream >
 
-*MAXLEN option applies to pending messages only!*
+### List
+
+    !sh
+    RPUSH mylist apple
+    RPUSH mylist banana
+    RPUSH mylist pineapple
+    BLPOP mylist 60
+
+---
+
+# My Takeway?
+
+Streams work, offer some theoretical benefits, but are slightly more 
+complicated and optimized to act as "append-only data structure[s]."
+
+* [Revert / Recover Stream Support](
+    https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=commitdiff;h=def7018b08c41e3b03e41e145deb638929981548)
 
 ---
 
 # Minimal Upgrade Requirements
 
+* Uses exiting opensrf\_core.xml
 * New config file: [/openils/conf/redis-accounts.txt[.example]](
     https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
@@ -188,7 +223,8 @@ Streams work, are a bit more complicated overall, but mainly:
     * Remove websocketd dependency
     * Implemented max-parallel throttling 
 * JSON HTTP Gateway
-    * Raw and RawSlim formats.
+    * [Additional formats](
+        https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.actor&method=open-ils.actor.org_tree.retrieve&format=raw)
 * OpenSRF Server
 
 ---
