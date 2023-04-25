@@ -174,31 +174,44 @@ Long Live the OpenSRF Router!
 
 ---
 
-# CLI Examples
-
-### List
+# List Example
 
     !sh
-    RPUSH mylist apple
-    RPUSH mylist banana
-    RPUSH mylist pineapple
-    BLPOP mylist 60
+    127.0.0.1:6379> RPUSH mylist apple
+    (integer) 1
+    127.0.0.1:6379> RPUSH mylist banana
+    (integer) 2
+    127.0.0.1:6379> RPUSH mylist pineapple
+    (integer) 3
+    127.0.0.1:6379> BLPOP mylist 60
+    1) "mylist"
+    2) "apple"
 
-### Stream
+---
+
+# Stream Example
 
     !sh
-    XGROUP CREATE mystream mygroup $ MKSTREAM
-    XADD mystream MAXLEN ~ 1000 * message apple
-    XADD mystream MAXLEN ~ 1000 * message banana
-    XADD mystream MAXLEN ~ 1000 * message pineapple
-    XREADGROUP GROUP mygroup myself BLOCK 6000 COUNT 1 NOACK STREAMS mystream >
+    127.0.0.1:6379> XGROUP CREATE mystream mygroup $ MKSTREAM   
+    OK
+    127.0.0.1:6379> XADD mystream MAXLEN ~ 1000 * message apple
+    "1682455235361-0"
+    127.0.0.1:6379> XADD mystream MAXLEN ~ 1000 * message banana
+    "1682455250495-0"
+    127.0.0.1:6379> XADD mystream MAXLEN ~ 1000 * message pineapple
+    "1682455255516-0"
+    127.0.0.1:6379> XREADGROUP GROUP mygroup myself BLOCK 6000 COUNT 1 NOACK STREAMS mystream >
+    1) 1) "mystream"
+       2) 1) 1) "1682455235361-0"
+             2) 1) "message"
+                2) "apple"
 
 ---
 
 # My Takeway?
 
-Streams work, offer some theoretical benefits, but are slightly more 
-complicated, and are optimized to act as "append-only data structure[s]."
+Streams work, offer some theoretical benefits, are slightly more 
+complicated, and optimized to act as "append-only data structure[s]."
 
 * [Revert / Recover Stream Support](
     https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=commitdiff;h=def7018b08c41e3b03e41e145deb638929981548)
@@ -225,14 +238,10 @@ complicated, and are optimized to act as "append-only data structure[s]."
 * Websocket Translator
     * Remove websocketd dependency
     * Implemented max-parallel throttling 
-    * sudo systemctl restart opensrf-websockets
 * JSON HTTP Gateway
     * [Additional formats](
         https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.actor&method=open-ils.actor.org_tree.retrieve&format=raw)
 * OpenSRF Server
-    * open-ils.rspub Poc
-        * sudo systemctl restart eg-svc-rspub
-* egsh
 
 ---
 
