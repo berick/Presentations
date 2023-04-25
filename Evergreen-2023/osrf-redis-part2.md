@@ -164,16 +164,25 @@ Long Live the OpenSRF Router!
 
 # Message Streams
 
+[https://redis.io/docs/data-types/streams-tutorial/](https://redis.io/docs/data-types/streams-tutorial/)
+
 * Observability
 * Access Ranges of Messages
+* Retains Messages over Time (by default)
 * Multiple Delivery Targets/Groups
 * Ability to ACK message
-
-[https://redis.io/docs/data-types/streams-tutorial/](https://redis.io/docs/data-types/streams-tutorial/)
 
 ---
 
 # CLI Examples
+
+### List
+
+    !sh
+    RPUSH mylist apple
+    RPUSH mylist banana
+    RPUSH mylist pineapple
+    BLPOP mylist 60
 
 ### Stream
 
@@ -184,20 +193,12 @@ Long Live the OpenSRF Router!
     XADD mystream MAXLEN ~ 1000 * message pineapple
     XREADGROUP GROUP mygroup myself BLOCK 6000 COUNT 1 NOACK STREAMS mystream >
 
-### List
-
-    !sh
-    RPUSH mylist apple
-    RPUSH mylist banana
-    RPUSH mylist pineapple
-    BLPOP mylist 60
-
 ---
 
 # My Takeway?
 
 Streams work, offer some theoretical benefits, but are slightly more 
-complicated and optimized to act as "append-only data structure[s]."
+complicated, and are optimized to act as "append-only data structure[s]."
 
 * [Revert / Recover Stream Support](
     https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=commitdiff;h=def7018b08c41e3b03e41e145deb638929981548)
@@ -211,6 +212,7 @@ complicated and optimized to act as "append-only data structure[s]."
     https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
     * TODO: Generate random passwords at build time
+* Changes to how the router / websockets processes are managed.
 
 ---
 
@@ -226,18 +228,20 @@ complicated and optimized to act as "append-only data structure[s]."
     * [Additional formats](
         https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.actor&method=open-ils.actor.org_tree.retrieve&format=raw)
 * OpenSRF Server
+    * open-ils.rspub PoC
+* egsh
 
 ---
 
 # Kicking the Tires
 
+* [OpenSRF Working Branch](
+    https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-opensrf-over-redis-v3)
+* [Evergreen Working Branch](
+    https://git.evergreen-ils.org/?p=working/Evergreen.git;a=shortlog;h=refs/heads/user/berick/lpxxx-opensrf-over-redis-v3)
+* [Demo Site](https://redis.demo.kclseg.org/eg2/staff/splash)
 * [Ansible Installer](
     https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
-* [Demo Site](https://redis.demo.kclseg.org/eg2/staff/splash)
-* [OpenSRF Github Branch](
-    https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-opensrf-over-redis-v3)
-* [Evergreen Github Branch](
-    https://git.evergreen-ils.org/?p=working/Evergreen.git;a=shortlog;h=refs/heads/user/berick/lpxxx-opensrf-over-redis-v3)
 
 ---
 
@@ -245,15 +249,18 @@ complicated and optimized to act as "append-only data structure[s]."
 
 * Direct-to-drone request delivery
     * Avoid listener chokepoints
-    * Perl code exists for this
+    * Perl patches exist to implment this.
+    * Rust OpenSRF works this way by default.
+* Replace Memache with Redis
+    * Authtokens could be more durable with Redis disk persistance.
 
 ---
 
 # OK, what now?
 
-* Decide on a path for Router and Websockets
+* Decide on a path for Router, Websockets, and Rust in general.
 * Generate bus passwords at install time
-* Migrate code to community repositories
+* Migrate Rust code to community repositories
 * Finalize install documentation
 
 
