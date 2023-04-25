@@ -221,14 +221,17 @@ complicated, and are optimized to act as "append-only data structure[s]."
 [KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
 
 * Router
+    * sudo systemctl restart opensrf-router
 * Websocket Translator
     * Remove websocketd dependency
     * Implemented max-parallel throttling 
+    * sudo systemctl restart opensrf-websockets
 * JSON HTTP Gateway
     * [Additional formats](
         https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.actor&method=open-ils.actor.org_tree.retrieve&format=raw)
 * OpenSRF Server
-    * open-ils.rspub PoC
+    * open-ils.rspub Poc
+        * sudo systemctl restart eg-svc-rspub
 * egsh
 
 ---
