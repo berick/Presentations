@@ -36,6 +36,14 @@ Software Development Engineer, King County Library System
 
 ---
 
+# Recap
+
+[Redis](https://redis.io/)
+
+> The open source, in-memory data store used by millions of developers as a database, cache, streaming engine, and message broker.
+
+---
+
 # XMPP V. Redis
 
 ### Jabber
@@ -84,7 +92,7 @@ Long Live the OpenSRF Router!
 
 ---
 
-# Routing / Addresses
+# Routable Addresses
 
 ## Structure
 
@@ -97,7 +105,7 @@ Long Live the OpenSRF Router!
               :[pid]
                 :[random]
 
-## #Examples
+### Examples
 
 * opensrf:service:open-ils.cstore
 * opensrf:router:private.localhost
@@ -210,9 +218,9 @@ Long Live the OpenSRF Router!
 
 # My Takeway?
 
-Streams work, offer some theoretical benefits, are slightly more 
-complicated, and optimized to act as "append-only data structure[s]."
-
+* Streams work, offer some theoretical benefits, are slightly more 
+  complicated, and optimized to act as "append-only data structure[s]."
+* Lists are easier to test and simulate data.
 * [Revert / Recover Stream Support](
     https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=commitdiff;h=def7018b08c41e3b03e41e145deb638929981548)
 
@@ -220,7 +228,7 @@ complicated, and optimized to act as "append-only data structure[s]."
 
 # Minimal Upgrade Requirements
 
-* Uses exiting opensrf\_core.xml
+* Uses existing opensrf\_core.xml
 * New config file: [/openils/conf/redis-accounts.txt[.example]](
     https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
@@ -261,7 +269,7 @@ complicated, and optimized to act as "append-only data structure[s]."
 
 * Direct-to-drone request delivery
     * Avoid listener chokepoints
-    * Perl patches exist to implment this.
+    * Perl patches exist to implement this.
     * Rust OpenSRF works this way by default.
 * Replace Memache with Redis
     * Authtokens could be more durable with Redis disk persistance.
@@ -270,7 +278,7 @@ complicated, and optimized to act as "append-only data structure[s]."
 
 # OK, what now?
 
-* Decide on a path for Router, Websockets, and Rust in general.
+* Decide on a path for Router, Websockets
 * Generate bus passwords at install time
 * Migrate Rust code to community repositories
 * Finalize install documentation
