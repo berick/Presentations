@@ -13,17 +13,6 @@ Software Development Engineer, King County Library System
 
 ---
 
-# XMPP Replacement?
-
-<a href="https://upload.wikimedia.org/wikipedia/commons/d/d6/NeXTcube_motherboard.jpg">
-    <img style="height:450px"
-        src="https://upload.wikimedia.org/wikipedia/commons/d/d6/NeXTcube_motherboard.jpg"/>
-</a>
-
-*https://en.wikipedia.org/wiki/File:NeXTcube_motherboard.jpg*
-
----
-
 # Evergreen 2022
 
 [https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md](
@@ -38,10 +27,12 @@ Software Development Engineer, King County Library System
 
 # Redis Recap
 
-[https://redis.io/](https://redis.io/)
-
 > The open source, in-memory data store used by millions of developers 
 > as a database, cache, streaming engine, and message broker.
+
+* [https://redis.io/](https://redis.io/)
+* [Developer Survey](
+    https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-databases)
 
 ---
 
@@ -159,7 +150,7 @@ Long Live the OpenSRF Router!
     * sudo systemctl restart opensrf-router
 * Websocket Translator
     * Remove websocketd dependency
-    * Implemented max-parallel [throttling](
+    * Per-Service Active Request [Throttling](
         https://redis.demo.kclseg.org/eg2/en-US/staff/sandbox)
 
 ---
