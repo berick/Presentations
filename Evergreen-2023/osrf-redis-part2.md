@@ -40,7 +40,8 @@ Software Development Engineer, King County Library System
 
 [Redis](https://redis.io/)
 
-> The open source, in-memory data store used by millions of developers as a database, cache, streaming engine, and message broker.
+> The open source, in-memory data store used by millions of developers 
+> as a database, cache, streaming engine, and message broker.
 
 ---
 
@@ -66,13 +67,13 @@ Software Development Engineer, King County Library System
 
 # Additional Design Considerations
 
-* Cross-Domain Routing
-* Redis Message Streams
-* Minimal upgrade requirements
+1. Cross-Domain Routing
+1. Redis Message Streams
+1. Minimal upgrade requirements
 
 ---
 
-# Multi-Domain Routing
+# 1. Multi-Domain Routing
 
 Long Live the OpenSRF Router!
 
@@ -117,7 +118,6 @@ Long Live the OpenSRF Router!
 # Router
 
 [Router v1](https://github.com/kcls/evergreen-universe-rs/blob/main/opensrf/src/bin/router.rs)
-[ / Rust (!)](https://www.rust-lang.org/)
 
     !sh
     srfsh# request router opensrf.router.info.class.list
@@ -143,6 +143,42 @@ Long Live the OpenSRF Router!
       "open-ils.permacrud",
       ...
 --- 
+
+# A Brief Detour...
+
+![https://www.sciencefocus.com/space/what-is-a-wormhole/](media/F0113300-Wormhole_in_outerspace_illustration-0bc04e0.jpg)
+
+--- 
+
+# [Fun With Rust](https://www.rust-lang.org/)
+
+[https://github.com/kcls/evergreen-universe-rs/](
+    https://github.com/kcls/evergreen-universe-rs)
+
+---
+
+# Stuff We Could Use
+
+* Router
+    * sudo systemctl restart opensrf-router
+* Websocket Translator
+    * Remove websocketd dependency
+    * Implemented max-parallel [throttling](
+        https://redis.demo.kclseg.org/eg2/en-US/staff/sandbox)
+
+---
+
+# More Stuff We Could Use
+
+* JSON HTTP Gateway
+    * [Additional formats](
+        https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.actor&method=open-ils.actor.org_tree.retrieve&format=raw)
+* OpenSRF Server
+    * [open-ils.rspub](
+        https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.rspub&method=opensrf.system.echo&param=[%22HELLO%22,%20%22WORLD%22])
+* egsh
+
+---
 
 # Router / Summarize
 
@@ -170,7 +206,12 @@ Long Live the OpenSRF Router!
         ...
 ---
 
-# Message Streams
+
+# ...And We're Back
+
+---
+
+# 2. Message Streams
 
 [https://redis.io/docs/data-types/streams-tutorial/](https://redis.io/docs/data-types/streams-tutorial/)
 
@@ -216,40 +257,23 @@ Long Live the OpenSRF Router!
 
 ---
 
-# My Takeway?
+# Streams: Takeway
 
-* Streams work, offer some theoretical benefits, are slightly more 
-  complicated, and optimized to act as "append-only data structure[s]."
-* Lists are easier to test and simulate data.
+* Streams work, are slightly more complicated, offer some theoretical benefits.
+* However...
 * [Revert / Recover Stream Support](
     https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=commitdiff;h=def7018b08c41e3b03e41e145deb638929981548)
 
 ---
 
-# Minimal Upgrade Requirements
+# 3. Minimal Upgrade Requirements
 
-* Uses existing opensrf\_core.xml
+* Use Existing Configs
 * New config file: [/openils/conf/redis-accounts.txt[.example]](
     https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
     * TODO: Generate random passwords at build time
 * Changes to how the router / websockets processes are managed.
-
----
-
-# Fun With Rust
-
-[KCLS Rust Evergreen Workspace](https://github.com/kcls/evergreen-universe-rs/)
-
-* Router
-    * sudo systemctl restart opensrf-router
-* Websocket Translator
-    * Remove websocketd dependency
-    * Implemented max-parallel throttling 
-* JSON HTTP Gateway
-    * [Additional formats](
-        https://redis.demo.kclseg.org/eg-http-gateway?service=open-ils.actor&method=open-ils.actor.org_tree.retrieve&format=raw)
-* OpenSRF Server
 
 ---
 
@@ -265,7 +289,7 @@ Long Live the OpenSRF Router!
 
 ---
 
-# Future Development
+# In Future
 
 * Direct-to-drone request delivery
     * Avoid listener chokepoints
@@ -278,9 +302,9 @@ Long Live the OpenSRF Router!
 
 # OK, what now?
 
+* Open a LP ticket
 * Decide on a path for Router, Websockets
 * Generate bus passwords at install time
 * Migrate Rust code to community repositories
 * Finalize install documentation
-
 
