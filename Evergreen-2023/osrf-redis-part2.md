@@ -36,9 +36,9 @@ Software Development Engineer, King County Library System
 
 ---
 
-# Recap
+# Redis Recap
 
-[Redis](https://redis.io/)
+[https://redis.io/](https://redis.io/)
 
 > The open source, in-memory data store used by millions of developers 
 > as a database, cache, streaming engine, and message broker.
@@ -80,10 +80,6 @@ Long Live the OpenSRF Router!
 * High-Availability
 * Additional Layer of Security (domain segmentation)
 * Backwards Compatible with the OpenSRF Translator / Dojo UI's
-* [Gateway Public Service](
-    https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.actor&method=opensrf.system.echo&param=%221%22&param=%222%22)
-* [Gateway Private Service](
-    https://redis.demo.kclseg.org/osrf-gateway-v1?service=open-ils.cstore&method=opensrf.system.echo&param=%221%22&param=%222%22)
 
 ---
 
@@ -309,6 +305,9 @@ Long Live the OpenSRF Router!
 
 ---
 
-![https://tenor.com/view/done-and-done-spongebob-finished-just-did-it-gif-10843280](
-    https://media.tenor.com/images/9b9e9a86c6b2c2e0424fdba9272f6471/tenor.png)
+<a href="https://media.tenor.com/images/9b9e9a86c6b2c2e0424fdba9272f6471/tenor.png">
+    <img style="height:550px"
+        src="https://media.tenor.com/images/9b9e9a86c6b2c2e0424fdba9272f6471/tenor.png"/>
+</a>
+
 
