@@ -293,10 +293,9 @@ Long Live the OpenSRF Router!
 
 * Direct-to-drone request delivery
     * Avoid listener chokepoints
-    * Perl patches exist to implement this.
-    * Rust OpenSRF works this way by default.
+    * I have Perl patches for this.
 * Replace Memache with Redis
-    * Authtokens could be more durable with Redis disk persistance.
+    * E.g. Authtokens could be more durable with Redis disk persistance.
 
 ---
 
@@ -305,6 +304,11 @@ Long Live the OpenSRF Router!
 * Open a LP ticket
 * Decide on a path for Router, Websockets
 * Generate bus passwords at install time
-* Migrate Rust code to community repositories
+* Migrate Rust code to community repositories?
 * Finalize install documentation
+
+---
+
+![https://tenor.com/view/done-and-done-spongebob-finished-just-did-it-gif-10843280](
+    https://media.tenor.com/images/9b9e9a86c6b2c2e0424fdba9272f6471/tenor.png)
 
