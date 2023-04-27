@@ -139,15 +139,14 @@ Long Live the OpenSRF Router!
 
 # [Fun With Rust](https://www.rust-lang.org/)
 
-[https://github.com/kcls/evergreen-universe-rs/](
+[KCLS Evergreen Rust Universe](
     https://github.com/kcls/evergreen-universe-rs)
 
 ---
 
-# Stuff We Could Use
+# Rust Stuff We Could Use
 
 * Router
-    * sudo systemctl restart opensrf-router
 * Websocket Translator
     * Remove websocketd dependency
     * Per-Service Active Request [Throttling](
@@ -155,7 +154,7 @@ Long Live the OpenSRF Router!
 
 ---
 
-# More Stuff We Could Use
+# More Rust Stuff We Could Use
 
 * JSON HTTP Gateway
     * [Additional formats](
@@ -260,7 +259,6 @@ Long Live the OpenSRF Router!
     https://github.com/berick/OpenSRF/blob/user/berick/lpxxx-opensrf-over-redis-v2/examples/redis-accounts.example.txt)
     * `osrf_control --reset-message-bus`
     * TODO: Generate random passwords at build time
-* Changes to how the router / websockets processes are managed.
 
 ---
 
