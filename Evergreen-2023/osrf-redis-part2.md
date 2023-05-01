@@ -8,15 +8,15 @@ Bill Erickson
 
 Software Development Engineer, King County Library System
 
-[https://github.com/berick/Presentations/tree/master/Evergreen-2023](
-    https://github.com/berick/Presentations/tree/master/Evergreen-2023)
+[https://github.com/berick/Presentations/tree/main/Evergreen-2023](
+    https://github.com/berick/Presentations/tree/main/Evergreen-2023)
 
 ---
 
 # Evergreen 2022
 
-[https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md](
-    https://github.com/berick/Presentations/blob/master/Evergreen-2022/osrf-redis.md)
+[https://github.com/berick/Presentations/blob/main/Evergreen-2022/osrf-redis.md](
+    https://github.com/berick/Presentations/blob/main/Evergreen-2022/osrf-redis.md)
 
 ## While We're Talking Ejabberd: 
 
