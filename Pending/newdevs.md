@@ -41,7 +41,8 @@ The "row" will match the data stored by the grid within each row.  For a
 grid of patrons, each "row" will be a patron object or a JS object which
 contains patron data.  
 
-NOTE: A row can be pretty much anything and it varies per grid.
+[!NOTE]
+A row can be pretty much anything and it varies per grid.
 
 To access the values stored in each row, assign a template-local variable
 to contain the row contents.  In this example, we assign the "row" value
