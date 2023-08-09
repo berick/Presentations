@@ -118,8 +118,7 @@ export class MyClass implements OnInit {
       */
       barcode: row => row.card() ? row.card().barcode() : ''
 
-      // Entries for other cell templates may continue here.
-
+      // Entries for other cell templates live here.
     };
   }
 }
