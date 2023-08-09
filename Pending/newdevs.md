@@ -42,18 +42,24 @@ grid of patrons, each "row" will be a patron object or a JS object which
 contains patron data.  
 
 > [!NOTE]
-> A row can be pretty much anything and it varies per grid.
+> A grid row can be pretty much any data structure and they vary per grid.
 
 To access the values stored in each row, assign a template-local variable
 to contain the row contents.  In this example, we assign the "row" value
-to a template-local variable called "patron" using the `let-*` syntax 
-(let-myVeryOwnVariable="row").
+to a template-local variable called "patron" using the `let-*` syntax:
 
 ```html
 <ng-template #barcodeTemplate let-patron="row">
 ```
 
 A common approach is to simply say `let-row="row"` since it's clear and tidy.
+
+Once assigned, the variable may be used in the template like any other
+Angular variable.
+
+```html
+<div i18n>Hello {{patron.pref_first_given_name()}}!</div>
+```
 
 ### Printing and Generating CSV Content
 ...
