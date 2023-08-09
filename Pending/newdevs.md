@@ -87,7 +87,12 @@ cell content.
 
 Defining a plain text alternative for a cell template requires telling
 the grid how to find the data you wish to use in lieu of the 
-renderd HTML content.
+renderd HTML content.  This is done by implementing a GridCellTextGenerator
+in the code.
+
+A GridCellTextGenerator is a JS object whose keys match the name of 
+the grid column in question and whose values are a function that
+accepts a grid row and returns a string value.
 
 * Define a text generator in the grid definition in the HTML markup.
 ```html
@@ -107,16 +112,13 @@ export class MyClass implements OnInit {
   ngOnInit() {
     this.cellTextGenerator = {
       /*
-      "barcode" must match the "name" attribute for the 
-      <eg-grid-column/> that uses the cell template.
-
-      <eg-grid-column name="barcode" [cellTemplate]="barcodeTemplate" .../>
-      
-      "row" is the same row value used within the cell template.
+      "barcode" matches the <eg-grid-column/> name.
+      "row" is the grid row, same as the "patron" variable from the cell
+      template definition.
      
-      Once again, this code checks to ses if the patron (here, "row")
-      has a "card" value then returns the barcode as the
-      cell text if present, or empty string otherwise.
+      This code checks to ses if the patron (here, "row") has a "card"
+      value then returns the barcode as the cell text if present, or
+      empty string otherwise.
       */
       barcode: row => row.card() ? row.card().barcode() : ''
 
