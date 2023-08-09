@@ -106,15 +106,20 @@ export class MyClass implements OnInit {
 
   ngOnInit() {
     this.cellTextGenerator = {
-      // "barcode" must match the "name" attribute for the 
-      // <eg-grid-column/> that uses the cell template.
-      //
-      // "row" is the same row value used within the cell template.
-      //
-      // Once again, this code checks to ses if the patron (here, "row")
-      // has a "card" value then returns the barcode as the
-      // cell text if present, or empty string otherwise.
+      /*
+      "barcode" must match the "name" attribute for the 
+      <eg-grid-column/> that uses the cell template.
+      
+      "row" is the same row value used within the cell template.
+     
+      Once again, this code checks to ses if the patron (here, "row")
+      has a "card" value then returns the barcode as the
+      cell text if present, or empty string otherwise.
+      */
       barcode: row => row.card() ? row.card().barcode() : ''
+
+      // Entries for other cell templates may continue here.
+
     };
   }
 }
