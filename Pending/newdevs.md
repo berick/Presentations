@@ -86,7 +86,8 @@ print/export function needs a way to get a plain-text version of the
 cell content.
 
 Defining a plain text alternative for a cell template requires telling
-the grid how to find the data you intend to use.
+the grid how to find the data you wish to use in lieu of the 
+renderd HTML content.
 
 * Define a text generator in the grid definition in the HTML markup.
 ```html
