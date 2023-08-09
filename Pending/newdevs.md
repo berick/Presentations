@@ -78,7 +78,7 @@ Angular variable.
 ```
 
 
-### Cell Template Printing and CSV Export Content
+### Printing and Export Cell Template Content
 
 Printing or exporting a grid as CSV requires the cell contents be
 plain text.  Since cell templates contain rendered HTML content, the
