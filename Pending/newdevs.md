@@ -60,9 +60,9 @@ Angular variable.
 
 ```html
 <ng-template #myTemplate let-patron="row">                                   
-  <div i18n>
+  <span i18n>
     Hello {{patron.pref_first_given_name() || patron.first_given_name()}}!
-  </div>
+  </span>
 </ng-template>
 ```
 
