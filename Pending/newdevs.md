@@ -109,6 +109,8 @@ export class MyClass implements OnInit {
       /*
       "barcode" must match the "name" attribute for the 
       <eg-grid-column/> that uses the cell template.
+
+      <eg-grid-column name="barcode" [cellTemplate]="barcodeTemplate" .../>
       
       "row" is the same row value used within the cell template.
      
