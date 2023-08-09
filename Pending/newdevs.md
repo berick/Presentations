@@ -9,11 +9,11 @@ a simple string value.
 
 The one exception to this rule are grid cell templates.  Cell templates
 allow the grid user to render HTML content within a grid cell instead of
-a simple string value.  A simple example of how this is useful is rendering
-a patron barcode as a HTML link instead of plain text, so the user can
+a simple string value.  A common example of how this is useful is rendering
+a patron barcode as an HTML link instead of plain text, so the user can
 click on the barcode to open the patron account.
 
-### Usage
+### Defining Templates
 
 A cell template is defined within the Angular markup, typically in the same 
 .html file as the grid it belongs to.  Each template gets a name and some 
@@ -32,7 +32,7 @@ a link:
 </ng-template>      
 ```
 
-### Template Context and Variables
+#### Template Context and Variables
 
 Cell templates are rendered by the grid, so each template only has 
 access to data that the grid also has access to.  The main (and typicall 
