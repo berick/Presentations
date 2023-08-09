@@ -110,9 +110,10 @@ export class MyClass implements OnInit {
       // <eg-grid-column/> that uses the cell template.
       //
       // "row" is the same row value used within the cell template.
+      //
       // Once again, this code checks to ses if the patron (here, "row")
       // has a "card" value then returns the barcode as the
-      // cell text.
+      // cell text if present, or empty string otherwise.
       barcode: row => row.card() ? row.card().barcode() : ''
     };
   }
