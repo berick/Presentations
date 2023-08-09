@@ -32,6 +32,17 @@ has a "card" value (via \*ngIf), then renders the patron barcode as a link:
 </ng-template>      
 ```
 
+#### Link The Template to Its Grid Cell
+
+Let the grid know which grid column should use the template to
+render its content.
+
+```html
+<eg-grid-column name="barcode" 
+  [cellTemplate]="barcodeTemplate" label="Barcode" i18n-label>                                              
+</eg-grid-column>       
+```
+
 #### Template Context and Variables
 
 Cell templates are rendered by the grid, so each template only has 
@@ -66,7 +77,47 @@ Angular variable.
 </ng-template>
 ```
 
-### Printing and Generating CSV Content
-...
+
+### Cell Template Printing and CSV Export Content
+
+Printing or exporting a grid as CSV requires the cell contents be
+plain text.  Since cell templates contain rendered HTML content, the
+print/export function needs a way to get a plain-text version of the
+cell content.
+
+Defining a plain text alternative for a cell template requires telling
+the grid how to find the data you intend to use.
+
+1. Define a text generator in the grid definition in the HTML markup.
+```html
+<eg-grid [cellTextGenerator]="cellTextGenerator" ...>
+    ...
+</eg-grid>
+```
+1. Define the cell text generator in the Typescript:
+```ts
+import {GridCellTextGenerator} from '@eg/share/grid/grid';
+
+// ...
+
+export class MyClass implements OnInit {
+  cellTextGenerator: GridCellTextGenerator;
+
+  ngOnInit() {
+    this.cellTextGenerator = {
+      // "barcode" must match the "name" attribute for the 
+      // <eg-grid-column/> that uses the cell template.
+      //
+      // "row" is the same row value used within the cell template.
+      // Once again, this code checks to ses if the patron (here, "row")
+      // has a "card" value then returns the barcode as the
+      // cell text.
+      barcode: row => row.card() ? row.card().barcode() : ''
+    };
+  }
+}
+```
+
+
 
 
