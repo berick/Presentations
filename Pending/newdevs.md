@@ -19,8 +19,8 @@ A cell template is defined within the Angular markup, typically in the same
 .html file as the grid it belongs to.  Each template gets a name and some 
 HTML content.  
 
-This template is named "barcodeTemplate" and renders a patron barcode as 
-a link:
+This template is named "barcodeTemplate".  It verifies each rendered patron
+has a "card" value (via \*ngIf), then renders the patron barcode as a link:
 
 ```html
 <ng-template #barcodeTemplate let-patron="row">                                   
