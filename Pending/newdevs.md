@@ -59,7 +59,11 @@ Once assigned, the variable may be used in the template like any other
 Angular variable.
 
 ```html
-<div i18n>Hello {{patron.pref_first_given_name()}}!</div>
+<ng-template #myTemplate let-patron="row">                                   
+  <div i18n>
+    Hello {{patron.pref_first_given_name() || patron.first_given_name()}}!
+  </div>
+</ng-template>
 ```
 
 ### Printing and Generating CSV Content
