@@ -52,7 +52,8 @@ to a template-local variable called "patron" using the `let-*` syntax:
 <ng-template #barcodeTemplate let-patron="row">
 ```
 
-A common approach is to simply say `let-row="row"` since it's clear and tidy.
+> [!NOTE]
+> A common approach is to say `let-row="row"` since it's clear and tidy.
 
 Once assigned, the variable may be used in the template like any other
 Angular variable.
