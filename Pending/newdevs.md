@@ -88,13 +88,13 @@ cell content.
 Defining a plain text alternative for a cell template requires telling
 the grid how to find the data you intend to use.
 
-1. Define a text generator in the grid definition in the HTML markup.
+* Define a text generator in the grid definition in the HTML markup.
 ```html
 <eg-grid [cellTextGenerator]="cellTextGenerator" ...>
     ...
 </eg-grid>
 ```
-1. Define the cell text generator in the Typescript:
+* Define the cell text generator in the Typescript:
 ```ts
 import {GridCellTextGenerator} from '@eg/share/grid/grid';
 
