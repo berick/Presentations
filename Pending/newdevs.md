@@ -215,7 +215,8 @@ import {ServerStoreService} from '@eg/core/server-store.service';
 // ...
 
 // Assumes "my.setting" is a workstation or user setting.
-this.serverStore.setItem('my.setting', 'Hello, Saturn!');
+this.serverStore.setItem('my.setting', 'Hello, Saturn!')
+.then(_ => console.debug('value is saved'));
 
 // getItem() works for all types
 this.serverStore.getItem('my.setting')
