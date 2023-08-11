@@ -129,5 +129,47 @@ export class MyClass implements OnInit {
 ```
 
 
+## Angular Store Services
+
+Store services allow users to track date longer than it might typically
+live within a given web page.  Evergreen Angular has two basic types of 
+store services: In-browswer and on the Evergreen server.  In turn, these 
+each have their own sub-types of data storage.  The decision to use a 
+certain type / sub-type depends on the context.
+
+### In-Browser Store
+
+#### Sub-Types
+
+* Browser Cookies (called "login session" storage).
+    * Persist for the duration of a login session.
+    * Available to all browser tabs
+    * Typical use:
+        * Authentication tokens
+        * Sensitive data that should not linger after logout, e.g. 
+          "last retrieved patron".
+* Browser localStorage
+    * Persist indefinitely
+    * Available to all browser tabs
+    * Typical use:
+        * Some local preferences that don't have / don't warrant a workstation
+          setting.
+        * Caching data that rarely changes.
+* Browser sessionStorage
+    * Persist for the duration of a single browser tab.
+    * Available to the creating tab only.
+    * Typical use:
+        * Unusued as of writing. 
+* Hatch Storage
+    * If Hatch is available, some special values can be stored there
+      to reduce the chances of accidental deletion, e.g. by clearing
+      browser data.
+    * Typical use:
+        * Storing registered workstations.
+* IndexedDB
+    * Persist indefinitely
+    * Available to all browser tabs
+    * Typical use:
+        * Data cache for the offline interface.
 
 
