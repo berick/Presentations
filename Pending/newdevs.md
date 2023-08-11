@@ -164,12 +164,65 @@ certain type / sub-type depends on the context.
     * If Hatch is available, some special values can be stored there
       to reduce the chances of accidental deletion, e.g. by clearing
       browser data.
+    * Internal use only.
     * Typical use:
         * Storing registered workstations.
 * IndexedDB
     * Persist indefinitely
     * Available to all browser tabs
+    * Generally for internal use only.
     * Typical use:
         * Data cache for the offline interface.
+
+#### Use
+
+```
+import {StoreService} from '@eg/core/store.service';
+
+// ...
+
+this.store.setLocalitem('key', 'value');
+this.store.setSessionitem('key', 'value');
+this.store.setLoginSessionitem('key', 'value');
+
+console.log('Value is', this.store.getLocalitem('key'));
+console.log('Value is', this.store.getSessionitem('key'));
+console.log('Value is', this.store.getLoginSessionitem('key'));
+```
+
+### Evergreen Store
+
+#### Sub-Types
+
+* Workstation settings
+    * Tied to the workstatoin in use.
+* User settings
+    * Tied to the logged-in user.
+* Org unit settings.
+    * Tied to the org unit of the workstation in use.
+    * Any org unit setting may also be a workstation OR user setting
+      as well, but not both.
+
+#### Use
+
+The type of each setting is determined by its configuration on the Evergreen
+server.  The Angular API is the same for all types, with the caveat that
+applying new values to org unit settings is not supported.
+
+```ts
+import {ServerStoreService} from '@eg/core/server-store.service';              
+
+// ...
+
+// Assumes "my.setting" is a workstation or user setting.
+this.serverStore.setItem('my.setting', 'Hello, Saturn!');
+
+// getItem() works for all types
+this.serverStore.getItem('my.setting')
+.then(s => console.log('Setting value is', s));
+```
+
+
+
 
 
