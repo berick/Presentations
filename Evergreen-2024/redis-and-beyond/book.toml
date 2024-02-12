@@ -1,0 +1,6 @@
+[book]
+authors = ["Bill Erickson"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Redis And Beyond"
