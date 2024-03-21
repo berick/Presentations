@@ -13,6 +13,10 @@ Software Development Engineer, King County Library System
 
 # Redis Project State of Affairs
 
+KeyDB
+
+https://docs.keydb.dev/
+
 big change; awaiting broader testing before merging to osrf main.
 
 Am I using it yet?  Is anyone?
@@ -40,6 +44,7 @@ redis passwords
 - command line auth
 
 redis monitor
+restarting redis is your friend.
 
 log stuff?
 
@@ -78,6 +83,7 @@ editor
 egsh
 -- requath
 -- flat fields by default.
+opensrf.router.info.summarize
 
 opensrf service 
 
