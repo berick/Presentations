@@ -1,4 +1,4 @@
-# Redis And Beyond
+# ~~Redis~~ Valkey And Beyond
 
 2024 Evergreen Conference
 
@@ -11,11 +11,12 @@ Software Development Engineer, King County Library System
 [https://github.com/berick/Presentations/tree/main/Evergreen-2024](
     https://github.com/berick/Presentations/tree/main/Evergreen-2024)
 
-# Redis Project State of Affairs
+# Project State of Affairs
+
+Flight of the Valkey!  (*If I'm the first here to make this joke, shame on us*).
 
 https://github.com/valkey-io/valkey
 
-Valkey
 
 big change; awaiting broader testing before merging to osrf main.
 
@@ -52,9 +53,9 @@ log stuff?
 
 # Multi-domain / high-availability / mesh
 
-* hosts file
-* opensrf_core.xml changes + passwords
-* copy redis-accounts.txt to all hosts.
+* hosts file (ditto ejabberd)
+* opensrf_core.xml changes + passwords (new)
+* copy redis-accounts.txt to all hosts. (new)
 * TODO: had to reset message bus on each host cuz of limitations in osrf_control
 
 * Listen on routable IP address
@@ -92,7 +93,6 @@ srfsh
 srfsh# request router opensrf.router.info.class.list
 srfsh# login admin demo123
 # See router logs on Host 2
-
 ```
 
 # Redis replace memcache / persistent auth tokens
@@ -130,7 +130,33 @@ Migrating C++ and Go to Rust.
 > in my life and I've never seen those kinds of numbers before."
 
 
+## Rust Router on Valkeys
+
+```
+# valkey-01 and valkey-02
+osrf_control -l --fast-shutdown-all
+
+
+# valkey-01
+sudo systemctl start eg-router
+
+# valkey-02
+osrf_control -l --start --service router
+
+# valkey-01 and valkey-02
+osrf_control -l --start-services
+
+# valkey-01
+egsh# req router opensrf.router.info.summarize
+```
+
+### gateway
+
+https://34.148.120.89/eg-http-gateway?service=open-ils.pcrud&method=open-ils.pcrud.search.cmrcfld&param=%22ANONYMOUS%22&param={%22id%22:{%22%3C%3E%22:0}}&format=hashfull
+
 Unit Tests
+
+DOCS: https://34.148.120.89/rust-docs/evergreen/index.html
 
 ```
 cargo watch -x "build --all"
@@ -162,7 +188,6 @@ exclude feature:
 ```
 
 redis cache
-
 
 https://crates.io/crates/sip2
 
