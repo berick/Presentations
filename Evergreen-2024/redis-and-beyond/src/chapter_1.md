@@ -2,8 +2,6 @@
 
 2024 Evergreen Conference
 
-Worcester, Massachusetts
-
 Bill Erickson
 
 Software Development Engineer, King County Library System
@@ -11,20 +9,29 @@ Software Development Engineer, King County Library System
 [https://github.com/berick/Presentations/tree/main/Evergreen-2024](
     https://github.com/berick/Presentations/tree/main/Evergreen-2024)
 
-# Project State of Affairs
+# State of the SUNION
 
-Flight of the Valkey!  (*If I'm the first here to make this joke, shame on us*).
+https://bugs.launchpad.net/opensrf/+bug/2017941
+
+* OpenSRF branch is pending merge (4.0?)
+* Evergreen components merged to 3.12
+
+# Flight of the Valkey! (*Obviously*)
+
+https://redis.io/blog/redis-adopts-dual-source-available-licensing/
 
 https://github.com/valkey-io/valkey
 
+# Dev VM How-To
 
-big change; awaiting broader testing before merging to osrf main.
+## Ansible
 
-Am I using it yet?  Is anyone?
+[https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis](
+    https://github.com/berick/evergreen-ansible-installer/tree/working/ubuntu-22.04-redis)
 
-# Dev VM How-to
+## Docker
 
-ansible
+[https://github.com/mcoia/eg-docker](https://github.com/mcoia/eg-docker)
 
 # Config files
 
@@ -152,7 +159,7 @@ egsh# req router opensrf.router.info.summarize
 
 ### gateway
 
-https://34.148.120.89/eg-http-gateway?service=open-ils.pcrud&method=open-ils.pcrud.search.cmrcfld&param=%22ANONYMOUS%22&param={%22id%22:{%22%3C%3E%22:0}}&format=hashfull
+https://valkey01.demo.kclseg.org/eg-http-gateway?service=open-ils.pcrud&method=open-ils.pcrud.search.cmrcfld&param=%22ANONYMOUS%22&param={%22id%22:{%22%3C%3E%22:0}}&format=hashfull
 
 Unit Tests
 
@@ -172,7 +179,8 @@ egsh
 -- scriptable like srfsh
 -- requath
 -- flat fields by default.
-opensrf.router.info.summarize (pvt vs. public)
+
+egsh# sip localhost:6001 login sip-user sip-pass
 egsh# sip localhost:6001 item-information CONC91000491
 
 opensrf service 
