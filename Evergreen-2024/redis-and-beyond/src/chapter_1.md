@@ -33,39 +33,47 @@ https://github.com/valkey-io/valkey
 
 [https://github.com/mcoia/eg-docker](https://github.com/mcoia/eg-docker)
 
-# Config files
+# Redis-Related Config Files
 
-redis-accounts.txt
-passwords in opensrf_core.xml and ~/.srfsh.xml
+* /openils/conf/redis-accounts.txt
+* /openils/conf/opensrf\_core.xml
+* /home/opensrf/.srfsh.xml
 
-How to change passwords and reset everything
+# Changing Redis Passwords
 
-# Migration How-to
+* Stop Redis
+* Modify redis-accounts.txt, opensrf\_core.xml
+* Start Redis
+* Restart Evergreen
 
-disable persist, etc.
+# Migrating from XMPP to Redis
+
+[https://evergreen-ils.org/documentation/release/RELEASE_NOTES_3_12.html#\_upgrading_to_evergreen_opensrf_redis](
+    https://evergreen-ils.org/documentation/release/RELEASE_NOTES_3_12.html#_upgrading_to_evergreen_opensrf_redis)
+   
+Note new gateway account.
 
 # Sysadmin and Debugging Tools
 
-redis passwords
-- stored
-- generated
-- command line auth
+* Default account / password
+* REDISCLI_AUTH=f42c7277-e452-44f8-8d5f-e34a15dd875f redis-cli monitor
 
-address structure
+# Redis Addresses
 
-redis monitor
-restarting redis is your friend.
+* opensrf:router:$username:$domain
+    * $username == router name
+* opensrf:service:$username:$domain:$service
+    * $username == service name
+* opensrf:client:$username:$domain:$hostname:$pid:$random
+    * $username == 'opensrf' (typically)
+    * $hostname:$pid:$random are for randomness and debugging
 
-log stuff?
+# High-Availability / Multi-Domain / Mesh
 
-# Multi-domain / high-availability / mesh
-
-* hosts file (ditto ejabberd)
-* opensrf_core.xml changes + passwords (new)
+* Redis listens on routable IP address
+* hosts file or DNS for cluster hosts
+* opensrf\_core.xml changes + passwords (new)
 * copy redis-accounts.txt to all hosts. (new)
-* TODO: had to reset message bus on each host cuz of limitations in osrf_control
-
-* Listen on routable IP address
 * Same username/password requirement for all domains
 * how it works: drawing
     * listener connects to remote redis instances to register w/ remote routers
@@ -74,7 +82,7 @@ log stuff?
     * worker opens connection to remote domain bus to send replies
       to clients whose API calls were cross-domain routed.
 
-# Mesh
+# Mesh Live
 
 ```
 # Host 1 --
@@ -157,6 +165,10 @@ osrf_control -l --start-services
 egsh# req router opensrf.router.info.summarize
 ```
 
+### Websockets
+
+Parallel request throttling
+
 ### gateway
 
 https://valkey01.demo.kclseg.org/eg-http-gateway?service=open-ils.pcrud&method=open-ils.pcrud.search.cmrcfld&param=%22ANONYMOUS%22&param={%22id%22:{%22%3C%3E%22:0}}&format=hashfull
@@ -182,6 +194,8 @@ egsh
 
 egsh# sip localhost:6001 login sip-user sip-pass
 egsh# sip localhost:6001 item-information CONC91000491
+egsh# db idl search aou name ~\* "branch"
+egsh# db idl search aou name ilike "%branch%"
 
 opensrf service 
 
