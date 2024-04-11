@@ -1,4 +1,4 @@
-# ~~Redis~~ Valkey And Beyond
+# Redis (Valkey?) And Beyond
 
 2024 Evergreen Conference
 
@@ -9,6 +9,8 @@ Software Development Engineer, King County Library System
 [https://github.com/berick/Presentations/tree/main/Evergreen-2024](
     https://github.com/berick/Presentations/tree/main/Evergreen-2024)
 
+---
+
 # State of the SUNION*
 
 [https://bugs.launchpad.net/opensrf/+bug/2017941](Bug 2017941)
@@ -16,16 +18,18 @@ Software Development Engineer, King County Library System
 * OpenSRF branch is pending merge (4.0?)
 * Evergreen components merged to 3.12
 
-[https://redis.io/docs/latest/commands/sunion/](\*https://redis.io/docs/latest/commands/sunion/)
+[\*https://redis.io/docs/latest/commands/sunion/](https://redis.io/docs/latest/commands/sunion/)
 
-<div style="page-break-before:always">&nbsp;</div>
-<p></p>
+---
 
-# Flight of the Valkey! (*obviously*)
+# Flight of the Valkey! (*i mean...*)
 
-https://redis.io/blog/redis-adopts-dual-source-available-licensing/
+[https://redis.io/blog/redis-adopts-dual-source-available-licensing/](
+    https://redis.io/blog/redis-adopts-dual-source-available-licensing/)
 
-https://github.com/valkey-io/valkey
+[https://github.com/valkey-io/valkey](https://github.com/valkey-io/valkey)
+
+---
 
 # Dev VM How-To
 
@@ -38,12 +42,16 @@ https://github.com/valkey-io/valkey
 
 [https://github.com/mcoia/eg-docker](https://github.com/mcoia/eg-docker)
 
+---
+
 # Redis-Related Config Files
 
 * /openils/conf/redis-accounts.txt
     * Permissions
 * /openils/conf/opensrf\_core.xml
 * /home/opensrf/.srfsh.xml
+
+---
 
 # Changing Redis Passwords
 
@@ -52,6 +60,8 @@ https://github.com/valkey-io/valkey
 * Start Redis
 * Restart Evergreen
 
+---
+
 # Migrating from XMPP to Redis
 
 [https://evergreen-ils.org/documentation/release/RELEASE_NOTES_3_12.html#\_upgrading_to_evergreen_opensrf_redis](
@@ -59,10 +69,18 @@ https://github.com/valkey-io/valkey
    
 Note new gateway account.
 
+---
+
 # Sysadmin and Debugging Tools
 
-* Default account / password
-* REDISCLI\_AUTH=f42c7277-e452-44f8-8d5f-e34a15dd875f redis-cli monitor
+```sh
+REDISCLI_AUTH=<PASSWORD> redis-cli monitor
+
+REDISCLI_AUTH=<PASSWORD> redis-cli
+127.0.0.1:6379> scan 0 match opensrf:*
+```
+
+---
 
 # Redis Addresses
 
@@ -77,6 +95,8 @@ prefix : purpose : name : domain [: extra...]
 * opensrf:client:$username:$domain:$hostname:$pid:$random
     * $username == 'opensrf' (typically)
     * $hostname:$pid:$random are for randomness and debugging
+
+---
 
 # High-Availability / Multi-Domain / Mesh
 
@@ -93,6 +113,8 @@ prefix : purpose : name : domain [: extra...]
       to clients whose API calls were cross-domain routed.
 
 https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU/edit
+
+---
 
 # Mesh Live
 
@@ -122,6 +144,8 @@ srfsh# login admin demo123
 # See router logs on Host 2
 ```
 
+---
+
 # Redis replace memcache / persistent auth tokens
 
 Work up a patch. What all uses memcache now?
@@ -132,7 +156,11 @@ Persist config. (optionally persist by database?)
 
 Other stuff we can cache?
 
+---
+
 # Rust Stuff
+
+---
 
 # Why Rust?
 
@@ -143,6 +171,8 @@ Cross-Platform
 Community
 Build System
 Doc Tests
+
+---
 
 # On Google migrating C++ and Go to Rust
 
@@ -167,20 +197,28 @@ Doc Tests
 [https://www.theregister.com/2024/03/31/rust_google_c/](
     https://www.theregister.com/2024/03/31/rust_google_c/)
 
+---
+
 # Why Not Rust?
 
 > In order to gain passage, payment must be made, payment intended to weaken any intruder.
 
 -- Albus Dumbledore, 2009
 
+---
+
 # KCLS Rust Project
 
 https://github.com/kcls/evergreen-universe-rs
+
+---
 
 # Evergreen Example
 
 [https://github.com/kcls/evergreen-universe-rs/blob/main/evergreen/README.md](
     https://github.com/kcls/evergreen-universe-rs/blob/main/evergreen/README.md)
+
+---
 
 ## Rust Router on Valkeys
 
@@ -202,9 +240,13 @@ osrf_control -l --start-services
 egsh# req router opensrf.router.info.summarize
 ```
 
+---
+
 ### Websockets
 
 Parallel request throttling
+
+---
 
 ### gateway
 
@@ -255,4 +297,25 @@ redis cache
 https://crates.io/crates/sip2
 
 https://github.com/berick/sip2-mediator-rs
+
+---
+
+# Evergreen Services
+
+* Service implement the `evergreen::osrf::app::Application` trait.
+    * Compared to Perl/C which dynamically load modules.
+
+```sh
+cargo run --package evergreen --bin eg-service-rs-circ
+# OR 
+sudo systemctl restart eg-service-rs-circ
+```
+
+* Doc Summary
+* introspect open-ils.rs-circ
+* introspect-summary open-ils.rs-circ
+* ParamCounts
+    * req open-ils.rs-circ opensrf.system.method.all 1 2 3
+
+
 
