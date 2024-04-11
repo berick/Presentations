@@ -9,14 +9,19 @@ Software Development Engineer, King County Library System
 [https://github.com/berick/Presentations/tree/main/Evergreen-2024](
     https://github.com/berick/Presentations/tree/main/Evergreen-2024)
 
-# State of the SUNION
+# State of the SUNION*
 
-https://bugs.launchpad.net/opensrf/+bug/2017941
+[https://bugs.launchpad.net/opensrf/+bug/2017941](Bug 2017941)
 
 * OpenSRF branch is pending merge (4.0?)
 * Evergreen components merged to 3.12
 
-# Flight of the Valkey! (*Obviously*)
+[https://redis.io/docs/latest/commands/sunion/](\*https://redis.io/docs/latest/commands/sunion/)
+
+<div style="page-break-before:always">&nbsp;</div>
+<p></p>
+
+# Flight of the Valkey! (*obviously*)
 
 https://redis.io/blog/redis-adopts-dual-source-available-licensing/
 
@@ -36,6 +41,7 @@ https://github.com/valkey-io/valkey
 # Redis-Related Config Files
 
 * /openils/conf/redis-accounts.txt
+    * Permissions
 * /openils/conf/opensrf\_core.xml
 * /home/opensrf/.srfsh.xml
 
@@ -56,9 +62,13 @@ Note new gateway account.
 # Sysadmin and Debugging Tools
 
 * Default account / password
-* REDISCLI_AUTH=f42c7277-e452-44f8-8d5f-e34a15dd875f redis-cli monitor
+* REDISCLI\_AUTH=f42c7277-e452-44f8-8d5f-e34a15dd875f redis-cli monitor
 
 # Redis Addresses
+
+```
+prefix : purpose : name : domain [: extra...]
+```
 
 * opensrf:router:$username:$domain
     * $username == router name
@@ -70,7 +80,7 @@ Note new gateway account.
 
 # High-Availability / Multi-Domain / Mesh
 
-* Redis listens on routable IP address
+* Configure Redis to llisten on a routable IP address
 * hosts file or DNS for cluster hosts
 * opensrf\_core.xml changes + passwords (new)
 * copy redis-accounts.txt to all hosts. (new)
@@ -81,6 +91,8 @@ Note new gateway account.
       to a listener that's not on its domain.
     * worker opens connection to remote domain bus to send replies
       to clients whose API calls were cross-domain routed.
+
+https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU/edit
 
 # Mesh Live
 
@@ -122,9 +134,17 @@ Other stuff we can cache?
 
 # Rust Stuff
 
-https://www.theregister.com/2024/03/31/rust_google_c/
+# Why Rust?
 
-Migrating C++ and Go to Rust.
+Memory Safety
+Performance
+Thread Safety
+Cross-Platform
+Community
+Build System
+Doc Tests
+
+# On Google migrating C++ and Go to Rust
 
 > A bit more than half of his developers say that Rust is easier to 
 > review, according to Bergstrom.
@@ -144,6 +164,23 @@ Migrating C++ and Go to Rust.
 > within their system. … I've been through more than one language survey
 > in my life and I've never seen those kinds of numbers before."
 
+[https://www.theregister.com/2024/03/31/rust_google_c/](
+    https://www.theregister.com/2024/03/31/rust_google_c/)
+
+# Why Not Rust?
+
+> In order to gain passage, payment must be made, payment intended to weaken any intruder.
+
+-- Albus Dumbledore, 2009
+
+# KCLS Rust Project
+
+https://github.com/kcls/evergreen-universe-rs
+
+# Evergreen Example
+
+[https://github.com/kcls/evergreen-universe-rs/blob/main/evergreen/README.md](
+    https://github.com/kcls/evergreen-universe-rs/blob/main/evergreen/README.md)
 
 ## Rust Router on Valkeys
 
@@ -191,6 +228,10 @@ egsh
 -- scriptable like srfsh
 -- requath
 -- flat fields by default.
+
+echo -e "sip localhost:6001 login sip-user sip-pass\nsip localhost:6001 item-information CONC40000583" | egsh
+
+cstore search au {"id":{"<":5}}
 
 egsh# sip localhost:6001 login sip-user sip-pass
 egsh# sip localhost:6001 item-information CONC91000491
