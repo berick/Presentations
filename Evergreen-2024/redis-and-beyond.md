@@ -73,20 +73,18 @@ Note new gateway account.
 
 # Sysadmin and Debugging Tools
 
-```sh
-REDISCLI_AUTH=<PASSWORD> redis-cli monitor
+    !sh
+    REDISCLI_AUTH=<PASSWORD> redis-cli monitor
 
-REDISCLI_AUTH=<PASSWORD> redis-cli
-127.0.0.1:6379> scan 0 match opensrf:*
-```
+    REDISCLI_AUTH=<PASSWORD> redis-cli
+
+    127.0.0.1:6379> scan 0 match opensrf:*
 
 ---
 
 # Redis Addresses
 
-```
-prefix : purpose : name : domain [: extra...]
-```
+    prefix : purpose : name : domain [: extra...]
 
 * opensrf:router:$username:$domain
     * $username == router name
@@ -112,37 +110,36 @@ prefix : purpose : name : domain [: extra...]
     * worker opens connection to remote domain bus to send replies
       to clients whose API calls were cross-domain routed.
 
+TODO: image
 https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU/edit
 
 ---
 
 # Mesh Live
 
-```
-# Host 1 --
-osrf_control -l --start --service router
+    # Host 1 --
+    osrf_control -l --start --service router
 
-# Host 2 --
-osrf_control -l --start --service router
+    # Host 2 --
+    osrf_control -l --start --service router
 
-# Host 1 --
-osrf_control -l --start-services
+    # Host 1 --
+    osrf_control -l --start-services
 
-# Host 2 --
-osrf_control -l --start-services
+    # Host 2 --
+    osrf_control -l --start-services
 
-# Host 1 --
-srfsh
-srfsh# request router opensrf.router.info.class.list
-srfsh# login admin demo123
-# See router logs on Host 1
+    # Host 1 --
+    srfsh
+    srfsh# request router opensrf.router.info.class.list
+    srfsh# login admin demo123
+    # See router logs on Host 1
 
-osrf_control -l --stop-services
-srfsh
-srfsh# request router opensrf.router.info.class.list
-srfsh# login admin demo123
-# See router logs on Host 2
-```
+    osrf_control -l --stop-services
+    srfsh
+    srfsh# request router opensrf.router.info.class.list
+    srfsh# login admin demo123
+    # See router logs on Host 2
 
 ---
 
@@ -150,7 +147,8 @@ srfsh# login admin demo123
 
 Work up a patch. What all uses memcache now?
 
-https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-redis-for-cache
+[https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-redis-for-cache](
+    https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-redis-for-cache)
 
 Persist config. (optionally persist by database?)
 
@@ -164,13 +162,13 @@ Other stuff we can cache?
 
 # Why Rust?
 
-Memory Safety
-Performance
-Thread Safety
-Cross-Platform
-Community
-Build System
-Doc Tests
+* Memory Safety
+* Performance
+* Thread Safety
+* Cross-Platform
+* Community
+* Build System
+* Doc Tests
 
 ---
 
@@ -178,7 +176,7 @@ Doc Tests
 
 > A bit more than half of his developers say that Rust is easier to 
 > review, according to Bergstrom.
-
+  
 > "When we sort of look into why that is," he said, "we get to sort of the
 > most incredible question of the survey, the one that kind of blew all of
 > us away, which is the confidence that people have in the correctness of
@@ -186,8 +184,12 @@ Doc Tests
 > other languages, how confident do you feel that your team's Rust code is
 > correct?"
 
-> The answer, Bergstrom said, was 85 percent.
+---
 
+# On Google migrating C++ and Go to Rust
+
+> The answer, Bergstrom said, was 85 percent.
+  
 > "That is a massive number," he said. "I could not get 85 percent of this
 > room to agree that we like M&M's. Eight-five percent of people believe
 > that their Rust code is more likely to be correct than the other code
@@ -209,7 +211,19 @@ Doc Tests
 
 # KCLS Rust Project
 
-https://github.com/kcls/evergreen-universe-rs
+[https://github.com/kcls/evergreen-universe-rs](https://github.com/kcls/evergreen-universe-rs)
+
+---
+
+# Unit Tests
+
+* [https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html](
+    https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html)
+
+# Documentation
+
+[https://valkey01.demo.kclseg.org/rust-docs/evergreen/index.html](
+    https://valkey01.demo.kclseg.org/rust-docs/evergreen/index.html)
 
 ---
 
@@ -220,102 +234,107 @@ https://github.com/kcls/evergreen-universe-rs
 
 ---
 
+# Websockets
+
+* Parallel request throttling
+    * [https://bugs.launchpad.net/evergreen/+bugs?field.tag=parallel-requests](Parallel Requets Tag)
+
+    2024-04-15 10:58:53 eg22 eg-websockets [WARN:126158:eg_websockets:464:1713193133884-00006] 
+        Session (127.0.0.1:60972) MAX_ACTIVE_REQUESTS reached. 1 messages queued
+
+Poll times / restarting
+
+---
+
+# gateway
+
+[Gateway Hash Format](https://valkey01.demo.kclseg.org/eg-http-gateway?service=open-ils.pcrud&method=open-ils.pcrud.search.cmrcfld&param=%22ANONYMOUS%22&param={%22id%22:{%22%3C%3E%22:0}}&format=hashfull)
+
+---
+
 ## Rust Router on Valkeys
 
-```
-# valkey-01 and valkey-02
-osrf_control -l --fast-shutdown-all
+    # valkey-01 and valkey-02
+    osrf_control -l --fast-shutdown-all
 
+    # valkey-01
+    sudo systemctl start eg-router
 
-# valkey-01
-sudo systemctl start eg-router
+    # valkey-02
+    osrf_control -l --start --service router
 
-# valkey-02
-osrf_control -l --start --service router
+    # valkey-01 and valkey-02
+    osrf_control -l --start-services
 
-# valkey-01 and valkey-02
-osrf_control -l --start-services
-
-# valkey-01
-egsh# req router opensrf.router.info.summarize
-```
+    # valkey-01
+    egsh# req router opensrf.router.info.summarize
 
 ---
 
-### Websockets
+# egsh
 
-Parallel request throttling
+## General Purpose Diagnostic and Debugging Tool
 
----
-
-### gateway
-
-https://valkey01.demo.kclseg.org/eg-http-gateway?service=open-ils.pcrud&method=open-ils.pcrud.search.cmrcfld&param=%22ANONYMOUS%22&param={%22id%22:{%22%3C%3E%22:0}}&format=hashfull
-
-Unit Tests
-
-DOCS: https://34.148.120.89/rust-docs/evergreen/index.html
-
-```
-cargo watch -x "build --all"
-```
-
-https://developers.slashdot.org/story/24/02/28/1529238/white-house-urges-devs-to-switch-to-memory-safe-programming-languages
-
-editor
--- show a simple usage example / compare to C?
-
-egsh
--- general purpose diagnostic / debugging tool
--- scriptable like srfsh
--- requath
--- flat fields by default.
-
-echo -e "sip localhost:6001 login sip-user sip-pass\nsip localhost:6001 item-information CONC40000583" | egsh
-
-cstore search au {"id":{"<":5}}
-
-egsh# sip localhost:6001 login sip-user sip-pass
-egsh# sip localhost:6001 item-information CONC91000491
-egsh# db idl search aou name ~\* "branch"
-egsh# db idl search aou name ilike "%branch%"
-
-opensrf service 
-
-introspect-summary open-ils.rs-circ
-
-jsonquery
-
-exclude feature:
-
-```
-{"select":{"bre":{"exclude":["marc","vis_attr_vector"]}},"from":"bre"}
-```
-
-redis cache
-
-https://crates.io/crates/sip2
-
-https://github.com/berick/sip2-mediator-rs
+srfsh plus a few additions.
 
 ---
 
-# Evergreen Services
+# egsh / Reqauth and Formatting
+
+    egsh# login admin demo123
+    egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
+    egsh# pref set json_as_wire_protocal true
+    egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
+
+---
+
+# egsh / SIP, etc.
+
+[https://crates.io/crates/sip2](https://crates.io/crates/sip2)
+
+    !sh
+    egsh# sip localhost:6001 login sip-user sip-pass
+    egsh# sip localhost:6001 item-information CONC91000491
+    egsh# cstore retrieve aou 1
+    egsh# cstore search au {"id":{"<":5}}
+
+---
+
+# egsh / --with-database
+
+    egsh# db idl search aou shortname = "BR1"
+    egsh# db idl search aou name ~\* "branch"
+    egsh# db idl search aou name ilike "%branch%"
+
+---
+
+# JSON Query & rs-store
+
+    egsh# req open-ils.rs-store open-ils.rs-store.json_query {"select":{"bre":{"exclude":["marc","vis_attr_vector"]}},"from":"bre"}
+
+
+---
+
+# OpenSRF/Evergreen Services
 
 * Service implement the `evergreen::osrf::app::Application` trait.
     * Compared to Perl/C which dynamically load modules.
 
-```sh
-cargo run --package evergreen --bin eg-service-rs-circ
+
+    cargo run --package evergreen --bin eg-service-rs-circ
+
 # OR 
-sudo systemctl restart eg-service-rs-circ
-```
 
-* Doc Summary
-* introspect open-ils.rs-circ
-* introspect-summary open-ils.rs-circ
-* ParamCounts
-    * req open-ils.rs-circ opensrf.system.method.all 1 2 3
+    sudo systemctl restart eg-service-rs-circ
+
+---
+
+# OpenSRF/Evergreen Services
+
+    egsh# introspect-summary open-ils.rs-circ
+    egsh# req open-ils.rs-circ opensrf.system.method.all 1 2 3
+
+---
 
 
-
+https://github.com/berick/sip2-mediator-rs
