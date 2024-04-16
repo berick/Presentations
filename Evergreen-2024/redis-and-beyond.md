@@ -1,3 +1,5 @@
+<!-- class: invert -->
+
 # Redis (Valkey?) And Beyond
 
 2024 Evergreen Conference
@@ -11,14 +13,12 @@ Software Development Engineer, King County Library System
 
 ---
 
-# State of the SUNION*
+# State of the SUNION
 
-[https://bugs.launchpad.net/opensrf/+bug/2017941](Bug 2017941)
+[Bug 2017941](https://bugs.launchpad.net/opensrf/+bug/2017941)
 
 * OpenSRF branch is pending merge (4.0?)
 * Evergreen components merged to 3.12
-
-[\*https://redis.io/docs/latest/commands/sunion/](https://redis.io/docs/latest/commands/sunion/)
 
 ---
 
@@ -46,8 +46,10 @@ Software Development Engineer, King County Library System
 
 # Redis-Related Config Files
 
+<!-- Discuss permissions for /openils/conf/redis-accounts.txt -->
+
 * /openils/conf/redis-accounts.txt
-    * Permissions
+    * [Redis ACLs](https://redis.io/docs/latest/operate/oss_and_stack/management/security/acl/)
 * /openils/conf/opensrf\_core.xml
 * /home/opensrf/.srfsh.xml
 
@@ -56,7 +58,7 @@ Software Development Engineer, King County Library System
 # Changing Redis Passwords
 
 * Stop Redis
-* Modify redis-accounts.txt, opensrf\_core.xml
+* Modify redis-accounts.txt, opensrf\_core.xml, .srfsh.xml
 * Start Redis
 * Restart Evergreen
 
@@ -64,21 +66,22 @@ Software Development Engineer, King County Library System
 
 # Migrating from XMPP to Redis
 
+<!-- New 'gateway' account -->
+
 [https://evergreen-ils.org/documentation/release/RELEASE_NOTES_3_12.html#\_upgrading_to_evergreen_opensrf_redis](
     https://evergreen-ils.org/documentation/release/RELEASE_NOTES_3_12.html#_upgrading_to_evergreen_opensrf_redis)
    
-Note new gateway account.
-
 ---
 
 # Sysadmin and Debugging Tools
 
-    !sh
-    REDISCLI_AUTH=<PASSWORD> redis-cli monitor
+```sh
+REDISCLI_AUTH=<PASSWORD> redis-cli monitor
 
-    REDISCLI_AUTH=<PASSWORD> redis-cli
+REDISCLI_AUTH=<PASSWORD> redis-cli
 
-    127.0.0.1:6379> scan 0 match opensrf:*
+127.0.0.1:6379> scan 0 match opensrf:*
+```
 
 ---
 
@@ -86,13 +89,14 @@ Note new gateway account.
 
     prefix : purpose : name : domain [: extra...]
 
-* opensrf:router:$username:$domain
-    * $username == router name
-* opensrf:service:$username:$domain:$service
-    * $username == service name
-* opensrf:client:$username:$domain:$hostname:$pid:$random
-    * $username == 'opensrf' (typically)
-    * $hostname:$pid:$random are for randomness and debugging
+* opensrf:router:\$username:$domain
+    * \$username == router name
+* opensrf:service:\$username:\$domain:\$service
+    * \$username == 'opensrf' (typically)
+    * \$service == service name
+* opensrf:client:\$username:\$domain:\$hostname:\$pid:\$random
+    * \$username == 'opensrf' (typically)
+    * \$hostname:\$pid:\$random are for randomness and debugging
 
 ---
 
@@ -117,42 +121,45 @@ https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU
 
 # Mesh Live
 
-    # Host 1 --
-    osrf_control -l --start --service router
+```sh
+# Host 1 --
+osrf_control -l --start --service router
 
-    # Host 2 --
-    osrf_control -l --start --service router
+# Host 2 --
+osrf_control -l --start --service router
 
-    # Host 1 --
-    osrf_control -l --start-services
+# Host 1 --
+osrf_control -l --start-services
 
-    # Host 2 --
-    osrf_control -l --start-services
+# Host 2 --
+osrf_control -l --start-services
 
-    # Host 1 --
-    srfsh
-    srfsh# request router opensrf.router.info.class.list
-    srfsh# login admin demo123
-    # See router logs on Host 1
+# Host 1 --
+srfsh
+srfsh# request router opensrf.router.info.class.list
+srfsh# login admin demo123
+# See router logs on Host 1
 
-    osrf_control -l --stop-services
-    srfsh
-    srfsh# request router opensrf.router.info.class.list
-    srfsh# login admin demo123
-    # See router logs on Host 2
+osrf_control -l --stop-services
+srfsh
+srfsh# request router opensrf.router.info.class.list
+srfsh# login admin demo123
+# See router logs on Host 2
+```
 
 ---
 
 # Redis replace memcache / persistent auth tokens
 
-Work up a patch. What all uses memcache now?
+## Work in Progress
 
-[https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-redis-for-cache](
+[user/berick/lpxxx-redis-for-cache](
     https://git.evergreen-ils.org/?p=working/OpenSRF.git;a=shortlog;h=refs/heads/user/berick/lpxxx-redis-for-cache)
 
-Persist config. (optionally persist by database?)
+## What else?
 
-Other stuff we can cache?
+    * Auth sessions
+    * SIP2Mediator sessions.
 
 ---
 
@@ -163,12 +170,12 @@ Other stuff we can cache?
 # Why Rust?
 
 * Memory Safety
-* Performance
 * Thread Safety
+* Performance
 * Cross-Platform
-* Community
 * Build System
 * Doc Tests
+* Community
 
 ---
 
@@ -183,6 +190,9 @@ Other stuff we can cache?
 > the Rust code that they're looking at – so in comparison to code in
 > other languages, how confident do you feel that your team's Rust code is
 > correct?"
+
+[https://www.theregister.com/2024/03/31/rust_google_c/](
+    https://www.theregister.com/2024/03/31/rust_google_c/)
 
 ---
 
@@ -204,8 +214,8 @@ Other stuff we can cache?
 # Why Not Rust?
 
 > In order to gain passage, payment must be made, payment intended to weaken any intruder.
-
--- Albus Dumbledore, 2009
+>
+> -- Albus Dumbledore, 2009
 
 ---
 
@@ -215,16 +225,17 @@ Other stuff we can cache?
 
 ---
 
-# Unit Tests
-
-* [https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html](
-    https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html)
-
 # Documentation
 
 [https://valkey01.demo.kclseg.org/rust-docs/evergreen/index.html](
     https://valkey01.demo.kclseg.org/rust-docs/evergreen/index.html)
 
+---
+
+# Unit Tests
+
+[https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html](
+    https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html)
 ---
 
 # Evergreen Example
@@ -236,13 +247,14 @@ Other stuff we can cache?
 
 # Websockets
 
-* Parallel request throttling
-    * [https://bugs.launchpad.net/evergreen/+bugs?field.tag=parallel-requests](Parallel Requets Tag)
+## Parallel request throttling
 
-    2024-04-15 10:58:53 eg22 eg-websockets [WARN:126158:eg_websockets:464:1713193133884-00006] 
-        Session (127.0.0.1:60972) MAX_ACTIVE_REQUESTS reached. 1 messages queued
+[Parallel Requests Issue](https://bugs.launchpad.net/evergreen/+bugs?field.tag=parallel-requests)
 
-Poll times / restarting
+```
+2024-04-15 10:58:53 eg22 eg-websockets [WARN:126158:eg_websockets:464:1713193133884-00006] 
+    Session (127.0.0.1:60972) MAX_ACTIVE_REQUESTS reached. 1 messages queued
+```
 
 ---
 
@@ -254,20 +266,22 @@ Poll times / restarting
 
 ## Rust Router on Valkeys
 
-    # valkey-01 and valkey-02
-    osrf_control -l --fast-shutdown-all
+```sh
+# valkey-01 and valkey-02
+osrf_control -l --fast-shutdown-all
 
-    # valkey-01
-    sudo systemctl start eg-router
+# valkey-01
+sudo systemctl start eg-router
 
-    # valkey-02
-    osrf_control -l --start --service router
+# valkey-02
+osrf_control -l --start --service router
 
-    # valkey-01 and valkey-02
-    osrf_control -l --start-services
+# valkey-01 and valkey-02
+osrf_control -l --start-services
 
-    # valkey-01
-    egsh# req router opensrf.router.info.summarize
+# valkey-01
+egsh# req router opensrf.router.info.summarize
+```
 
 ---
 
@@ -333,9 +347,9 @@ Poll times / restarting
 
 # OpenSRF/Evergreen Services
 
-* Service implement the `evergreen::osrf::app::Application` trait.
-    * Compared to Perl/C which dynamically load modules.
+Services implement the `evergreen::osrf::app::Application` Rust trait.
 
+Compared to Perl/C which dynamically load modules.
 
     cargo run --package evergreen --bin eg-service-rs-circ
 
@@ -347,10 +361,11 @@ Poll times / restarting
 
 # OpenSRF/Evergreen Services
 
+TODO: Threaded; Direct to drone delivery
+
     egsh# introspect-summary open-ils.rs-circ
+
     egsh# req open-ils.rs-circ opensrf.system.method.all 1 2 3
 
 ---
 
-
-https://github.com/berick/sip2-mediator-rs
