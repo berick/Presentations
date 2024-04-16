@@ -271,39 +271,56 @@ Poll times / restarting
 
 ---
 
-# egsh
+# egsh / Eggshell!
 
 ## General Purpose Diagnostic and Debugging Tool
 
-srfsh plus a few additions.
+### srfsh with a few additions.
 
 ---
 
 # egsh / Reqauth and Formatting
 
     egsh# login admin demo123
+
     egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
+
     egsh# pref set json_as_wire_protocal true
+
     egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
 
 ---
 
-# egsh / SIP, etc.
+# egsh / cstore
+
+    egsh# cstore retrieve aou 1
+
+    egsh# cstore search au {"id":{"<":5}}
+
+    egsh# cstore json_query {"select":{"bre":["id"]},"from":"bre"}
+
+---
+
+# egsh / SIP
 
 [https://crates.io/crates/sip2](https://crates.io/crates/sip2)
 
-    !sh
     egsh# sip localhost:6001 login sip-user sip-pass
+
     egsh# sip localhost:6001 item-information CONC91000491
-    egsh# cstore retrieve aou 1
-    egsh# cstore search au {"id":{"<":5}}
+
+    egsh# sip localhost:6001 patron-status 99999335545
+
+    egsh# sip localhost:6001 patron-information 99999335545
 
 ---
 
-# egsh / --with-database
+# egsh / `--with-database`
 
     egsh# db idl search aou shortname = "BR1"
+
     egsh# db idl search aou name ~\* "branch"
+
     egsh# db idl search aou name ilike "%branch%"
 
 ---
@@ -311,7 +328,6 @@ srfsh plus a few additions.
 # JSON Query & rs-store
 
     egsh# req open-ils.rs-store open-ils.rs-store.json_query {"select":{"bre":{"exclude":["marc","vis_attr_vector"]}},"from":"bre"}
-
 
 ---
 
