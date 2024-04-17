@@ -1,6 +1,8 @@
 <!-- class: invert -->
 
-# Redis (Valkey?) And Beyond
+<!-- Building: marp -w redis-and-beyond.md -->
+
+# Redis And Beyond
 
 2024 Evergreen Conference
 
@@ -17,8 +19,8 @@ Software Development Engineer, King County Library System
 
 [Bug 2017941](https://bugs.launchpad.net/opensrf/+bug/2017941)
 
-* OpenSRF branch is pending merge (4.0?)
 * Evergreen components merged to 3.12
+* OpenSRF branch is pending merge (4.0?)
 
 ---
 
@@ -31,7 +33,7 @@ Software Development Engineer, King County Library System
 
 ---
 
-# Dev VM How-To
+# Dev VMs
 
 ## Ansible
 
@@ -58,7 +60,7 @@ Software Development Engineer, King County Library System
 # Changing Redis Passwords
 
 * Stop Redis
-* Modify redis-accounts.txt, opensrf\_core.xml, .srfsh.xml
+* Modify redis-accounts.txt, opensrf\_core.xml, .srfsh.xml as needed
 * Start Redis
 * Restart Evergreen
 
@@ -76,27 +78,68 @@ Software Development Engineer, King County Library System
 # Sysadmin and Debugging Tools
 
 ```sh
-REDISCLI_AUTH=<PASSWORD> redis-cli monitor
-
 REDISCLI_AUTH=<PASSWORD> redis-cli
 
 127.0.0.1:6379> scan 0 match opensrf:*
+
+REDISCLI_AUTH=<PASSWORD> redis-cli monitor
 ```
 
 ---
 
 # Redis Addresses
 
-    prefix : purpose : name : domain [: extra...]
+## General Structure
 
-* opensrf:router:\$username:$domain
-    * \$username == router name
-* opensrf:service:\$username:\$domain:\$service
-    * \$username == 'opensrf' (typically)
-    * \$service == service name
-* opensrf:client:\$username:\$domain:\$hostname:\$pid:\$random
-    * \$username == 'opensrf' (typically)
-    * \$hostname:\$pid:\$random are for randomness and debugging
+```
+prefix : purpose : username : domain [: extra...]
+```
+
+## Routers
+
+```
+prefix : purpose : router-name : domain
+
+'opensrf:router:router:public.localhost'
+```
+
+--- 
+
+# Redis Addresses...
+<!-- 
+username for router/service allow like entities on the same domain
+serving different populateions.
+
+For clients it's mostly for consistency of address formatting
+-->
+
+## Services
+
+```
+prefix : purpose : username : domain : service
+
+'opensrf:service:opensrf:private.localhost:open-ils.cstore'
+```
+
+## Clients
+
+```
+prefix : purpose : username : domain : hostname : pid : random
+
+'opensrf:client:opensrf:private.localhost:eg22:78870:368956'
+```
+
+--- 
+
+# Router Service Address
+<!-- 
+Redis doesn't have a message wrapper like XMPP, so the "router_class"
+has to be encoded in the Transport Message.
+-->
+
+```
+'opensrf:service:_:_:open-ils.cstore'
+```
 
 ---
 
@@ -221,6 +264,12 @@ srfsh# login admin demo123
 
 # KCLS Rust Project
 
+<!-- 
+    Makefile 
+    systemd support
+    /usr/local/bin/, etc.
+-->
+
 [https://github.com/kcls/evergreen-universe-rs](https://github.com/kcls/evergreen-universe-rs)
 
 ---
@@ -285,33 +334,43 @@ egsh# req router opensrf.router.info.summarize
 
 ---
 
-# egsh / Eggshell!
+# Eggshell!
 
-## General Purpose Diagnostic and Debugging Tool
+<!-- 
+General Purpose Diagnostic and Debugging Tool
 
-### srfsh with a few additions.
+srfsh with a few additions 
+-->
+
+```
+egsh# help
+```
 
 ---
 
 # egsh / Reqauth and Formatting
 
-    egsh# login admin demo123
+```
+egsh# login admin demo123
 
-    egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
+egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
 
-    egsh# pref set json_as_wire_protocal true
+egsh# pref set json_as_wire_protocal true
 
-    egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
+egsh# reqauth open-ils.pcrud open-ils.pcrud.retrieve.au 1
+```
 
 ---
 
 # egsh / cstore
 
-    egsh# cstore retrieve aou 1
+```
+egsh# cstore retrieve aou 1
 
-    egsh# cstore search au {"id":{"<":5}}
+egsh# cstore search au {"id":{"<":5}}
 
-    egsh# cstore json_query {"select":{"bre":["id"]},"from":"bre"}
+egsh# cstore json_query {"select":{"bre":["id"]},"from":"bre"}
+```
 
 ---
 
@@ -319,43 +378,53 @@ egsh# req router opensrf.router.info.summarize
 
 [https://crates.io/crates/sip2](https://crates.io/crates/sip2)
 
-    egsh# sip localhost:6001 login sip-user sip-pass
+```
+egsh# sip localhost:6001 login sip-user sip-pass
 
-    egsh# sip localhost:6001 item-information CONC91000491
+egsh# sip localhost:6001 item-information CONC91000491
 
-    egsh# sip localhost:6001 patron-status 99999335545
+egsh# sip localhost:6001 patron-status 99999335545
 
-    egsh# sip localhost:6001 patron-information 99999335545
+egsh# sip localhost:6001 patron-information 99999335545
+```
 
 ---
 
 # egsh / `--with-database`
 
-    egsh# db idl search aou shortname = "BR1"
+```
+egsh# db idl search aou shortname = "BR1"
 
-    egsh# db idl search aou name ~\* "branch"
+egsh# db idl search aou name ~\* "branch"
 
-    egsh# db idl search aou name ilike "%branch%"
+egsh# db idl search aou name ilike "%branch%"
+```
 
 ---
 
 # JSON Query & rs-store
 
-    egsh# req open-ils.rs-store open-ils.rs-store.json_query {"select":{"bre":{"exclude":["marc","vis_attr_vector"]}},"from":"bre"}
+```
+egsh# req open-ils.rs-store open-ils.rs-store.json_query {"select":{"bre":{"exclude":["marc","vis_attr_vector"]}},"from":"bre"}
+```
 
 ---
 
 # OpenSRF/Evergreen Services
 
+<!--
+Perl and C services dynamically load modules
+-->
+
 Services implement the `evergreen::osrf::app::Application` Rust trait.
 
-Compared to Perl/C which dynamically load modules.
+```sh
+cargo run --package evergreen --bin eg-service-rs-circ
 
-    cargo run --package evergreen --bin eg-service-rs-circ
+# or
 
-# OR 
-
-    sudo systemctl restart eg-service-rs-circ
+sudo systemctl restart eg-service-rs-circ
+```
 
 ---
 
@@ -363,9 +432,11 @@ Compared to Perl/C which dynamically load modules.
 
 TODO: Threaded; Direct to drone delivery
 
-    egsh# introspect-summary open-ils.rs-circ
+```
+egsh# introspect-summary open-ils.rs-circ
 
-    egsh# req open-ils.rs-circ opensrf.system.method.all 1 2 3
+egsh# req open-ils.rs-circ opensrf.system.method.all 1 2 3
+```
 
 ---
 
