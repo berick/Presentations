@@ -145,19 +145,22 @@ has to be encoded in the Transport Message.
 
 # High-Availability / Multi-Domain / Mesh
 
-* Configure Redis to llisten on a routable IP address
+* Configure Redis to listen on a routable IP address
 * hosts file or DNS for cluster hosts
 * opensrf\_core.xml changes + passwords (new)
 * copy redis-accounts.txt to all hosts. (new)
 * Same username/password requirement for all domains
-* how it works: drawing
-    * listener connects to remote redis instances to register w/ remote routers
-    * router opens port to remote domain when it needs to route an API request
-      to a listener that's not on its domain.
-    * worker opens connection to remote domain bus to send replies
-      to clients whose API calls were cross-domain routed.
 
-TODO: image
+---
+
+# Mesh Under the Covers
+
+* listener connects to remote redis instances to register w/ remote routers
+* router opens port to remote domain when it needs to route an API request
+  to a listener that's not on its domain.
+* worker opens connection to remote domain bus to send replies
+  to clients whose API calls were cross-domain routed.
+
 https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU/edit
 
 ---
@@ -165,34 +168,35 @@ https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU
 # Mesh Live
 
 ```sh
-# Host 1 --
+# valkey01 / valkey02
 osrf_control -l --start --service router
 
-# Host 2 --
-osrf_control -l --start --service router
-
-# Host 1 --
+# valkey01 / valkey02
 osrf_control -l --start-services
 
-# Host 2 --
-osrf_control -l --start-services
-
-# Host 1 --
-srfsh
+# valkey01
 srfsh# request router opensrf.router.info.class.list
 srfsh# login admin demo123
+
 # See router logs on Host 1
 
+# valkey01
 osrf_control -l --stop-services
-srfsh
+
 srfsh# request router opensrf.router.info.class.list
 srfsh# login admin demo123
+
 # See router logs on Host 2
+
 ```
 
 ---
 
-# Redis replace memcache / persistent auth tokens
+# What's Next for Redis?
+
+---
+
+# Replacing Memcache
 
 ## Work in Progress
 
@@ -201,64 +205,63 @@ srfsh# login admin demo123
 
 ## What else?
 
-    * Auth sessions
-    * SIP2Mediator sessions.
+* Auth sessions
+* SIP2Mediator sessions.
 
 ---
 
-# Rust Stuff
+# Rust
+
+![bg w:360](https://foundation.rust-lang.org/img/cargo.png)
 
 ---
 
-# Why Rust?
+# Why?
 
-* Memory Safety
+<!-- compiles to machine code -->
+
+* Memory Safety (Security)
 * Thread Safety
 * Performance
 * Cross-Platform
 * Build System
 * Doc Tests
 * Community
+* Web Assembly?
 
 ---
 
 # On Google migrating C++ and Go to Rust
 
-> A bit more than half of his developers say that Rust is easier to 
-> review, according to Bergstrom.
-  
-> "When we sort of look into why that is," he said, "we get to sort of the
-> most incredible question of the survey, the one that kind of blew all of
-> us away, which is the confidence that people have in the correctness of
-> the Rust code that they're looking at – so in comparison to code in
-> other languages, how confident do you feel that your team's Rust code is
-> correct?"
-
-[https://www.theregister.com/2024/03/31/rust_google_c/](
-    https://www.theregister.com/2024/03/31/rust_google_c/)
-
----
-
-# On Google migrating C++ and Go to Rust
-
+> ... in comparison to code in other languages, how confident do you
+> feel that your team's Rust code is correct?"
+>
 > The answer, Bergstrom said, was 85 percent.
-  
-> "That is a massive number," he said. "I could not get 85 percent of this
-> room to agree that we like M&M's. Eight-five percent of people believe
-> that their Rust code is more likely to be correct than the other code
-> within their system. … I've been through more than one language survey
-> in my life and I've never seen those kinds of numbers before."
+>  
+> "That is a massive number," he said. "I could not get 85 percent of
+> this room to agree that we like M&M's... I've been through more than
+> one language survey in my life and I've never seen those kinds of
+> numbers before."
 
 [https://www.theregister.com/2024/03/31/rust_google_c/](
     https://www.theregister.com/2024/03/31/rust_google_c/)
 
 ---
 
-# Why Not Rust?
+# Why Not?
 
+>
 > In order to gain passage, payment must be made, payment intended to weaken any intruder.
 >
 > -- Albus Dumbledore, 2009
+>
+
+---
+
+# Why Not?
+
+* Learning Curve
+* Youth of the Project
 
 ---
 
@@ -285,6 +288,7 @@ srfsh# login admin demo123
 
 [https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html](
     https://valkey01.demo.kclseg.org/rust-docs/evergreen/util/fn.stringify_params.html)
+
 ---
 
 # Evergreen Example
