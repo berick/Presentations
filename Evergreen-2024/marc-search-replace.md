@@ -15,20 +15,19 @@ Software Development Engineer, King County Library System
 
 ---
 
+# Play Along
+
+[https://valkey01.demo.kclseg.org/eg2/en-US/staff/splash](
+    https://valkey01.demo.kclseg.org/eg2/en-US/staff/splash)
+
+admin / demo123
+
+---
+
 # Start With the Basics
 
----
-
-# Removing a Row
-
-* ```=3.*```
-
----
-
-# Adding a Row
-
-* ```(=245.*)```
-* ```$1\n=246 1 \$aMY-246```
+* Simple String Replacement
+* Adding / Removing Rows
 
 ---
 
@@ -48,7 +47,7 @@ Software Development Engineer, King County Library System
 
 # Authority Repairs
 
-> I did a MARC search for 650 fields with subfield zero (0) that has 
+> I did a MARC search for 650 fields with subfield zero (0) that had 
 > `KCLS` instead of `DLC`. There are 14 records in Production that currently 
 > match these criteria.
 
@@ -75,7 +74,7 @@ Software Development Engineer, King County Library System
 # Electronic Dance Music!
 
 > We wanted to change `Underground` dance music to `Electronic` dance music 
-> OCLC `Fast` and our local headings.
+> for OCLC `Fast` and our local headings.
 
 * Search Regex: ```^(=650 .7.a)(Underground)( dance music.*2fast.*[0-9])$```
 * Replace Regex: ```$1Electronic$3```
@@ -86,7 +85,7 @@ Software Development Engineer, King County Library System
 
 # What's Next
 
-* Dry-Run Option
+* Extended Dry-Run Option
 * Launchpad
 
 
