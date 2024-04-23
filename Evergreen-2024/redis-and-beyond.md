@@ -105,7 +105,7 @@ prefix : purpose : router-name : domain
 
 --- 
 
-# Redis Addresses...
+# Redis Addresses
 <!-- 
 username for router/service allow like entities on the same domain
 serving different populateions.
@@ -153,15 +153,7 @@ has to be encoded in the Transport Message.
 
 ---
 
-# Mesh Under the Covers
-
-* listener connects to remote redis instances to register w/ remote routers
-* router opens port to remote domain when it needs to route an API request
-  to a listener that's not on its domain.
-* worker opens connection to remote domain bus to send replies
-  to clients whose API calls were cross-domain routed.
-
-https://docs.google.com/drawings/d/1TL1scUsQ5yKWk0THs2RvHEmvyiltsaizfDxFLIjf\_XU/edit
+![](Redis-Mesh.png)
 
 ---
 
@@ -210,6 +202,10 @@ srfsh# login admin demo123
 
 ---
 
+![bg](A7YN.gif)
+
+---
+
 # Rust
 
 ![bg w:360](https://foundation.rust-lang.org/img/cargo.png)
@@ -227,7 +223,6 @@ srfsh# login admin demo123
 * Build System
 * Doc Tests
 * Community
-* Web Assembly?
 
 ---
 
@@ -255,10 +250,6 @@ srfsh# login admin demo123
 >
 > -- Albus Dumbledore, 2009
 >
-
----
-
-# Why Not?
 
 * Learning Curve
 * Youth of the Project
@@ -416,31 +407,30 @@ egsh# req open-ils.rs-store open-ils.rs-store.json_query {"select":{"bre":{"excl
 
 # OpenSRF/Evergreen Services
 
-<!--
-Perl and C services dynamically load modules
--->
-
-Services implement the `evergreen::osrf::app::Application` Rust trait.
-
-```sh
-cargo run --package evergreen --bin eg-service-rs-circ
-
-# or
-
-sudo systemctl restart eg-service-rs-circ
-```
+* Standalone Binaries
+    * Implements `evergreen::osrf::app::Application` Trait
+    * ```sudo systemctl restart eg-service-rs-circ```
+* Threaded
+* Direct-to-Drone API Delivery
+* Parameter Type & Count Enforcement
+    * ```egsh# req open-ils.rs-circ open-ils.rs-circ.checkin 1 1 1```
+    * ```egsh# req open-ils.rs-circ open-ils.rs-circ.checkin 1 1```
+* Introspect Summary
+    * ```egsh# introspect-summary open-ils.rs-circ```
 
 ---
 
-# OpenSRF/Evergreen Services
-
-TODO: Threaded; Direct to drone delivery
-
-```
-egsh# introspect-summary open-ils.rs-circ
-
-egsh# req open-ils.rs-circ opensrf.system.method.all 1 2 3
-```
+# Common Application Logic
 
 ---
+
+# Web Assembly?
+
+[https://webassembly.org/](https://webassembly.org/)
+
+[http://10.170.174.155:8080/](http://10.170.174.155:8080/)
+
+---
+
+The End
 
