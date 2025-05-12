@@ -14,11 +14,10 @@ Software Development Engineer, King County Library System
     https://github.com/berick/Presentations/tree/main/Evergreen-2025)
 
 ---
-
 # Two Big (For Us) 2025 Feature Deployments
 
 ---
-# (Partially) Automated Lost+Returned Refunds
+# I. Automated Lost+Returned Refunds
 
 <!-- 
 replace clunky paper based system
@@ -27,7 +26,13 @@ had to know they could!
 -->
 
 * Project first proposed in 2016.
-* Collaboration across Business Applications (Evergreen), Circulation, and Finance.
+* Business Applications (Evergreen), 
+* Circulation
+* Finance.
+
+---
+# It's Complicated
+
 * Staff changes... 
 * Design changes...
 * Like, 100 pandemics...
@@ -37,37 +42,50 @@ had to know they could!
 # Implemented in 2 Phases
 
 <!--
+Track refundable payments new table; links back to EG payments.
 Re-printable, templated refundable payment receipts
+
+===
+
 Applying refunded money to other charges and ultimately cutting checks and
-issuing credit card refunds.
+issuing credit card refunds (not automatic)
 -->
 
-1. Tracking Refundable Payments
-2. Automatically Processing Refunds
+* Tracking Refundable Payments
+* Automated Refund Processing
 
 ---
-
 # To the Demo-Mobile!
 
 ---
-# Combined Patron Purchase + ILL Request Form
+# II. Patron Requests (Purchasing + ILL)
 
 <!--
 Replaces 2 seperate paper based forms
 Much quicker turnaround
 -->
 
-* Quicker turnaround for this one.
+* Deployed March
 * Pushing high priority patches as late as last week.
-* Lots of feature pending requests.
-
-first angular UI patrons are using; use of Angular Material
- -- using http gateway
-    -- no IDL loading / more of issue in mobile
-    -- hash based data modification
-
-# REFUNDS
-
+* Still lots of work to do!
 
 ---
+
+# Features
+
+* Account verification
+* Automated routing for Purchasing and ILL
+* Duplicate / Existing Request Matching
+* Staff UI for managing requests
+* Staff mediated requests
+
+---
+
+# New Tech Alert
+
+* Angular Material
+* Using Rust-based HTTP
+
+---
+# Back To the Demo-Mobile!
 
