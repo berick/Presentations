@@ -21,18 +21,19 @@ Software Development Engineer, King County Library System
 
 <!-- 
 replace clunky paper based system
-patron had to request a refund; 
+patron had to request a refund! 
 had to know they could!
 -->
 
 * Project first proposed in 2016.
 * Business Applications (Evergreen), 
-* Circulation
+* Circulation,
 * Finance.
 
 ---
 # It's Complicated
 
+* It's Money...
 * Staff changes... 
 * Design changes...
 * Like, 100 pandemics...
@@ -42,12 +43,15 @@ had to know they could!
 # Implemented in 2 Phases
 
 <!--
-Track refundable payments new table; links back to EG payments.
+Track refundable payments new table, links back to EG payments.
+
 Re-printable, templated refundable payment receipts
 
 ===
 
-Applying refunded money to other charges and ultimately cutting checks and
+Assessing refundability (item condition)
+Applying refunded money to other charges
+cutting checks / credit card refunds
 issuing credit card refunds (not automatic)
 -->
 
@@ -82,10 +86,20 @@ Much quicker turnaround
 ---
 
 # New Tech Alert
+<!--
+Material design more intentional; focused
+with Accessibility in mind
+doesn't do as much as Bootstrap
+like how it looks
+-->
 
 * Angular Material
-* Using Rust-based HTTP
+* Using Rust-based HTTP Gateway
 
 ---
 # Back To the Demo-Mobile!
+
+---
+# Thanks!
+
 
