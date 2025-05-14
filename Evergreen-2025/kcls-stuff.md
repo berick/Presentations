@@ -67,6 +67,10 @@ issuing credit card refunds (not automatic)
 <!--
 Replaces 2 seperate paper based forms
 Much quicker turnaround
+
+TODO
+email notices
+
 -->
 
 * Deployed March
@@ -74,8 +78,11 @@ Much quicker turnaround
 * Still lots of work to do!
 
 ---
-
 # Features
+
+<!--
+account checks; number of open requests; fines, etc.
+-->
 
 * Account verification
 * Automated routing for Purchasing and ILL
@@ -100,6 +107,6 @@ like how it looks
 # Back To the Demo-Mobile!
 
 ---
-# Thanks!
+# See You In Seattle!
 
 
